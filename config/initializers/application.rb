@@ -1,0 +1,1 @@
+SYSTEM_EMAIL_ADDRESS = 'Camping-gas Support <support@example.com>'

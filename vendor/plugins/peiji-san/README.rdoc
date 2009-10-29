@@ -1,0 +1,20 @@
+= Peiji-San
+
+Peiji-San uses named scopes to create a thin pagination layer.
+
+Model:
+
+  class Member < ActiveRecord::Base
+    extend PeijiSan
+    self.entries_per_page = 32
+  end
+
+Controller:
+
+  @collection = Member.active.page(2)
+
+View:
+
+  <% pages_to_link_to(@collection).each do |page %>
+    <%= page.is_a?(String) ? page : link_to_page(page) %>
+  <% end %>

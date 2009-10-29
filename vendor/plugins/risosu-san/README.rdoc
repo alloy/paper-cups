@@ -1,0 +1,19 @@
+= Risosu-san
+
+A lean mixin for <tt>ActionController::Base</tt> that assists in situations
+where a resource controller is nested under another resource. Eg:
+
+  /members/24/passwords/new
+
+In this example, retrieving the parent resource is as simple as:
+
+  class PasswordsController < ActionController::Base
+    find_parent_resource :only => :new
+    
+    def new
+      @parent_resource # => #<Member id: 24>
+      @member # => #<Member id: 24>
+    end
+  end
+
+See RisosuSan for a bit more in depth documentation.

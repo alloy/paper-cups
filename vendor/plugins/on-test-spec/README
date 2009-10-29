@@ -1,0 +1,12 @@
+On Test Spec
+------------
+
+Makes testing Rails apps with test/spec easier and more fun. Created with a
+half eye on the test_spec_on_rails plugin, thanks!
+
+Autotest
+--------
+
+To use autotest with test/spec on Rails, copy the "dot.autotest" sample file to
+your project's root directory and name it ".autotest". Edit the file if you
+need any custom mappings.

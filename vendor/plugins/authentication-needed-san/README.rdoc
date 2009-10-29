@@ -1,0 +1,42 @@
+== AuthenticationNeededSan
+
+A thin wrapper around the Rails ‘flash’ object, to assist in redirecting a user
+‘back’ to the page she originally requested.
+
+For more info see the AuthenticationNeededSan class documentation.
+
+=== Example
+
+Consider an application which uses the authorization-san plugin. The
+ApplicationController would look something like the following:
+
+  class ApplicationController < ActionController::Base
+    # If nobody was logged in and this resource is not accessable by all,
+    # request authentication. Otherwise reply that the resource is forbidden.
+    def access_forbidden
+      # If the user is logged in and still can't view the page, we have to tell
+      # them access is forbidden.
+      if !@authenticated.nil?
+        send_response_document :forbidden
+      else
+        authentication_needed!
+      end
+    end
+
+    def when_authentication_needed
+      redirect_to new_session_url
+    end
+  end
+
+Then from your sessions controller redirect the user back to the page she
+requested or the default one:
+
+  class SessionsController < ApplicationController
+    def create
+      # login code...
+      finish_authentication_needed! or redirect_to(root_url)
+    end
+  end
+
+The authorization-san plugin is available at:
+http://github.com/Fingertips/authorization-san

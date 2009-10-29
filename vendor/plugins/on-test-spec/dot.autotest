@@ -1,0 +1,93 @@
+Autotest.add_hook :initialize do |at|
+  at.unit_diff = 'cat'
+  at.failed_results_re = /^\s+\d+\) (?:Failure|Error):\n(.*?)\((.*?)\)\n\[([^:]*):.*\]/
+  
+  at.add_exception %r%^\./(?:db|doc|log|public|script|tmp|vendor|data|content|config)%
+  at.add_exception %r%\.svn%
+  
+  at.clear_mappings
+  
+  # Add your custom mappings:
+  #
+  # at.add_mapping %r%^app/(concerns)/(.*)\.rb$% do |_, match|
+  #   "test/unit/#{match[1]}/#{match[2]}_test.rb"
+  # end
+  # 
+  # at.add_mapping %r%^test/unit/(concerns)/.*rb$% do |filename, _|
+  #   filename
+  # end
+  # 
+  # at.add_mapping %r%^lib/(.*).rb% do |_, match|
+  #   sqwat = match[1].gsub('/', '_')
+  #   "test/lib/#{sqwat}_test.rb"
+  # end
+  # 
+  # at.add_mapping %r%^test/lib/.*rb$% do |filename, _|
+  #   filename
+  # end
+  
+  # Standard Rails
+  
+  at.add_mapping %r%^test/fixtures/(.*)s.yml% do |_, m|
+    ["test/unit/#{m[1]}_test.rb",
+     "test/controllers/#{m[1]}_controller_test.rb",
+     "test/views/#{m[1]}_view_test.rb",
+     "test/functional/#{m[1]}_controller_test.rb"]
+  end
+  
+  at.add_mapping %r%^test/(unit|integration|controllers|views|functional|helpers)/.*rb$% do |filename, _|
+    filename
+  end
+  
+  at.add_mapping %r%^app/models/(.*)\.rb$% do |_, m|
+    "test/unit/#{m[1]}_test.rb"
+  end
+  
+  at.add_mapping %r%^app/helpers/application_helper.rb% do
+    ["test/helpers/applications_helper_test.rb"] + at.files_matching(%r%^test/(views|functional)/.*_test\.rb$%)
+  end
+  
+  at.add_mapping %r%^app/helpers/(.*)_helper.rb% do |_, m|
+    if m[1] == "application" then
+      at.files_matching %r%^test/(views|functional)/.*_test\.rb$%
+    else
+      ["test/helpers/#{m[1]}_helper_test.rb",
+       "test/views/#{m[1]}_view_test.rb",
+       "test/functional/#{m[1]}_controller_test.rb"]
+    end
+  end
+  
+  at.add_mapping %r%^app/views/(.*)/% do |_, m|
+    ["test/views/#{m[1]}_view_test.rb",
+     "test/functional/#{m[1]}_controller_test.rb"]
+  end
+  
+  at.add_mapping %r%^app/controllers/(.*)\.rb$% do |_, m|
+    if m[1] == "application" then
+      at.files_matching %r%^test/(controllers|views|functional)/.*_test\.rb$%
+    else
+      ["test/controllers/#{m[1]}_test.rb",
+       "test/functional/#{m[1]}_test.rb"]
+    end
+  end
+  
+  at.add_mapping %r%^app/views/layouts/% do
+    "test/views/layouts_view_test.rb"
+  end
+  
+  at.add_mapping %r%^config/routes.rb$% do
+    at.files_matching %r%^test/(controllers|views|functional)/.*_test\.rb$%
+  end
+  
+  at.add_mapping %r%^test/test_helper.rb|config/((boot|environment(s/test)?).rb|database.yml)% do
+    at.files_matching %r%^test/(unit|controllers|views|functional)/.*_test\.rb$%
+  end
+  
+  class << at
+    def consolidate_failures(failed)
+      failed.inject(new_hash_of_arrays) do |filters, (method, klass, filename)|
+        filters[File.expand_path(filename)] << method; filters
+      end
+    end
+  end
+end

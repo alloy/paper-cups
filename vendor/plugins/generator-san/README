@@ -1,0 +1,6 @@
+~
+~ Generator-San
+~ 
+
+$ ./script/generate controller-san --help
+$ ./script/generate model-san --help
