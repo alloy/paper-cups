@@ -1,3 +1,16 @@
 == CampingGas
 
 A small cozy fire, usually surrounded by lots of French chatter...
+
+== Install
+
+The vendored Rails is a git submodule, to get it:
+
+  $ git submodule update --init
+
+Then:
+
+  $ rake db:create:all
+  $ rake migrate
+
+And it’s ready to be served.
