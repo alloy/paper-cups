@@ -21,6 +21,12 @@ As a member I would like to see external images inline so that I can see them wi
 As a member I would like to see pasted text formatted as a code block so that I can read it more easily. - #6 must todo
 As a member I would like to upload binary files so that I can share them with other members. - #3 must todo
 As a member I would like to upload images and see them inline so that I can show something to other members. - #4 must todo
+As a lrz I would like to randomly not see messages so that I come across as a weirdo. - #17 could todo
+
+Archives
+
+As a member I would like to browse logs so that I can read what people said when I was away. - #15 must todo
+As a member I would like to search through logs so that I can easily find specific messages. - #16 must todo
 
 Non-functional
 
@@ -35,11 +41,13 @@ ROLES
 Visitor: Anyone who visits the site.
 Member: Any user that has an account on the application.
 Administrator: Priviledged member who is able to access all parts of the application.
+Lrz: Ruby ninja and general weirdo.
 
 THEMES
 
 Members: Stories related to member profiles.
 Rooms: Stories related to chat rooms.
+Archives: Stories related to archived messages.
 Non-functional: Stories related to non-functional requirements.
 Other: Stories that don’t fit anywhere else.
 
