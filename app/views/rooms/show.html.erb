@@ -1,25 +1,22 @@
 <h2><%= @title = @room.label %></h2>
 
-<table id="messages">
-  <% @room.messages.each do |message| %>
-    <tr>
-      <th><%=h message.author.email %></th>
-      <td><%=h message.body %></td>
-    </tr>
-  <% end %>
-  
-  <tr>
-    <th></th>
-    <td>
-      <% form_for [@room, Message.new] do |f| %>
-        <div class="fields">
-          <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80 %></div>
-          
-          <div class="submit">
-            <%= f.submit 'New message' %>
-          </div>
-        </div>
-      <% end %>
-    </td>
-  </tr>
+<table id="messages" data-action="<%= room_messages_path(@room) %>">
+  <tbody>
+    <% @room.messages.each do |message| %>
+      <tr data-message-id="<%= message.id %>">
+        <th><%=h message.author.email %></th>
+        <td><%=h message.body %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
+<% form_for [@room, Message.new] do |f| %>
+  <div class="fields">
+    <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80 %></div>
+    
+    <div class="submit">
+      <%= f.submit 'New message' %>
+    </div>
+  </div>
+<% end %>
