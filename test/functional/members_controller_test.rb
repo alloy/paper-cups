@@ -28,15 +28,15 @@ describe "On the", MembersController, "a visitor" do
   end
   
   it "should see a profile" do
-    get :show, :id => members(:adrian)
-    assigns(:member).should == members(:adrian)
+    get :show, :id => members(:alloy)
+    assigns(:member).should == members(:alloy)
     status.should.be :success
     template.should.be 'members/show'
   end
   
-  should.require_login.get :edit, :id => members(:adrian)
-  should.require_login.put :update, :id => members(:adrian)
-  should.require_login.delete :destroy, :id => members(:adrian)
+  should.require_login.get :edit, :id => members(:alloy)
+  should.require_login.put :update, :id => members(:alloy)
+  should.require_login.delete :destroy, :id => members(:alloy)
   
   private
   
@@ -47,7 +47,7 @@ end
 
 describe "On the", MembersController, "a member" do
   before do
-    login members(:adrian)
+    login members(:alloy)
   end
   
   it "should see an edit form" do
@@ -60,12 +60,12 @@ describe "On the", MembersController, "a member" do
   end
   
   it "should be able to update his profile" do
-    put :update, :id => @authenticated.to_param, :member => { :email => 'sir.adrian@example.com' }
+    put :update, :id => @authenticated.to_param, :member => { :email => 'sir.eloy@example.com' }
     
-    @authenticated.reload.email.should == 'sir.adrian@example.com'
+    @authenticated.reload.email.should == 'sir.eloy@example.com'
     should.redirect_to member_url(@authenticated)
   end
   
-  should.disallow.put :update, :id => members(:kelly)
-  should.disallow.delete :destroy, :id => members(:kelly)
+  should.disallow.put :update, :id => members(:lrz)
+  should.disallow.delete :destroy, :id => members(:lrz)
 end

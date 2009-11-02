@@ -41,9 +41,9 @@ end
 
 describe TestApplicationsController do
   it "should find the currently logged in member" do
-    login members(:adrian)
+    login members(:alloy)
     get :public_action
-    assigns(:authenticated).should == members(:adrian)
+    assigns(:authenticated).should == members(:alloy)
   end
   
   it "should not find currently logged in member when no-one is logged in" do
@@ -53,12 +53,12 @@ describe TestApplicationsController do
   
   it "should log a member in" do
     should.not.be.authenticated
-    @controller.send(:login, members(:adrian))
+    @controller.send(:login, members(:alloy))
     should.be.authenticated
   end
   
   it "should log a member out" do
-    @controller.send(:login, members(:adrian))
+    @controller.send(:login, members(:alloy))
     should.be.authenticated
     @controller.send(:logout)
     should.not.be.authenticated

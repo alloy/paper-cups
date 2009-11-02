@@ -2,7 +2,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 describe "Mailer", ActionMailer::TestCase do
   it "should render a reset password message" do
-    member = members(:adrian)
+    member = members(:alloy)
     member.generate_reset_password_token!
     url = "http://test.host/password/#{member.reset_password_token}/edit"
     

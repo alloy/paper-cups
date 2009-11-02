@@ -6,12 +6,12 @@ describe "Member, concerning authentication" do
   end
   
   it "should authenticate users with correct credentials" do
-    member = Member.authenticate(:email => 'adrian@example.com', :password => 'secret')
+    member = Member.authenticate(:email => 'eloy@example.com', :password => 'secret')
     member.errors.should.be.empty
   end
   
   it "should not authenticate users with incorrect credentials" do
-    member = Member.authenticate(:email => 'adrian@example.com', :password => 'incorrect')
+    member = Member.authenticate(:email => 'eloy@example.com', :password => 'incorrect')
     member.errors.should.not.be.empty
     member.errors.on(:base).should.not.be.blank
   end
@@ -25,7 +25,7 @@ end
 
 describe "A member, concerning authentication" do
   before do
-    @member = members(:adrian)
+    @member = members(:alloy)
   end
   
   it "should require a password" do

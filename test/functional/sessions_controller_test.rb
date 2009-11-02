@@ -9,20 +9,20 @@ describe "On the", SessionsController, "a visitor" do
   end
   
   it "should keep the url to return to after authentication" do
-    url = member_url(members(:adrian))
+    url = member_url(members(:alloy))
     get :new, {}, {}, { :after_authentication => { :redirect_to => url }}
     controller.after_authentication[:redirect_to].should == url
   end
   
   it "should be able to create a new session" do
     post :create, :member => valid_credentials
-    assigns(:unauthenticated).should == members(:adrian)
+    assigns(:unauthenticated).should == members(:alloy)
     should.be.authenticated
     should.redirect_to root_url
   end
   
   it "should redirect the user back to the page he originally requested" do
-    url = edit_member_url(members(:adrian))
+    url = edit_member_url(members(:alloy))
     post :create, { :member => valid_credentials }, {}, { :after_authentication => { :redirect_to => url }}
     should.redirect_to url
   end
@@ -53,7 +53,7 @@ describe "On the", SessionsController, "a visitor" do
   end
   
   it "should keep the url to return to if the password or email was wrong" do
-    url = member_url(members(:adrian))
+    url = member_url(members(:alloy))
     post :create, { :member => valid_credentials.merge(:password => 'wrong') }, {}, { :after_authentication => { :redirect_to => url }}
     should.not.be.authenticated
     controller.after_authentication[:redirect_to].should == url
@@ -62,13 +62,13 @@ describe "On the", SessionsController, "a visitor" do
   private
   
   def valid_credentials
-    { :email => members(:adrian).email, :password => 'secret' }
+    { :email => members(:alloy).email, :password => 'secret' }
   end
 end
 
 describe "On the", SessionsController, "a member" do
   before do
-    login members(:adrian)
+    login members(:alloy)
   end
   
   it "should be able to clear the logged in session" do

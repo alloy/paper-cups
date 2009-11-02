@@ -18,7 +18,7 @@ describe Member, "concerning validations" do
   end
   
   it "should require a unique email" do
-    @member.email = members(:adrian).email
+    @member.email = members(:alloy).email
     @member.should.not.be.valid
     @member.errors.on(:email).should.not.be.blank
   end
@@ -26,7 +26,7 @@ end
 
 describe 'A', Member do
   it "should allow access to email" do
-    members(:adrian).update_attributes(:email => 'new@example.com')
-    members(:adrian).reload.email.should == 'new@example.com'
+    members(:alloy).update_attributes(:email => 'new@example.com')
+    members(:alloy).reload.email.should == 'new@example.com'
   end
 end

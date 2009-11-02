@@ -2,7 +2,7 @@ require File.expand_path('../../test_helper', __FILE__)
 
 describe "On the", PasswordsController, "a visitor" do
   before do
-    @member = members(:adrian)
+    @member = members(:alloy)
   end
   
   it "should see a new form to reset his password" do

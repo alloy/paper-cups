@@ -142,3 +142,12 @@ a.cancel:hover
 
 /* @end */
 
+#messages th
+{
+  text-align: right;
+}
+
+#messages td
+{
+  padding: 10px;
+}
