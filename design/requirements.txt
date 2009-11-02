@@ -1,0 +1,50 @@
+Requirements CampingGas
+
+- Eloy Durán, eloy@fngtps.com, Fingertips, http://www.fngtps.com
+
+CampingGas is a Ruby on Rails application which provides easy web-chat.
+
+USER STORIES
+
+Members
+
+As a member I would like to receive an invitation so that I can create a profile. - #7 must todo
+As a member I would like to edit my profile so that I can keep the information up-to-date. - #8 must todo
+
+Rooms
+
+As an administrator I would like to invite people so that they can join in on the discussion. - must todo
+As a member I would like to see an overview of all rooms I have access to so that I can join rooms. - #1 must todo
+As a member I would like to join a room so that see and add messages. - #2 must todo
+As a member I would like to see external images inline so that I can see them without navigating away. - #5 must todo
+    These are URLs to files that have an extension such as png, gif, or jpg.
+As a member I would like to see pasted text formatted as a code block so that I can read it more easily. - #6 must todo
+As a member I would like to upload binary files so that I can share with other members. - #3 must todo
+As a member I would like to upload images and see them inline so that I can show something to other members. - #4 must todo
+
+Non-functional
+
+As a developer I would like to have written a site which is compliant with XHTML and CSS standards so that as many people as possible can access the site and view it as intended. - #9 must todo
+As a developer I would like to have created database indexes so that the queries run as fast as possible. - #10 must todo
+As a developer I would like to have the website function correctly in Internet Explorer 7 and 8, Firefox 2 and 3, and Safari 3 so that most people can use the site. - #11 must todo
+As a visitor I would like to see sensible and predictable URLs so that the application feels logical and transparent. - #12 must todo
+As a visitor I would like to be able to use Unicode so that I can use any language I like. - #13 must todo
+
+ROLES
+
+Visitor: Anyone who visits the site.
+Member: Any user that has an account on the application.
+Administrator: Priviledged member who is able to access all parts of the application.
+
+THEMES
+
+Members: Stories related to member profiles.
+Rooms: Stories related to chat rooms.
+Non-functional: Stories related to non-functional requirements.
+Other: Stories that don’t fit anywhere else.
+
+DEFINITIONS
+
+NOTES
+
+- Administrators might at some point need to be restricted to certain rooms.
