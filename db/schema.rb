@@ -9,13 +9,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091029090825) do
+ActiveRecord::Schema.define(:version => 20091102213431) do
 
   create_table "members", :force => true do |t|
     t.string   "role"
     t.string   "email"
     t.string   "hashed_password"
     t.string   "reset_password_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "member_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rooms", :force => true do |t|
+    t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,8 +1,14 @@
-adrian:
-  hashed_password: <%= Member.hash_password('secret') %>
-  email: adrian@example.com
+<% password = Member.hash_password('secret') %>
+lrz:
+  hashed_password: <%= password %>
+  email: lrz@example.com
   role: member
-kelly:
-  hashed_password: <%= Member.hash_password('secret') %>
-  email: kelly@example.com
+alloy:
+  hashed_password: <%= password %>
+  email: eloy@example.com
+  role: admin
+matt:
+  hashed_password: <%= password %>
+  email: matt@example.com
   role: member
+  

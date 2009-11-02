@@ -1,0 +1,9 @@
+lrz_in_macruby:
+  room: macruby
+  member: lrz
+alloy_in_macruby:
+  room: macruby
+  member: alloy
+matt_in_macruby:
+  room: macruby
+  member: matt
