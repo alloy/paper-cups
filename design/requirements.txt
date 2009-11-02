@@ -13,13 +13,13 @@ As a member I would like to edit my profile so that I can keep the information u
 
 Rooms
 
-As an administrator I would like to invite people so that they can join in on the discussion. - must todo
+As an administrator I would like to invite people so that they can join in on the discussion. - #14 must todo
 As a member I would like to see an overview of all rooms I have access to so that I can join rooms. - #1 must todo
 As a member I would like to join a room so that see and add messages. - #2 must todo
 As a member I would like to see external images inline so that I can see them without navigating away. - #5 must todo
     These are URLs to files that have an extension such as png, gif, or jpg.
 As a member I would like to see pasted text formatted as a code block so that I can read it more easily. - #6 must todo
-As a member I would like to upload binary files so that I can share with other members. - #3 must todo
+As a member I would like to upload binary files so that I can share them with other members. - #3 must todo
 As a member I would like to upload images and see them inline so that I can show something to other members. - #4 must todo
 
 Non-functional
