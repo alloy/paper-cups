@@ -2,5 +2,6 @@
 ~ Generator-San
 ~ 
 
-$ ./script/generate controller-san --help
-$ ./script/generate model-san --help
+$ ./script/generate controller_san --help
+$ ./script/generate model_san --help
+$ ./script/generate javascript_san --help
