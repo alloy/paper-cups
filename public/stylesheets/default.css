@@ -165,6 +165,14 @@ a.cancel:hover
   vertical-align: top;
   padding: 10px;
 }
+#messages pre
+{
+  padding: 10px;
+  background-color: lightgrey;
+  width: 550px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
 
 .sidebar
 {
