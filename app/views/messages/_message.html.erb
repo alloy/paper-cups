@@ -1,4 +1,4 @@
 <tr data-message-id="<%= message.id %>">
   <th data-author-id="<%= message.author.id %>"><%=h message.author.email %></th>
-  <td><%=h message.body %></td>
+  <td><%= format_message message %></td>
 </tr>

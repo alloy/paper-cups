@@ -145,18 +145,28 @@ a.cancel:hover
 .messages
 {
   float: left;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 800px;
+  height: 500px;
 }
+.messages img
+{
+  width: 300px;
+}
+#messages th
+{
+  vertical-align: top;
+  text-align: right;
+  padding: 10px;
+}
+#messages td
+{
+  vertical-align: top;
+  padding: 10px;
+}
+
 .sidebar
 {
   float: right;
-}
-
-#messages th
-{
-  text-align: right;
-}
-
-#messages td
-{
-  padding: 10px;
 }
