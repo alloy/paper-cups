@@ -1,6 +1,7 @@
 == PaperCups
 
-A small cozy fire, usually surrounded by lots of French chatter...
+A small cozy web chat app, like paper cups and a string back in the days.
+Usually surrounded by lots of French chatter...
 
 == Install
 
