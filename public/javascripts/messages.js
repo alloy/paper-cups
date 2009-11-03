@@ -5,7 +5,7 @@ CG.Messages = Class.create({
     this.table = $(table);
     this.tbody = $(table).down('tbody');
     this.action = this.table.readAttribute('data-action');
-    this.timer = new PeriodicalExecuter(this.loadMoreMessages.bindAsEventListener(this), 5);
+    this.timer = new PeriodicalExecuter(this.loadMoreMessages.bindAsEventListener(this), 10);
   },
   
   lastMessageId: function() {
@@ -15,7 +15,7 @@ CG.Messages = Class.create({
   loadMoreMessages: function() {
     new Ajax.Request(this.action, {
       method: 'get',
-      parameters: { last_message_id: this.lastMessageId() },
+      parameters: { since: this.lastMessageId() },
       onSuccess: this.loadMessages.bindAsEventListener(this),
     });
   },

@@ -14,8 +14,7 @@ describe 'A', Room do
     rooms(:macruby).members.should.equal_list members(:alloy, :lrz, :matt)
   end
   
-  it "should return the messages that were written in the room, ordered by creation date" do
-    messages(:daily_kitten).update_attribute(:created_at, Time.parse('1/1/1999'))
-    rooms(:macruby).messages.should.equal_list messages(:daily_kitten, :patrick_hernandez)
+  it "should return the messages that were written in the room, ordered id" do
+    rooms(:macruby).messages.should.equal_list rooms(:macruby).messages.sort_by(&:id)
   end
 end

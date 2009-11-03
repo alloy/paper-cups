@@ -38,6 +38,7 @@ Test.context("CG.Messages", {
     var request = Ajax.requests.last();
     
     this.assertEqual('/rooms/123/messages', request[0]);
+    this.assertEqual('2', request[1].parameters.since);
     
     var handler = request[1]['onSuccess'];
     handler({ responseText:'<tr data-message-id="3"><th>matt</th><td>Third message</td></tr>' });

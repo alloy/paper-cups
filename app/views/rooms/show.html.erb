@@ -2,12 +2,7 @@
 
 <table id="messages" data-action="<%= room_messages_path(@room) %>">
   <tbody>
-    <% @room.messages.each do |message| %>
-      <tr data-message-id="<%= message.id %>">
-        <th><%=h message.author.email %></th>
-        <td><%=h message.body %></td>
-      </tr>
-    <% end %>
+    <%= render @room.messages %>
   </tbody>
 </table>
 

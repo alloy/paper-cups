@@ -41,3 +41,11 @@ describe "A", Message do
     @message.room.should == rooms(:macruby)
   end
 end
+
+describe Message do
+  it "should return messages since a given id" do
+    messages = Message.all
+    Message.since(messages.first.id).should.equal_list messages[1..-1]
+    Message.since(messages.second.id.to_s).should.equal_list messages[2..-1]
+  end
+end
