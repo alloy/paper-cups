@@ -5,6 +5,12 @@ describe Member, "concerning validations" do
     @member = Member.new
   end
   
+  it "should require a full name" do
+    @member.full_name = ''
+    @member.should.not.be.valid
+    @member.errors.on(:full_name).should.not.be.blank
+  end
+  
   it "should require an email" do
     @member.email = ''
     @member.should.not.be.valid

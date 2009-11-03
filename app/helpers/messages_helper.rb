@@ -21,4 +21,10 @@ module MessagesHelper
       link_to body, body
     end
   end
+  
+  def format_full_name(member)
+    parts = h(member.full_name).split(' ')
+    parts[0..-2].join(' ') + parts.last
+    "#{parts[0..-2].join(' ')} #{parts.last[0,1]}."
+  end
 end

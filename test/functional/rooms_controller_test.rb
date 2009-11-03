@@ -24,8 +24,8 @@ describe "On the", RoomsController, "a member" do
     status.should.be :success
     
     data = JSON.parse(response.body)
-    data['online_members'].should.include members(:alloy).email
-    data['online_members'].should.include members(:lrz).email
+    data['online_members'].should.include members(:alloy).full_name
+    data['online_members'].should.include members(:lrz).full_name
     @room.messages[1..-1].each do |message|
       data['messages'].should.include "data-message-id=\"#{message.id}\""
     end

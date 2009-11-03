@@ -5,7 +5,7 @@ class Member < ActiveRecord::Base
   
   named_scope :online, :conditions => ["memberships.last_seen_at >= ?", 5.minutes.ago]
   
-  attr_accessible :email
+  attr_accessible :full_name, :email
   
   def online_in(room)
     memberships.find_by_room_id(room.id).online!
@@ -13,6 +13,7 @@ class Member < ActiveRecord::Base
   
   private
   
+  validates_presence_of :full_name
   validates_uniqueness_of :email
   validates_email :email
 end

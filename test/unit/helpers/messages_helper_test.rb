@@ -1,6 +1,11 @@
 require File.expand_path('../../../test_helper', __FILE__)
 
 describe MessagesHelper do
+  it "should format a members' full name" do
+    format_full_name(members(:alloy)).should == 'Eloy D.'
+    format_full_name(members(:lrz)).should == 'Laurent S.'
+  end
+  
   it "should not format a message body that isn't only a url and escape" do
     body = " \thttp://example.com This is <em>not</em> only a url.\n "
     format_message(Message.new(:body => body)).should == h(body.strip)

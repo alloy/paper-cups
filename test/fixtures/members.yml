@@ -2,13 +2,16 @@
 lrz:
   hashed_password: <%= password %>
   email: lrz@example.com
+  full_name: Laurent Sansonetti
   role: member
 alloy:
   hashed_password: <%= password %>
   email: eloy@example.com
+  full_name: Eloy Duran
   role: admin
 matt:
   hashed_password: <%= password %>
   email: matt@example.com
+  full_name: Matt Aimonetti
   role: member
   

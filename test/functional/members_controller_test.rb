@@ -41,7 +41,7 @@ describe "On the", MembersController, "a visitor" do
   private
   
   def valid_params
-    { :email => 'jurgen@example.com', :password => 'so secret', :verify_password => 'so secret' }
+    { :full_name => 'Jurgen von Apfel', :email => 'jurgen@example.com', :password => 'so secret', :verify_password => 'so secret' }
   end
 end
 

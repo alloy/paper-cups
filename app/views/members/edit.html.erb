@@ -12,6 +12,11 @@
         <div class="field"><%= f.text_field :email %></div>
       </div>
       
+      <div class="field">
+        <div class="label"><%= f.label :full_name %></div>
+        <div class="field"><%= f.text_field :full_name %></div>
+      </div>
+      
       <div class="submit">
         <%= f.submit 'Update profile' %>
         <%= link_to 'Back', root_path, :class => 'cancel' %>
