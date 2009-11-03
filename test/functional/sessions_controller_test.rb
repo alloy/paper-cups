@@ -76,4 +76,10 @@ describe "On the", SessionsController, "a member" do
     should.not.be.authenticated
     should.redirect_to root_url
   end
+  
+  it "should make sure the member is marked as logged out" do
+    memberships(:alloy_in_macruby).online!
+    get :clear
+    rooms(:macruby).should.be.empty
+  end
 end

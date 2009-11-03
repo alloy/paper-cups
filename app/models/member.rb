@@ -11,6 +11,10 @@ class Member < ActiveRecord::Base
     memberships.find_by_room_id(room.id).online!
   end
   
+  def offline!
+    memberships.select(&:last_seen_at).each(&:offline!)
+  end
+  
   private
   
   validates_presence_of :full_name

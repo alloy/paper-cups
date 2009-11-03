@@ -19,6 +19,7 @@ class SessionsController < ApplicationController
   
   def clear
     logout
+    @authenticated.offline!
     flash[:notice] = "You are now logged out."
     redirect_to root_url
   end

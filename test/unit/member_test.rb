@@ -40,4 +40,10 @@ describe 'A', Member do
     members(:alloy).online_in(rooms(:macruby))
     rooms(:macruby).members.online.should == [members(:alloy)]
   end
+  
+  it "should mark a member as being offline" do
+    memberships(:lrz_in_macruby).online!
+    members(:lrz).offline!
+    rooms(:macruby).should.be.empty
+  end
 end
