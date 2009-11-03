@@ -1,9 +1,4 @@
 <tr data-message-id="<%= message.id %>">
-  <th data-author-id="<%= message.author.id %>">
-    <% unless @last_author == message.author %>
-      <%=h message.author.email %>
-      <% @last_author = message.author %>
-    <% end %>
-  </th>
+  <th data-author-id="<%= message.author.id %>"><%=h message.author.email %></th>
   <td><%=h message.body %></td>
 </tr>

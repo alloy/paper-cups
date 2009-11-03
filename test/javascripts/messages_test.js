@@ -15,6 +15,10 @@ Test.context("CG.Messages", {
           '<th data-author-id="22">lrz</th>' +
           '<td>Second message</td>' +
         '</tr>' +
+        '<tr data-message-id="3">' +
+          '<th data-author-id="22">lrz</th>' +
+          '<td>Third message</td>' +
+        '</tr>' +
       '</tbody>' +
     '</table>';
     
@@ -30,7 +34,7 @@ Test.context("CG.Messages", {
   },
   
   "should return the id of the last message": function() {
-    this.assertEqual('2', this.instance.lastMessageId());
+    this.assertEqual('3', this.instance.lastMessageId());
   },
   
   "should load the messages since the last message id": function() {
@@ -38,19 +42,23 @@ Test.context("CG.Messages", {
     var request = Ajax.requests.last();
     
     this.assertEqual('/rooms/123/messages', request[0]);
-    this.assertEqual('2', request[1].parameters.since);
+    this.assertEqual('3', request[1].parameters.since);
     
     var handler = request[1]['onSuccess'];
-    handler({ responseText:'<tr data-message-id="3"><th data-author-id="33">matt</th><td>Third message</td></tr>' });
+    handler({ responseText:'<tr data-message-id="4"><th data-author-id="33">matt</th><td>Fourth message</td></tr>' });
     
-    this.assertEqual('3', this.instance.lastMessageId());
+    this.assertEqual('4', this.instance.lastMessageId());
   },
   
-  "should empty the authors details if the last message was by the same author": function() {
-    this.instance.loadMessages({
-      responseText:'<tr data-message-id="3"><th data-author-id="22">lrz</th><td>Third message</td></tr>' +
-                   '<tr data-message-id="4"><th data-author-id="33">matt</th><td>Third message</td></tr>'
-    });
+  "should group messages by author on initialization": function() {
     this.assertEqual('', $$('tr[data-message-id=3]').first().down('th').innerHTML);
+  },
+  
+  "should group messages by author after receiving new messages": function() {
+    this.instance.loadMessages({
+      responseText:'<tr data-message-id="4"><th data-author-id="22">lrz</th><td>Fourth message</td></tr>' +
+                   '<tr data-message-id="5"><th data-author-id="33">matt</th><td>Fifth message</td></tr>'
+    });
+    this.assertEqual('', $$('tr[data-message-id=4]').first().down('th').innerHTML);
   },
 });

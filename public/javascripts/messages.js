@@ -5,6 +5,8 @@ CG.Messages = Class.create({
     this.table = $(table);
     this.tbody = $(table).down('tbody');
     this.action = this.table.readAttribute('data-action');
+    
+    this.groupMessagesByAuthor();
     this.timer = new PeriodicalExecuter(this.loadMoreMessages.bindAsEventListener(this), 10);
   },
   
@@ -25,13 +27,18 @@ CG.Messages = Class.create({
   },
   
   loadMessages: function(response) {
-    var last = this.lastMessage();
     this.tbody.insert(response.responseText);
-    
-    var author = last.nextSibling.down('th');
-    if (author.readAttribute('data-author-id') == last.down('th').readAttribute('data-author-id')) {
-      author.innerHTML = '';
-    }
+    this.groupMessagesByAuthor();
+  },
+  
+  groupMessagesByAuthor: function() {
+    var last_author;
+    this.tbody.select('tr').each(function(row) {
+      var author = row.down('th');
+      var author_id = author.readAttribute('data-author-id');
+      if (last_author && author_id == last_author) { author.innerHTML = ''; }
+      last_author = author_id;
+    }, this);
   },
 });
 
