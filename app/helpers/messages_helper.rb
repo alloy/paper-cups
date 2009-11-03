@@ -6,7 +6,7 @@ module MessagesHelper
     if body =~ /^https*:\/\/[^\s]+$/
       format_url body
     elsif body.include?("\n")
-      content_tag :pre, h(message.body)
+      "<pre>#{h(message.body)}</pre>"
     else
       h body
     end
