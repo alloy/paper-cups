@@ -17,12 +17,12 @@ As an administrator I would like to invite people so that they can join in on th
 As a member I would like to see an overview of all rooms I have access to so that I can join rooms. - #1 must todo
 As a member I would like to join a room so that I can see and add messages. - #2 must done
 As a member I would like to see an overview of other members that are online so that I know I can discuss certain topics. - #18 must done
-As a member I would like to see external images inline so that I can see them without navigating away. - #5 must todo
+As a member I would like to see external images inline so that I can see them without navigating away. - #5 must done
   These are URLs to files that have an extension such as png, gif, or jpg.
-As a member I would like to see pasted text formatted as a code block so that I can read it more easily. - #6 must todo
+As a member I would like to see pasted text formatted as a code block so that I can read it more easily. - #6 must done
 As a member I would like to upload binary files so that I can share them with other members. - #3 must todo
 As a member I would like to upload images and see them inline so that I can show something to other members. - #4 must todo
-As a member I would I would like to see poster frames of clips on youtube that are linked to so that I can get an idea what it is about before navigating away. - #19 must todo
+As a member I would I would like to see poster frames of clips on youtube that are linked to so that I can get an idea what it is about before navigating away. - #19 must done
 As a member I would like to connect to rooms with my IM client so that I don't need to use yet another application. - #20 could todo
   This should probably be implemented with XMPP.
 As a lrz I would like to randomly not see messages so that I come across as a weirdo. - #17 could todo
