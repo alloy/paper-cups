@@ -3,7 +3,7 @@
 // requesting the javascripts.
 
 Event.observe(document, 'dom:loaded', function() {
-  CG.Messages.watch();
+  PC.Room.watch();
 });
 
 // Event.observe(window, 'load', function() {

@@ -1,28 +1,30 @@
 <h2><%= @title = @room.label %></h2>
 
-<div class="messages column">
-  <table id="messages" data-action="<%= room_messages_path(@room) %>">
-    <tbody>
-      <%= render @room.messages %>
-    </tbody>
-  </table>
-  
-  <% form_for [@room, Message.new] do |f| %>
-    <div class="fields">
-      <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80 %></div>
-      
-      <div class="submit">
-        <%= f.submit 'New message' %>
+<div id="room" data-action="<%= room_path(@room, 'json') %>">
+  <div class="messages column">
+    <table id="messages">
+      <tbody>
+        <%= render @room.messages %>
+      </tbody>
+    </table>
+    
+    <% form_for [@room, Message.new] do |f| %>
+      <div class="fields">
+        <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80 %></div>
+        
+        <div class="submit">
+          <%= f.submit 'New message' %>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
-
-<div class="sidebar column">
-  <h3>Online members</h3>
-  <table class="online_members">
-    <tbody>
-      <%= render @room.members.online %>
-    </tbody>
-  </table>
+    <% end %>
+  </div>
+  
+  <div class="sidebar column">
+    <h3>Online members</h3>
+    <table id="online_members">
+      <tbody>
+        <%= render @room.members.online %>
+      </tbody>
+    </table>
+  </div>
 </div>

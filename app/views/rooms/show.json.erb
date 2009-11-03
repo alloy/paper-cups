@@ -1,0 +1,10 @@
+<%= {
+  :messages => render(
+    :partial => 'messages/message.html.erb',
+    :collection => @room.messages.since(params[:since])
+  ),
+  :online_members => render(
+    :partial => 'members/member.html.erb',
+    :collection => @room.members.online
+  )
+}.to_json %>
