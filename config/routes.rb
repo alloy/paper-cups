@@ -6,5 +6,5 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.resource  :session, :collection => { :clear => :get }
   
-  map.root :controller => "members", :action => "new"
+  map.root :controller => "rooms", :action => "index"
 end

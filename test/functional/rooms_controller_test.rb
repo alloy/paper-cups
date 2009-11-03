@@ -6,6 +6,11 @@ describe "On the", RoomsController, "a member" do
     @room = rooms(:macruby)
   end
   
+  it "should for now redirect to the only room" do
+    get :index
+    should.redirect_to room_url(@room)
+  end
+  
   it "should see an overview of messages in the room" do
     get :show, :id => @room.to_param
     assigns(:room).should == @room
