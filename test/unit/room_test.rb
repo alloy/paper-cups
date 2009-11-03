@@ -10,11 +10,25 @@ describe Room, 'concerning validations' do
 end
 
 describe 'A', Room do
+  before do
+    @room = rooms(:macruby)
+  end
+  
   it "should return the members with access to the room, ordered by email" do
-    rooms(:macruby).members.should.equal_list members(:alloy, :lrz, :matt)
+    @room.members.should.equal_list members(:alloy, :lrz, :matt)
   end
   
   it "should return the messages that were written in the room, ordered id" do
-    rooms(:macruby).messages.should.equal_list rooms(:macruby).messages.sort_by(&:id)
+    @room.messages.should.equal_list @room.messages.sort_by(&:id)
+  end
+  
+  it "should return the members that are currently in the room" do
+    @room.should.be.empty
+    
+    @room.memberships.first.touch(:last_seen_at)
+    @room.members.online.should == [@room.members.first]
+    
+    @room.memberships.each { |m| m.touch(:last_seen_at) }
+    @room.members.online.should == @room.members
   end
 end

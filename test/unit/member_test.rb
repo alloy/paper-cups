@@ -29,4 +29,9 @@ describe 'A', Member do
     members(:alloy).update_attributes(:email => 'new@example.com')
     members(:alloy).reload.email.should == 'new@example.com'
   end
+  
+  it "should be marked as being online in a room" do
+    members(:alloy).online_in(rooms(:macruby))
+    rooms(:macruby).members.online.should == [members(:alloy)]
+  end
 end

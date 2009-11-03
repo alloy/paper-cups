@@ -3,5 +3,6 @@ class RoomsController < ApplicationController
   
   def show
     @room = Room.find(params[:id])
+    @authenticated.online_in(@room)
   end
 end

@@ -11,8 +11,9 @@ describe "On the", RoomsController, "a member" do
     status.should.be :success
     template.should.be 'rooms/show'
   end
+  
+  it "should be marked as being online" do
+    get :show, :id => rooms(:macruby).to_param
+    rooms(:macruby).members.online.should == [@authenticated]
+  end
 end
-
-# describe "On the", RoomsController, "a visitor" do
-#   should.disallow.get :show, :id => rooms(:macruby)
-# end

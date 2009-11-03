@@ -1,9 +1,12 @@
 lrz_in_macruby:
   room: macruby
   member: lrz
+  last_seen_at: <%= 1.day.ago %>
 alloy_in_macruby:
   room: macruby
   member: alloy
+  last_seen_at: <%= 1.day.ago %>
 matt_in_macruby:
   room: macruby
   member: matt
+  last_seen_at: <%= 1.day.ago %>
