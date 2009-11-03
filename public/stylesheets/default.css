@@ -142,6 +142,15 @@ a.cancel:hover
 
 /* @end */
 
+.messages
+{
+  float: left;
+}
+.sidebar
+{
+  float: right;
+}
+
 #messages th
 {
   text-align: right;
