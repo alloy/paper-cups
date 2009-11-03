@@ -30,10 +30,4 @@ describe "On the", RoomsController, "a member" do
       data['messages'].should.include "data-message-id=\"#{message.id}\""
     end
   end
-  
-  private
-  
-  def parse_html(data)
-    HTML::Document.new(data).root
-  end
 end
