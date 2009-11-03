@@ -1,8 +1,8 @@
-Requirements CampingGas
+Requirements PaperCups
 
 - Eloy Durán, eloy@fngtps.com, Fingertips, http://www.fngtps.com
 
-CampingGas is a Ruby on Rails application which provides easy web-chat.
+PaperCups is a Ruby on Rails application which provides easy web-chat.
 
 USER STORIES
 

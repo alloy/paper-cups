@@ -1,1 +1,1 @@
-SYSTEM_EMAIL_ADDRESS = 'Camping-gas Support <support@example.com>'
+SYSTEM_EMAIL_ADDRESS = 'PaperCups Support <support@example.com>'
