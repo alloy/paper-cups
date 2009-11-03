@@ -8,8 +8,12 @@ CG.Messages = Class.create({
     this.timer = new PeriodicalExecuter(this.loadMoreMessages.bindAsEventListener(this), 10);
   },
   
+  lastMessage: function() {
+    return this.tbody.down('tr:last-child');
+  },
+  
   lastMessageId: function() {
-    return this.tbody.down('tr:last-child').readAttribute('data-message-id');
+    return this.lastMessage().readAttribute('data-message-id');
   },
   
   loadMoreMessages: function() {
@@ -21,7 +25,13 @@ CG.Messages = Class.create({
   },
   
   loadMessages: function(response) {
+    var last = this.lastMessage();
     this.tbody.insert(response.responseText);
+    
+    var author = last.nextSibling.down('th');
+    if (author.readAttribute('data-author-id') == last.down('th').readAttribute('data-author-id')) {
+      author.innerHTML = '';
+    }
   },
 });
 

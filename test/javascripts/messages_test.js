@@ -8,11 +8,11 @@ Test.context("CG.Messages", {
     '<table id="messages" data-action="/rooms/123/messages">' +
       '<tbody>' +
         '<tr data-message-id="1">' +
-          '<th>alloy</th>' +
+          '<th data-author-id="11">alloy</th>' +
           '<td>First message</td>' +
         '</tr>' +
         '<tr data-message-id="2">' +
-          '<th>lrz</th>' +
+          '<th data-author-id="22">lrz</th>' +
           '<td>Second message</td>' +
         '</tr>' +
       '</tbody>' +
@@ -41,8 +41,16 @@ Test.context("CG.Messages", {
     this.assertEqual('2', request[1].parameters.since);
     
     var handler = request[1]['onSuccess'];
-    handler({ responseText:'<tr data-message-id="3"><th>matt</th><td>Third message</td></tr>' });
+    handler({ responseText:'<tr data-message-id="3"><th data-author-id="33">matt</th><td>Third message</td></tr>' });
     
     this.assertEqual('3', this.instance.lastMessageId());
+  },
+  
+  "should empty the authors details if the last message was by the same author": function() {
+    this.instance.loadMessages({
+      responseText:'<tr data-message-id="3"><th data-author-id="22">lrz</th><td>Third message</td></tr>' +
+                   '<tr data-message-id="4"><th data-author-id="33">matt</th><td>Third message</td></tr>'
+    });
+    this.assertEqual('', $$('tr[data-message-id=3]').first().down('th').innerHTML);
   },
 });
