@@ -14,4 +14,8 @@ Then:
   $ rake db:create:all
   $ rake migrate
 
+Add some development data:
+
+  $ rake db:fixtures:load
+
 And it’s ready to be served.
