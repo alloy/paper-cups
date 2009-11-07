@@ -48,4 +48,19 @@ describe Message do
     Message.since(messages.first.id).should.equal_list messages[1..-1]
     Message.since(messages.second.id.to_s).should.equal_list messages[2..-1]
   end
+  
+  it "should return messages on a given date" do
+    freeze_time!(Time.parse('01/01/2009'))
+    messages = Message.all
+    
+    messages.last.update_attribute(:created_at, "2008-12-30")
+    messages[1..2].each { |m| m.update_attribute(:created_at, "2008-12-31") }
+    messages.first.update_attribute(:created_at, "2009-01-01")
+    
+    Message.find_created_on_date('2008', '12', '28').should.equal_list []
+    Message.find_created_on_date('2008', '12', '30').should.equal_list [messages.last]
+    Message.find_created_on_date('2008', '12', '31').should.equal_list messages[1..2]
+    Message.find_created_on_date('2009', '1',  '1').should.equal_list  [messages.first]
+    Message.find_created_on_date('2009', '1',  '2').should.equal_list  []
+  end
 end
