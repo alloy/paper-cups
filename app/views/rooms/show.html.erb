@@ -4,6 +4,11 @@
   <div class="messages column">
     <table id="messages">
       <tbody>
+        <tr>
+          <th></th>
+          <td><%= link_to 'Earlier today…', room_messages_on_day_path(@room, :day => Date.today) %></td>
+        </tr>
+        
         <%= render @room.messages %>
       </tbody>
     </table>
