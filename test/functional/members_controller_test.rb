@@ -74,7 +74,7 @@ describe "On the", MembersController, "a visitor" do
     member.invitation_token.should.be nil
     
     should.be.authenticated
-    should.redirect_to member_url(member)
+    should.redirect_to rooms_url
   end
   
   it "should show validation errors after a failed update" do

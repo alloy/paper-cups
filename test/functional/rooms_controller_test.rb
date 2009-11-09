@@ -6,9 +6,13 @@ describe "On the", RoomsController, "a member" do
     @room = rooms(:macruby)
   end
   
-  it "should for now redirect to the only room" do
+  it "should for now redirect to the first room a member has access to" do
+    new_room = Room.create!(:label => 'another room')
+    @authenticated.memberships.delete_all
+    @authenticated.memberships.create(:room => new_room)
+    
     get :index
-    should.redirect_to room_url(@room)
+    should.redirect_to room_url(new_room)
   end
   
   it "should see an overview of messages in the room" do

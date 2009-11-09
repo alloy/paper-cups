@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
   allow_access :authenticated
   
   def index
-    redirect_to room_url(Room.first)
+    redirect_to room_url(@authenticated.memberships.first.room)
   end
   
   def show

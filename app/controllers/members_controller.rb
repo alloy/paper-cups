@@ -24,9 +24,10 @@ class MembersController < ApplicationController
   end
   
   def update
+    first_time = !@member.invitation_token.blank?
     if @member.update_attributes(params[:member])
       login @member
-      redirect_to member_url(@member)
+      redirect_to(first_time ? rooms_url : member_url(@member))
     else
       render :edit
     end
