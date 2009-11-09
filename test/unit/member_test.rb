@@ -78,6 +78,11 @@ describe Member, "concerning an existing record" do
 end
 
 describe 'A', Member do
+  it "should not allow access to role" do
+    members(:lrz).update_attributes(:role => 'admin')
+    members(:lrz).reload.role.should == 'member'
+  end
+  
   it "should allow access to email" do
     members(:alloy).update_attributes(:email => 'new@example.com')
     members(:alloy).reload.email.should == 'new@example.com'
