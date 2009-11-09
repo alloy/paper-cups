@@ -26,5 +26,6 @@
         <%= render @room.members.online %>
       </tbody>
     </table>
+    <%= link_to 'Invite member', new_room_member_path(@room) if @authenticated.admin? %>
   </div>
 </div>
