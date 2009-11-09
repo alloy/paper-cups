@@ -1,8 +1,6 @@
-<% @title = 'Sign up' %>
-
 <div>
   <% form_for @member do |f| %>
-    <h2>Sign up</h2>
+    <h2><%= @title = 'Invite' %></h2>
     
     <%= error_messages_for :member %>
     
@@ -12,18 +10,8 @@
         <div class="field"><%= f.text_field :email %></div>
       </div>
       
-      <div class="field">
-        <div class="label"><%= f.label :full_name %></div>
-        <div class="field"><%= f.text_field :full_name %></div>
-      </div>
-      
-      <div class="field">
-        <div class="label"><%= f.label :password %></div>
-        <div class="field"><%= f.password_field :password %></div>
-      </div>
-      
       <div class="submit">
-        <%= f.submit 'Sign up' %>
+        <%= f.submit 'Send invitation' %>
         <%= link_to 'Back', root_path, :class => 'cancel' %>
       </div>
     </div>
