@@ -5,11 +5,12 @@ describe "On the", MembersController, "an admin" do
     login members(:alloy)
   end
   
-  it "should see a form to invite a new member" do
-    get :new
+  it "should see a form to invite a new member to a room" do
+    get :new, :room_id => rooms(:macruby)
+    assigns(:room).should == rooms(:macruby)
     status.should.be :ok
     template.should.be 'members/new'
-    assert_select 'form'
+    assert_select "form[action=#{room_members_path(rooms(:macruby))}]"
   end
   
   it "should create a new member and send an invitation" do
@@ -18,12 +19,15 @@ describe "On the", MembersController, "an admin" do
     
     assert_emails 1 do
       lambda {
-        post :create, :member => { :email => 'dionne@example.com' }
+        lambda {
+          post :create, :room_id => rooms(:macruby), :member => { :email => 'dionne@example.com' }
+        }.should.differ('Membership.count', +1)
       }.should.differ('Member.count', +1)
     end
     
     assigns(:member).email.should == 'dionne@example.com'
     assigns(:member).invitation_token.should == token
+    assigns(:member).memberships.map(&:room).should == [rooms(:macruby)]
     ActionMailer::Base.deliveries.last.to.should == ['dionne@example.com']
     
     should.redirect_to root_url

@@ -1,5 +1,5 @@
 <div>
-  <% form_for @member do |f| %>
+  <% form_for [@room, @member] do |f| %>
     <h2><%= @title = 'Invite' %></h2>
     
     <%= error_messages_for :member %>

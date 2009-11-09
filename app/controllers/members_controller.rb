@@ -5,12 +5,15 @@ class MembersController < ApplicationController
   
   before_filter :find_member, :only => [:show, :edit, :update]
   
+  find_parent_resource :only => [:new, :create]
+  
   def new
     @member = Member.new
   end
   
   def create
     @member = Member.new(params[:member])
+    @member.memberships.build(:room => @room)
     
     if @member.save
       @member.invite!
