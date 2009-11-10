@@ -4,10 +4,16 @@
 # If you change this key, all old sessions will become invalid!
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
-ActionController::Base.session = {
-  :key         => '_paper_cups_session',
-  :secret      => '4010273d7797f0cfb1c468dbc9cd8100d478a2b89dc28bd8408d26224c9e1680221f8dfff87fd6d055d57e85591928b7a69dd67ed3e97b69199ede5d8ee22deb'
-}
+
+# Replace this file with a linked version in production!
+if Rails.env == 'production'
+  raise "Need to link the proper session key!"
+else
+  ActionController::Base.session = {
+    :key         => '_paper_cups_session',
+    :secret      => '4010273d7797f0cfb1c468dbc9cd8100d478a2b89dc28bd8408d26224c9e1680221f8dfff87fd6d055d57e85591928b7a69dd67ed3e97b69199ede5d8ee22deb'
+  }
+end
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
