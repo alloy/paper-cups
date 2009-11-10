@@ -2,6 +2,11 @@
 
 <div id="room">
   <div class="messages column">
+    <div>
+      <%= link_to_with_long_date @room.previous_date_that_contains_messages(params[:day]) %>
+      <%= link_to_with_long_date @room.next_date_that_contains_messages(params[:day]) %>
+    </div>
+    
     <table id="messages">
       <tbody>
         <%= render @messages %>

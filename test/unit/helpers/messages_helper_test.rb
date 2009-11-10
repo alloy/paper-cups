@@ -1,6 +1,15 @@
 require File.expand_path('../../../test_helper', __FILE__)
 
 describe MessagesHelper do
+  it "should return a formatted link" do
+    link_to_with_long_date(nil).should.be nil
+    
+    @room = rooms(:macruby)
+    link_to_with_long_date(Date.today).should ==
+      link_to(Date.today.to_formatted_s(:long_ordinal),
+        room_messages_on_day_path(@room, :day => Date.today))
+  end
+  
   it "should format a members' full name" do
     format_full_name(members(:alloy)).should == 'Eloy D.'
     format_full_name(members(:lrz)).should == 'Laurent S.'

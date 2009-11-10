@@ -1,6 +1,10 @@
 module MessagesHelper
   YOUTUBE_POSTER_FRAME = 'http://img.youtube.com/vi/%s/0.jpg'
   
+  def link_to_with_long_date(date)
+    link_to(date.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => date)) if date
+  end
+  
   def format_message(message)
     body = message.body.strip
     if body =~ /^https*:\/\/[^\s]+$/

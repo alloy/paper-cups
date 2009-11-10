@@ -6,7 +6,7 @@
       <tbody>
         <tr>
           <th></th>
-          <td><%= link_to 'Earlier today…', room_messages_on_day_path(@room, :day => Date.today) %></td>
+          <td><%= link_to 'Earlier messages…', room_messages_on_day_path(@room, :day => Date.today) %></td>
         </tr>
         
         <%= render @room.messages %>

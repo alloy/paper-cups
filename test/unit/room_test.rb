@@ -31,4 +31,28 @@ describe 'A', Room do
     @room.memberships.each { |m| m.touch(:last_seen_at) }
     @room.members.online.should == @room.members
   end
+  
+  it "should return the most recent date that contains messages" do
+    freeze_time!
+    
+    @room.messages[0].update_attribute(:created_at, 2.days.ago)
+    @room.messages[1].update_attribute(:created_at, 1.day.ago)
+    @room.messages[2].update_attribute(:created_at, Date.today)
+    @room.messages[3].update_attribute(:created_at, 1.day.from_now)
+    
+    @room.previous_date_that_contains_messages(Date.today.to_s).should == 1.day.ago.to_date
+    @room.previous_date_that_contains_messages(2.days.ago.to_date.to_s).should.be nil
+  end
+  
+  it "should return the first coming date that contains messages" do
+    freeze_time!
+    
+    @room.messages[0].update_attribute(:created_at, 1.day.ago)
+    @room.messages[1].update_attribute(:created_at, Date.today)
+    @room.messages[2].update_attribute(:created_at, 1.day.from_now)
+    @room.messages[3].update_attribute(:created_at, 2.days.from_now)
+    
+    @room.next_date_that_contains_messages(Date.today.to_s).should == 1.day.from_now.to_date
+    @room.next_date_that_contains_messages(2.days.from_now.to_date.to_s).should.be nil
+  end
 end
