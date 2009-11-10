@@ -16,7 +16,7 @@ describe "On the", MessagesController, " nested under a room, a member" do
     should.redirect_to room_url(@room)
   end
   
-  it "should return all messages for the given date" do
+  it "should see all messages for the given date" do
     freeze_time!(Time.parse('01/01/2009'))
     messages = Message.all
     
@@ -29,5 +29,12 @@ describe "On the", MessagesController, " nested under a room, a member" do
     status.should.be :success
     template.should.be 'messages/index'
     assigns(:messages).should.equal_list messages[1..2]
+  end
+  
+  it "should see all messages matching the search query" do
+    get :index, :room_id => @room.to_param, :q => 'itte'
+    status.should.be :success
+    template.should.be 'messages/index'
+    assigns(:messages).should == [messages(:daily_kitten)]
   end
 end

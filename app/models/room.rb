@@ -15,6 +15,10 @@ class Room < ActiveRecord::Base
     date_that_contains_messages(Date.parse(date) + 1.day, 'ASC', '>=')
   end
   
+  def search(query)
+    messages.find :all, :conditions => ["messages.body LIKE ?", "%#{query}%"]
+  end
+  
   private
   
   def date_that_contains_messages(date, order, operator)

@@ -1,8 +1,12 @@
 module MessagesHelper
   YOUTUBE_POSTER_FRAME = 'http://img.youtube.com/vi/%s/0.jpg'
   
-  def link_to_with_long_date(date)
-    link_to(date.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => date)) if date
+  def link_to_messages_on_date(date, direction)
+    if date
+      path = room_messages_on_day_path(@room, :day => date)
+      link = link_to(date.to_formatted_s(:long_ordinal), path)
+      direction == :previous ? '← ' + link : link + ' →'
+    end
   end
   
   def format_message(message)

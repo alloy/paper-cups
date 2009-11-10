@@ -4,8 +4,12 @@ class MessagesController < ApplicationController
   find_parent_resource
   
   def index
-    day = params[:day].match(/^(\d{4})-(\d{2})-(\d{2})$/)
-    @messages = @room.messages.find_created_on_date(day[1], day[2], day[3])
+    if params[:q]
+      @messages = @room.search(params[:q])
+    else
+      day = params[:day].match(/^(\d{4})-(\d{2})-(\d{2})$/)
+      @messages = @room.messages.find_created_on_date(day[1], day[2], day[3])
+    end
   end
   
   def create

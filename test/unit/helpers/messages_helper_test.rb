@@ -2,12 +2,13 @@ require File.expand_path('../../../test_helper', __FILE__)
 
 describe MessagesHelper do
   it "should return a formatted link" do
-    link_to_with_long_date(nil).should.be nil
+    link_to_messages_on_date(nil, :previous).should.be nil
     
     @room = rooms(:macruby)
-    link_to_with_long_date(Date.today).should ==
-      link_to(Date.today.to_formatted_s(:long_ordinal),
-        room_messages_on_day_path(@room, :day => Date.today))
+    
+    link = link_to(Date.today.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => Date.today))
+    link_to_messages_on_date(Date.today, :previous).should == '← ' + link
+    link_to_messages_on_date(Date.today, :next).should == link + ' →'
   end
   
   it "should format a members' full name" do

@@ -3,13 +3,22 @@
 
 <div id="room">
   <div class="messages column">
-    <div>
-      <%= link_to_with_long_date @room.previous_date_that_contains_messages(params[:day]) %>
-      <%= link_to_with_long_date @room.next_date_that_contains_messages(params[:day]) %>
-    </div>
-    
     <table id="messages">
       <tbody>
+        <tr>
+          <th></th>
+          <td>
+            <% if params[:q] %>
+              <% form_tag room_messages_path(@room), :method => :get do %>
+                <%= text_field_tag 'q', params[:q], :size => 20 %>
+                <%= submit_tag 'Search', :name => nil %>
+              <% end %>
+            <% else %>
+              <%= link_to_messages_on_date @room.previous_date_that_contains_messages(params[:day]), :previous %>
+              <%= link_to_messages_on_date @room.next_date_that_contains_messages(params[:day]), :next %>
+            <% end %>
+          </td>
+        </tr>
         <%= render @messages %>
       </tbody>
     </table>
