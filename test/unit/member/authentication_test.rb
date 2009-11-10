@@ -29,11 +29,11 @@ describe "A member, concerning authentication" do
   end
   
   it "should require a password" do
-    @member.password = ''
+    @member.hashed_password = ''
     @member.should.not.be.valid
     @member.errors.on(:password).should.not.be.blank
     
-    @member.hashed_password = Member.hash_password('')
+    @member.hashed_password = nil
     @member.should.not.be.valid
     @member.errors.on(:password).should.not.be.blank
   end

@@ -34,6 +34,11 @@ describe Member, "concerning a new record" do
     @member.should.be.valid
   end
   
+  it "should not require a password" do
+    @member.password = ''
+    @member.should.be.valid
+  end
+  
   it "should create an invitation token" do
     token = Token.generate
     Token.stubs(:generate).returns(token)

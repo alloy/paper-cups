@@ -36,10 +36,10 @@ class Member
   private
   
   def password_is_not_blank
-    if hashed_password == self.class.hash_password('')
+    if hashed_password.blank? || hashed_password == self.class.hash_password('')
       errors.add(:password, "can't be blank")
     end
   end
   
-  validate :password_is_not_blank
+  validate :password_is_not_blank, :unless => :new_record?
 end
