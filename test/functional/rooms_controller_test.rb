@@ -15,9 +15,13 @@ describe "On the", RoomsController, "a member" do
     should.redirect_to room_url(new_room)
   end
   
-  it "should see an overview of messages in the room" do
+  it "should see an overview of messages in the room, limited to the last 25" do
+    @room.messages.delete_all
+    messages = Array.new(26) { @room.messages.create! :author => @authenticated, :body => "foo" }
+    
     get :show, :id => @room.to_param
     assigns(:room).should == @room
+    assigns(:messages).should.equal_list messages.last(25)
     status.should.be :success
     template.should.be 'rooms/show'
   end

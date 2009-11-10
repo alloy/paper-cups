@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @authenticated.online_in(@room)
     respond_to do |format|
-      format.html
+      format.html { @messages = @room.messages.recent }
       format.json
     end
   end

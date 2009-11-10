@@ -63,4 +63,11 @@ describe Message do
     Message.find_created_on_date('2009', '1',  '1').should.equal_list  [messages.first]
     Message.find_created_on_date('2009', '1',  '2').should.equal_list  []
   end
+  
+  it "should return the 25 most recent messages" do
+    room = rooms(:macruby)
+    room.messages.delete_all
+    messages = Array.new(26) { room.messages.create! :author => members(:lrz), :body => "foo" }
+    room.reload.messages.recent.should.equal_list messages.last(25)
+  end
 end
