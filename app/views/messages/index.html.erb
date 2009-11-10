@@ -1,4 +1,5 @@
-<h2><%= @title = @room.label %></h2>
+<% @title = @room.label %>
+<h2><%= link_to @title, room_path(@room) %></h2>
 
 <div id="room">
   <div class="messages column">

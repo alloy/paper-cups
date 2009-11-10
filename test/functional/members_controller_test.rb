@@ -126,7 +126,7 @@ describe "On the", MembersController, "a member" do
     put :update, :id => @authenticated.to_param, :member => { :email => 'sir.eloy@example.com' }
     
     @authenticated.reload.email.should == 'sir.eloy@example.com'
-    should.redirect_to member_url(@authenticated)
+    should.redirect_to rooms_url
   end
   
   should.disallow.get :edit, :id => members(:alloy)
