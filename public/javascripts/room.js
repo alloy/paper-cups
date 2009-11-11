@@ -5,6 +5,7 @@ PC.Room = Class.create({
     this.container = $(container);
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
+    this.newMessageInput = $('new_message').down('textarea');
     this.onlineMembersTBody = this.container.down('#online_members');
     this.action = this.container.readAttribute('data-action');
     
@@ -13,7 +14,7 @@ PC.Room = Class.create({
   },
   
   start: function() {
-    $('new_message').down('textarea').focus();
+    this.newMessageInput.focus();
     this.groupMessagesByAuthor();
   },
   
@@ -39,6 +40,7 @@ PC.Room = Class.create({
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
       this.groupMessagesByAuthor();
+      this.newMessageInput.scrollIntoView();
     }
   },
   
