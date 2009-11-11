@@ -21,7 +21,7 @@ module MessagesHelper
   end
   
   def format_url(body)
-    if body =~ /^http:\/\/\w*\.*youtube.com\/watch.+?v=(\w+)/
+    if body =~ /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/
       link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), body)
     elsif body.split('?').first =~ /\.(gif|png|jpg)$/
       image_tag body, :alt => ''
