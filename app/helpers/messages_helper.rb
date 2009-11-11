@@ -8,10 +8,14 @@ module MessagesHelper
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
   YOUTUBE_URL = /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
   
+  def open_link_to(content, url, options = {})
+    link_to content, url, options.merge(:target => '_blank')
+  end
+  
   def link_to_messages_on_date(date, direction)
     if date
       path = room_messages_on_day_path(@room, :day => date)
-      link = link_to(date.to_formatted_s(:long_ordinal), path)
+      link = open_link_to(date.to_formatted_s(:long_ordinal), path)
       direction == :previous ? '← ' + link : link + ' →'
     end
   end
@@ -23,16 +27,16 @@ module MessagesHelper
     when MULTILINE
       "<pre>#{h(message.body)}</pre>"
     else
-      body.gsub(ANY_URL) { "#{link_to($1, $1)}#{$2}" }
+      body.gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
     end
   end
   
   def format_special_link(url)
     case url
     when YOUTUBE_URL
-      link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), url)
+      open_link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), url)
     when IMAGE_URL
-      image_tag url, :alt => ''
+      open_link_to(image_tag(url, :alt => ''), url)
     end
   end
   
