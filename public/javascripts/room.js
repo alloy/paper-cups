@@ -6,11 +6,15 @@ PC.Room = Class.create({
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
     this.onlineMembersTBody = this.container.down('#online_members');
-    
     this.action = this.container.readAttribute('data-action');
     
-    this.groupMessagesByAuthor();
+    this.start();
     this.timer = new PeriodicalExecuter(this.requestData.bindAsEventListener(this), 10);
+  },
+  
+  start: function() {
+    $('new_message').down('textarea').focus();
+    this.groupMessagesByAuthor();
   },
   
   lastMessage: function() {

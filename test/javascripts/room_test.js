@@ -27,6 +27,9 @@ Test.context("PC.Room", {
           '<tr><td>alloy</td></tr>' +
         '</tbody>' +
       '</table>' +
+      '<form id="new_message">' +
+        '<textarea></textarea>' +
+      '</form>'
     '</div>';
     
     this.collectAjaxRequests();
@@ -46,6 +49,12 @@ Test.context("PC.Room", {
   teardown: function() {
     Moksi.assertExpectations(this);
     Moksi.revert();
+  },
+  
+  "should set focus to the new message textarea": function() {
+    Moksi.expects($('new_message').down('textarea'), 'focus');
+    this.room = new PC.Room.watch();
+    this.room.timer.stop();
   },
   
   "should return the id of the last message": function() {

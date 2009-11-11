@@ -15,10 +15,10 @@
     
     <% form_for [@room, Message.new] do |f| %>
       <div class="fields">
-        <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80 %></div>
+        <div class="field"><%= f.text_area :body, :rows => 5, :cols => 80, :tabfocus => 0 %></div>
         
         <div class="submit">
-          <%= f.submit 'New message' %>
+          <%= f.submit 'Send message' %>
         </div>
       </div>
     <% end %>
@@ -27,7 +27,7 @@
   <div class="sidebar column">
     <div>
       <% form_tag room_messages_path(@room), :method => :get do %>
-        <%= text_field_tag 'q', '', :size => 12 %>
+        <%= text_field_tag 'q', '', :size => 12, :tabfocus => 1 %>
         <%= submit_tag 'Search', :name => nil %>
       <% end %>
     </div>
