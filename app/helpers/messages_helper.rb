@@ -27,7 +27,7 @@ module MessagesHelper
     when MULTILINE
       "<pre>#{h(message.body)}</pre>"
     else
-      body.gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
+      h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
     end
   end
   

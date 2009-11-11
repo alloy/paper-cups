@@ -26,6 +26,11 @@ describe MessagesHelper do
     format_message(Message.new(:body => body)).should == "<pre>#{h(body)}</pre>"
   end
   
+  it "should escape content for regular messages" do
+    body = "  This is a <em>normal</em> message."
+    format_message(Message.new(:body => body)).should == h(body.strip)
+  end
+  
   it "should create an anchor for each url in a message body that's not a multiline paste" do
     test = lambda do |url|
       [
@@ -35,7 +40,7 @@ describe MessagesHelper do
         "Also hilarious: %s",
         "Also hilarious: %s."
       ].each do |body|
-        format_message(Message.new(:body => body % url)).should == body.strip % open_link_to(url, url)
+        format_message(Message.new(:body => body % url)).should == h(body.strip) % open_link_to(url, url)
       end
     end
     
