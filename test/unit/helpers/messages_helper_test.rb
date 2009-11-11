@@ -42,8 +42,8 @@ describe MessagesHelper do
   end
   
   it "should create an anchor to a youtube clip with an image tag that shows the poster frame" do
-    body = "\t http://www.youtube.com/watch?foo=bar&v=ytf0M5fcqbs&baz=bla \n "
-    poster_frame = image_tag('http://img.youtube.com/vi/ytf0M5fcqbs/0.jpg', :alt => '')
+    body = "\t http://www.youtube.com/watch?foo=bar&v=ytf0M5fc-bs&baz=bla \n "
+    poster_frame = image_tag('http://img.youtube.com/vi/ytf0M5fc-bs/0.jpg', :alt => '')
     format_message(Message.new(:body => body)).should == link_to(poster_frame, body.strip)
   end
 end
