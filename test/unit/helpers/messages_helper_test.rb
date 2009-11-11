@@ -35,7 +35,7 @@ describe MessagesHelper do
   end
   
   it "should create an image tag if a message body only contains a url that seems to point to an image" do
-    %w{ gif png jpg }.each do |ext|
+    %w{ gif png jpg jpeg }.each do |ext|
       body = " \thttp://example.com/image.#{ext}\n"
       format_message(Message.new(:body => body)).should == image_tag(body.strip, :alt => '')
     end
