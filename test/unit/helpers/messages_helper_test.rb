@@ -16,22 +16,26 @@ describe MessagesHelper do
     format_full_name(members(:lrz)).should == 'Laurent S.'
   end
   
-  it "should not format a message body that isn't only a url and escape" do
-    body = " \thttp://example.com This is <em>not</em> only a url.\n "
-    format_message(Message.new(:body => body)).should == h(body.strip)
-  end
-  
   it "should format a multiline message body as code and escape" do
-    body = "  This\n  <em>is</em>\n  code"
+    body = "  This is\n  <em> http://example.com </em>\n  code"
     format_message(Message.new(:body => body)).should == "<pre>#{h(body)}</pre>"
   end
   
-  it "should create an anchor if a message body only contains a url" do
-    body = " \thttp://example.com/index.php?foo=bar%20baz\n"
-    format_message(Message.new(:body => body)).should == link_to(body.strip, body.strip)
+  it "should create an anchor for each url in a message body that's not a multiline paste" do
+    test = lambda do |url|
+      [
+        "Check this \t%s. link\n",
+        "%s <= hilarious!",
+        "%s. <= hilarious!",
+        "Also hilarious: %s",
+        "Also hilarious: %s."
+      ].each do |body|
+        format_message(Message.new(:body => body % url)).should == body.strip % link_to(url, url)
+      end
+    end
     
-    body = " \thttps://example.com/index.php?foo=bar%20baz\n"
-    format_message(Message.new(:body => body)).should == link_to(body.strip, body.strip)
+    test.call("hTtP://some-examplE.com/inDex.php?foo=bar%20baz")
+    test.call("hTtPs://some-examplE.com/inDex.php?foo=bar%20baz")
   end
   
   it "should create an image tag if a message body only contains a url that seems to point to an image" do
@@ -42,8 +46,8 @@ describe MessagesHelper do
   end
   
   it "should create an anchor to a youtube clip with an image tag that shows the poster frame" do
-    body = "\t http://www.youtube.com/watch?foo=bar&v=ytf0M5fc-bs&baz=bla \n "
-    poster_frame = image_tag('http://img.youtube.com/vi/ytf0M5fc-bs/0.jpg', :alt => '')
+    body = "\t http://www.yOutube.com/wAtch?foo=bar&v=ytF0M5fc-bs&baz=bla \n "
+    poster_frame = image_tag('http://img.youtube.com/vi/ytF0M5fc-bs/0.jpg', :alt => '')
     format_message(Message.new(:body => body)).should == link_to(poster_frame, body.strip)
   end
 end
