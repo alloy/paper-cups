@@ -34,6 +34,8 @@ describe MessagesHelper do
   it "should create an anchor for each url in a message body that's not a multiline paste" do
     test = lambda do |url|
       [
+        "%s",
+        "\t%s\n",
         "Check this \t%s. link\n",
         "%s <= hilarious!",
         "%s. <= hilarious!",

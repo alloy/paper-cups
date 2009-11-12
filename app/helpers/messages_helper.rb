@@ -26,9 +26,7 @@ module MessagesHelper
       format_special_link body
     when MULTILINE
       "<pre>#{h(message.body)}</pre>"
-    else
-      h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
-    end
+    end || h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
   end
   
   def format_special_link(url)
