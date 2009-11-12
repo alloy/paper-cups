@@ -61,8 +61,9 @@ Test.context("PC.Room", {
     this.assertEqual('3', this.room.lastMessageId());
   },
   
-  "should load the messages since the last message id and scroll down to the message form": function() {
+  "should load the messages since the last message id, scroll down, and notify": function() {
     Moksi.expects($('new_message').down('textarea'), 'scrollIntoView');
+    Moksi.expects(document.body, 'insert'); // beep
     
     var request = this.loadData({
       messages: '<tr data-message-id="4"><th data-author-id="33">matt</th><td>Fourth message</td></tr>',

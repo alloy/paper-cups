@@ -41,6 +41,7 @@ PC.Room = Class.create({
       this.messagesTBody.insert(data.messages);
       this.groupMessagesByAuthor();
       this.newMessageInput.scrollIntoView();
+      this.notify();
     }
   },
   
@@ -53,7 +54,14 @@ PC.Room = Class.create({
       last_author = author_id;
     }, this);
   },
+  
+  notify: function() {
+    document.body.insert(PC.Room.beepHTML);
+  },
 });
+
+// Free sound effect from: http://www.freesoundfiles.tintagel.net/Audio/free-wave-files-beeps
+PC.Room.beepHTML = '<embed src="/droplet.wav" type="audio/wav" hidden="true" autostart="true" loop="false" volume="50" />';
 
 PC.Room.watch = function() {
   var container = $('room');
