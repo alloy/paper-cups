@@ -16,6 +16,28 @@ PC.Room = Class.create({
   start: function() {
     this.newMessageInput.focus();
     this.groupMessagesByAuthor();
+    this.setupWindow();
+  },
+  
+  setupWindow: function() {
+    this.isVisible = true;
+    this.originalTitle = document.title;
+    Event.observe(window, 'blur',  this.windowLoosesFocus.bindAsEventListener(this));
+    Event.observe(window, 'focus', this.windowGainsFocus.bindAsEventListener(this));
+  },
+  
+  windowLoosesFocus: function() {
+    this.isVisible = false;
+    this.messageCountBeforeFocusLost = this.messageCount();
+  },
+  
+  windowGainsFocus: function() {
+    document.title = this.originalTitle;
+    this.isVisible = true;
+  },
+  
+  messageCount: function() {
+    return this.messagesTBody.select('tr').length;
   },
   
   lastMessage: function() {
@@ -57,6 +79,10 @@ PC.Room = Class.create({
   
   notify: function() {
     document.body.insert(PC.Room.beepHTML);
+    if (!this.isVisible) {
+      var count = this.messageCount() - this.messageCountBeforeFocusLost;
+      document.title = '(' + count + ') ' + this.originalTitle;
+    }
   },
 });
 

@@ -33,6 +33,7 @@ Test.context("PC.Room", {
     '</div>';
     
     this.collectAjaxRequests();
+    this.collectObservers();
     
     this.loadData = function(data) {
       this.room.requestData();
@@ -57,13 +58,34 @@ Test.context("PC.Room", {
     this.room.timer.stop();
   },
   
+  "should store the documents original title and that it's visible": function() {
+    this.assert(this.room.isVisible);
+    this.assertEqual(document.title, this.room.originalTitle);
+  },
+  
+  "should track that the window looses focus and store the amount of exisiting messages at that moment": function() {
+    observerHandler(window, 'blur')();
+    this.assert(!this.room.isVisible);
+    this.assertEqual(3, this.room.messageCountBeforeFocusLost);
+  },
+  
+  "should track that the window gains focus and restores the document title": function() {
+    var before = document.title;
+    document.title = 'oeleboele';
+    
+    observerHandler(window, 'focus')();
+    this.assert(this.room.isVisible);
+    
+    this.assertEqual(before, document.title);
+  },
+  
   "should return the id of the last message": function() {
     this.assertEqual('3', this.room.lastMessageId());
   },
   
   "should load the messages since the last message id, scroll down, and notify": function() {
     Moksi.expects($('new_message').down('textarea'), 'scrollIntoView');
-    Moksi.expects(document.body, 'insert'); // beep
+    Moksi.expects(this.room, 'notify');
     
     var request = this.loadData({
       messages: '<tr data-message-id="4"><th data-author-id="33">matt</th><td>Fourth message</td></tr>',
@@ -73,6 +95,19 @@ Test.context("PC.Room", {
     this.assertEqual('/rooms/123', request[0]);
     this.assertEqual('3', request[1].parameters.since);
     this.assertEqual('4', this.room.lastMessageId());
+  },
+  
+  "should insert the beepHTML and show the new messages count if the window does not have focus": function() {
+    var before = document.title;
+    Moksi.expects(document.body, 'insert', { 'times': 2 }); // beep
+    
+    this.room.notify();
+    this.assertEqual(before, document.title);
+    
+    observerHandler(window, 'blur')();
+    this.room.messageCount = function() { return 9; }
+    this.room.notify();
+    this.assertEqual("(6) " + before, document.title);
   },
   
   "should group messages by author on initialization": function() {
