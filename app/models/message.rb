@@ -5,7 +5,7 @@ class Message < ActiveRecord::Base
   named_scope :since, lambda { |id| { :conditions => ["messages.id > ?", id] } }
   
   def self.recent
-    find(:all, :order => 'messages.id DESC', :limit => 25).reverse
+    find(:all, :order => 'messages.id DESC', :limit => 25, :include => :author).reverse
   end
   
   def self.find_created_on_date(year, month, day)

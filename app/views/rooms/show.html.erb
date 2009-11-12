@@ -9,7 +9,7 @@
           <td><%= open_link_to 'Earlier messages…', room_messages_on_day_path(@room, :day => Date.today) %></td>
         </tr>
         
-        <%= render @room.messages %>
+        <%= render @messages %>
       </tbody>
     </table>
     
