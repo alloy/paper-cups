@@ -29,6 +29,9 @@ Test.context("PC.Room", {
       '</table>' +
       '<form id="new_message">' +
         '<textarea></textarea>' +
+      '</form>' +
+      '<form>' +
+        '<input type="checkbox" id="mute"/>' +
       '</form>'
     '</div>';
     
@@ -108,6 +111,12 @@ Test.context("PC.Room", {
     this.room.messageCount = function() { return 9; }
     this.room.notify();
     this.assertEqual("(6) " + before, document.title);
+  },
+  
+  "should not insert the beepHTML if the mute checkbox is checked": function() {
+    $('mute').checked = true;
+    Moksi.expects(document.body, 'insert', { 'times': 0 }); // no beep
+    this.room.notify();
   },
   
   "should group messages by author on initialization": function() {

@@ -33,6 +33,13 @@
     </div>
     
     <div>
+      <% form_tag do %>
+        <%= label_tag 'mute' %>
+        <%= check_box_tag '', '', false, :id => 'mute' %>
+      <% end %>
+    </div>
+    
+    <div>
       <h3>Online:</h3>
       <table id="online_members">
         <tbody>

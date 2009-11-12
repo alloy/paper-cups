@@ -3,11 +3,14 @@ if (typeof PC == "undefined") PC = {};
 PC.Room = Class.create({
   initialize: function(container) {
     this.container = $(container);
+    this.action = this.container.readAttribute('data-action');
+    
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
     this.newMessageInput = $('new_message').down('textarea');
+    
     this.onlineMembersTBody = this.container.down('#online_members');
-    this.action = this.container.readAttribute('data-action');
+    this.muteCheckbox = $('mute');
     
     this.start();
     this.timer = new PeriodicalExecuter(this.requestData.bindAsEventListener(this), 10);
@@ -78,7 +81,9 @@ PC.Room = Class.create({
   },
   
   notify: function() {
-    document.body.insert(PC.Room.beepHTML);
+    if (!this.muteCheckbox.checked) {
+      document.body.insert(PC.Room.beepHTML);
+    }
     if (!this.isVisible) {
       var count = this.messageCount() - this.messageCountBeforeFocusLost;
       document.title = '(' + count + ') ' + this.originalTitle;
