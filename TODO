@@ -1,5 +1,3 @@
-- Add db indices.
-- Add notifications for new messages: add new message count to the window title and beep.
 - Add timestamps in between messages that are more than 5 minutes apart.
 - Add an event listener so ‘enter’ submits the new message and ‘alt+enter’ inserts a new line.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
