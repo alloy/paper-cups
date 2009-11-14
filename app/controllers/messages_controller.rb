@@ -14,6 +14,12 @@ class MessagesController < ApplicationController
   
   def create
     @message = @room.messages.create(params[:message].merge(:author => @authenticated))
-    redirect_to room_url(@room)
+    respond_to do |format|
+      format.html { redirect_to room_url(@room) }
+      format.js do
+        @authenticated.online_in(@room)
+        render 'rooms/show.json'
+      end
+    end
   end
 end

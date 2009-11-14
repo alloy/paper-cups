@@ -4,22 +4,17 @@ PC.Room = Class.create({
   initialize: function(container) {
     this.container = $(container);
     this.action = this.container.readAttribute('data-action');
-    
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
-    this.newMessageInput = $('new_message').down('textarea');
-    
-    this.onlineMembersTBody = this.container.down('#online_members');
     this.muteCheckbox = $('mute');
     
     this.start();
-    this.timer = new PeriodicalExecuter(this.requestData.bindAsEventListener(this), 10);
   },
   
   start: function() {
-    this.newMessageInput.focus();
-    this.groupMessagesByAuthor();
     this.setupWindow();
+    this.setupRefreshedElements();
+    this.groupMessagesByAuthor();
   },
   
   setupWindow: function() {
@@ -27,6 +22,22 @@ PC.Room = Class.create({
     this.originalTitle = document.title;
     Event.observe(window, 'blur',  this.windowLoosesFocus.bindAsEventListener(this));
     Event.observe(window, 'focus', this.windowGainsFocus.bindAsEventListener(this));
+  },
+  
+  setupRefreshedElements: function() {
+    this.onlineMembersTBody = this.container.down('#online_members');
+    
+    this.newMessageForm = $('new_message');
+    this.newMessageButton = this.newMessageForm.down('input[type=submit]');
+    this.newMessageInput = this.newMessageForm.down('textarea');
+    this.newMessageInput.focus();
+    this.newMessageForm.observe('submit', this.submitMessage.bindAsEventListener(this));
+    
+    this.startUpdateLoop();
+  },
+  
+  startUpdateLoop: function() {
+    this.timer = new PeriodicalExecuter(this.requestData.bindAsEventListener(this), 10);
   },
   
   windowLoosesFocus: function() {
@@ -59,6 +70,26 @@ PC.Room = Class.create({
     });
   },
   
+  submitMessage: function(event) {
+    this.timer.stop();
+    event.stop();
+    
+    this.newMessageButton.disabled = true;
+    this.newMessageForm.request({
+      parameters: { since: this.lastMessageId() },
+      onSuccess: function(response) {
+        this.newMessageInput.value = '';
+        this.dontNotify = true;
+        this.loadData(response);
+      }.bind(this),
+      onComplete: function() {
+        this.newMessageButton.disabled = false;
+        this.newMessageInput.focus();
+        this.startUpdateLoop();
+      }.bind(this),
+    });
+  },
+  
   loadData: function(response) {
     var data = response.responseText.evalJSON();
     this.onlineMembersTBody.innerHTML = data.online_members;
@@ -81,12 +112,16 @@ PC.Room = Class.create({
   },
   
   notify: function() {
-    if (!this.muteCheckbox.checked) {
-      document.body.insert(PC.Room.beepHTML);
-    }
-    if (!this.isVisible) {
-      var count = this.messageCount() - this.messageCountBeforeFocusLost;
-      document.title = '(' + count + ') ' + this.originalTitle;
+    if (this.dontNotify) {
+      this.dontNotify = false;
+    } else {
+      if (!this.muteCheckbox.checked) {
+        document.body.insert(PC.Room.beepHTML);
+      }
+      if (!this.isVisible) {
+        var count = this.messageCount() - this.messageCountBeforeFocusLost;
+        document.title = '(' + count + ') ' + this.originalTitle;
+      }
     }
   },
 });

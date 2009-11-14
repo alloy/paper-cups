@@ -27,15 +27,19 @@ Test.context("PC.Room", {
           '<tr><td>alloy</td></tr>' +
         '</tbody>' +
       '</table>' +
-      '<form id="new_message">' +
-        '<textarea></textarea>' +
+      '<form id="new_message" action="/rooms/123/messages">' +
+        '<textarea>foobar</textarea>' +
+        '<input type="submit" />' +
       '</form>' +
       '<form>' +
-        '<input type="checkbox" id="mute"/>' +
-      '</form>'
+        '<input type="checkbox" id="mute" />' +
+      '</form>' +
     '</div>';
     
+    this.form = $('new_message');
+    
     this.collectAjaxRequests();
+    this.collectObserverOn(this.form);
     this.collectObservers();
     
     this.loadData = function(data) {
@@ -56,7 +60,7 @@ Test.context("PC.Room", {
   },
   
   "should set focus to the new message textarea": function() {
-    Moksi.expects($('new_message').down('textarea'), 'focus');
+    Moksi.expects(this.form.down('textarea'), 'focus');
     this.room = new PC.Room.watch();
     this.room.timer.stop();
   },
@@ -87,7 +91,7 @@ Test.context("PC.Room", {
   },
   
   "should load the messages since the last message id, scroll down, and notify": function() {
-    Moksi.expects($('new_message').down('textarea'), 'scrollIntoView');
+    Moksi.expects(this.form.down('textarea'), 'scrollIntoView');
     Moksi.expects(this.room, 'notify');
     
     var request = this.loadData({
@@ -148,5 +152,55 @@ Test.context("PC.Room", {
     
     this.loadData({ messages: '', online_members: '' });
     this.assertEqual(0, $$('#online_members tr td').length);
+  },
+  
+  "should create a new message through an Ajax request, stop the update timer, and disable the submit button": function() {
+    Moksi.expects(this.room.timer, 'stop');
+    
+    observerHandler(this.form, 'submit')({ stop: function() {} });
+    var request = Ajax.requests.last();
+    
+    this.assertEqual('/rooms/123/messages', request[0]);
+    this.assertEqual('3', request[1].parameters.since);
+    this.assert(this.form.down('input[type=submit]').disabled);
+  },
+  
+  "should always re-enable the submit button, focus on the new message input, and start a new timer after trying to create a new message through Ajax": function() {
+    Moksi.expects(PeriodicalExecuter.prototype, 'initialize');
+    Moksi.expects(this.form.down('textarea'), 'focus');
+    
+    var submit = this.form.down('input[type=submit]');
+    submit.disabled = true;
+    observerHandler(this.form, 'submit')({ stop: function() {} });
+    var request = Ajax.requests.last();
+    request[1].onComplete();
+    
+    this.assert(!submit.disabled);
+  },
+  
+  "should load the data when creating a new message through Ajax succeeded and clear the new message input": function() {
+    var result = '';
+    this.room.loadData = function(response) { result = response; };
+    
+    observerHandler(this.form, 'submit')({ stop: function() {} });
+    var request = Ajax.requests.last();
+    request[1].onSuccess('RESPONSE');
+    
+    this.assertEqual('RESPONSE', result);
+    this.assertEqual('', this.form.down('textarea').value);
+  },
+  
+  "should not notify if new messages arrived due to a message being created through Ajax": function() {
+    Moksi.expects(document.body, 'insert', { 'times': 0 }); // no beep
+    var before = document.title;
+    
+    this.room.loadData = function(response) {};
+    observerHandler(this.form, 'submit')({ stop: function() {} });
+    var request = Ajax.requests.last();
+    request[1].onSuccess('');
+    
+    this.room.notify();
+    this.assertEqual(before, document.title);
+    this.assertEqual(false, this.room.dontNotify);
   },
 });

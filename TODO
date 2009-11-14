@@ -2,4 +2,9 @@
 - Add an event listener so ‘enter’ submits the new message and ‘alt+enter’ inserts a new line.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
 - Use Ajax for creating new messages.
+- Create enter/leave messages and also use these to track the status of the authors.
+  Also store the last message id on the room instance, this allows us to check if
+  anything changed at all since a specific message id.
+- Save mute state on membership.
+- Use 'js' instead of json on rooms controller to be consistent with the messages controller.
 - Don't try to retrieve new messages and focus on the textarea if browsing an archive.
