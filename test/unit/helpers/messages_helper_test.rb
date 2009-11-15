@@ -70,7 +70,7 @@ describe MessagesHelper, 'concerning date/time formatting' do
     link_to_messages_on_date(Date.today, :next).should == link + ' →'
   end
   
-  it "should return whether or not a timestamp message is needed and cache the last message" do
+  it "should return whether or not a timestamp message is needed" do
     freeze_time!
     
     messages = @room.messages
@@ -79,18 +79,37 @@ describe MessagesHelper, 'concerning date/time formatting' do
     messages[2].update_attribute(:created_at, 2.minutes.ago)
     messages[3].update_attribute(:created_at, Time.now)
     
-    @last_message.should.be nil
-    
+    @last_message = nil
     should.be.timestamp_message_needed messages[0]
-    @last_message.should == messages[0]
     
+    @last_message = messages[0]
     should.be.timestamp_message_needed messages[1]
-    @last_message.should == messages[1]
     
+    @last_message = messages[1]
     should.not.be.timestamp_message_needed messages[2]
-    @last_message.should == messages[2]
     
+    @last_message = messages[2]
     should.not.be.timestamp_message_needed messages[3]
-    @last_message.should == messages[3]
+  end
+  
+  it "should return whether or not the author's name is needed" do
+    messages = @room.messages
+    
+    messages[0].update_attribute(:author, members(:matt))
+    messages[1].update_attribute(:author, members(:lrz))
+    messages[2].update_attribute(:author, members(:lrz))
+    messages[3].update_attribute(:author, members(:alloy))
+    
+    @last_message = nil
+    should.be.authors_name_needed messages[0]
+    
+    @last_message = messages[0]
+    should.be.authors_name_needed messages[1]
+    
+    @last_message = messages[1]
+    should.not.be.authors_name_needed messages[2]
+    
+    @last_message = messages[2]
+    should.be.authors_name_needed messages[3]
   end
 end

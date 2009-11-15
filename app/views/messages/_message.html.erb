@@ -1,10 +1,11 @@
 <% if timestamp_message_needed?(message) %>
-  <tr>
+  <tr class="timestamp">
     <th></th>
-    <td class="timestamp"><%= message.created_at.strftime("%I:%M %p") %></td>
+    <td><%= message.created_at.strftime("%I:%M %p") %></td>
   </tr>
 <% end %>
-<tr data-message-id="<%= message.id %>">
-  <th data-author-id="<%= message.author.id %>"><%= format_full_name message.author %></th>
+<tr class="message" data-message-id="<%= message.id %>">
+  <th><%= format_full_name(message.author) if authors_name_needed?(message) %></th>
   <td><%= format_message message %></td>
 </tr>
+<% @last_message = message %>

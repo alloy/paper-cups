@@ -160,13 +160,14 @@ a.cancel:hover
   vertical-align: top;
   text-align: right;
   padding: 10px;
+  font-size: 85%;
 }
 #messages td
 {
   vertical-align: top;
   padding: 10px;
 }
-#messages td.timestamp
+#messages tr.timestamp td
 {
   vertical-align: middle;
   padding: 0 0 0 10px;

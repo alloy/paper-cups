@@ -8,15 +8,19 @@ Test.context("PC.Room", {
     '<div id="room" data-action="/rooms/123">' +
       '<table id="messages">' +
         '<tbody>' +
-          '<tr data-message-id="1">' +
-            '<th data-author-id="11">alloy</th>' +
+          '<tr class="message" data-message-id="1">' +
+            '<th>alloy</th>' +
             '<td>First message</td>' +
           '</tr>' +
-          '<tr data-message-id="2">' +
-            '<th data-author-id="22">lrz</th>' +
+          '<tr class="message" data-message-id="2">' +
+            '<th>lrz</th>' +
             '<td>Second message</td>' +
           '</tr>' +
-          '<tr data-message-id="3">' +
+          '<tr class="timestamp">' +
+            '<th></th>' +
+            '<td>11:22 AM</td>' +
+          '</tr>' +
+          '<tr class="message" data-message-id="3">' +
             '<th data-author-id="22">lrz</th>' +
             '<td>Third message</td>' +
           '</tr>' +
@@ -62,13 +66,10 @@ Test.context("PC.Room", {
     Moksi.revert();
   },
   
-  "should only group messages by author if there's no data-action on the room div specified": function() {
-    this.room.action = undefined;
-    Moksi.expects(this.room, 'setupWindow', { 'times': 0 });
-    Moksi.expects(this.room, 'setupMuteCheckbox', { 'times': 0 });
-    Moksi.expects(this.room, 'setupRefreshedElements', { 'times': 0 });
-    Moksi.expects(this.room, 'groupMessagesByAuthor', { 'times': 1 });
-    this.room.start();
+  "should only watch a room if a data-action on the room div has been specified": function() {
+    $('sample').innerHTML = $('sample').innerHTML.replace('data-action="/rooms/123"', '');
+    Moksi.expects(PC.Room.prototype, 'initialize', { 'times': 0 });
+    this.room = new PC.Room.watch();
   },
   
   "should set focus to the new message textarea": function() {
@@ -80,6 +81,10 @@ Test.context("PC.Room", {
   "should store the documents original title and that it's visible": function() {
     this.assert(this.room.isVisible);
     this.assertEqual(document.title, this.room.originalTitle);
+  },
+  
+  "should only count messages with class 'message'": function() {
+    this.assertEqual(3, this.room.messageCount());
   },
   
   "should track that the window looses focus and store the amount of exisiting messages at that moment": function() {
@@ -153,25 +158,6 @@ Test.context("PC.Room", {
     var request = Ajax.requests.last();
     this.assertEqual('/memberships/321', request[0]);
     this.assertEqual('on', request[1].parameters['mute_audio']);
-  },
-  
-  "should group messages by author on initialization": function() {
-    this.assertEqual('', $$('tr[data-message-id=3]').first().down('th').innerHTML);
-  },
-  
-  "should group messages by author after receiving new messages": function() {
-    this.loadData({
-      messages: '<tr data-message-id="4"><th data-author-id="22">lrz</th><td>Fourth message</td></tr>' +
-                '<tr data-message-id="5"><th data-author-id="33">matt</th><td>Fifth message</td></tr>',
-      online_members: ''
-    });
-    this.assertEqual('', $$('tr[data-message-id=4]').first().down('th').innerHTML);
-  },
-  
-  "should not group messages by author if no new messages were added": function() {
-    Moksi.expects(this.room, 'groupMessagesByAuthor', { times: 0 });
-    this.loadData({ messages: "\n  \n", online_members: '' });
-    this.loadData({ messages: null, online_members: '' });
   },
   
   "should update the online members table with the result": function() {

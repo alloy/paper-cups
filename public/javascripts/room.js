@@ -11,12 +11,9 @@ PC.Room = Class.create({
   },
   
   start: function() {
-    if (this.action) {
-      this.setupWindow();
-      this.setupMuteCheckbox();
-      this.setupRefreshedElements();
-    }
-    this.groupMessagesByAuthor();
+    this.setupWindow();
+    this.setupMuteCheckbox();
+    this.setupRefreshedElements();
   },
   
   setupWindow: function() {
@@ -73,7 +70,7 @@ PC.Room = Class.create({
   },
   
   messageCount: function() {
-    return this.messagesTBody.select('tr').length;
+    return this.messagesTBody.select('tr.message').length;
   },
   
   lastMessage: function() {
@@ -117,20 +114,9 @@ PC.Room = Class.create({
     this.onlineMembersTBody.innerHTML = data.online_members;
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
-      this.groupMessagesByAuthor();
       this.newMessageInput.scrollIntoView();
       this.notify();
     }
-  },
-  
-  groupMessagesByAuthor: function() {
-    var last_author;
-    this.messagesTBody.select('tr').each(function(row) {
-      var author = row.down('th');
-      var author_id = author.readAttribute('data-author-id');
-      if (last_author && author_id == last_author) { author.innerHTML = ''; }
-      last_author = author_id;
-    }, this);
   },
   
   notify: function() {
@@ -155,7 +141,7 @@ PC.Room.BEEP_HTML = '<embed src="/droplet.wav" type="audio/wav" hidden="true" au
 
 PC.Room.watch = function() {
   var container = $('room');
-  if (container) {
+  if (container && container.readAttribute('data-action')) {
     return new PC.Room(container);
   }
 }
