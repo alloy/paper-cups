@@ -31,8 +31,8 @@ Test.context("PC.Room", {
         '<textarea>foobar</textarea>' +
         '<input type="submit" />' +
       '</form>' +
-      '<form>' +
-        '<input type="checkbox" id="mute" />' +
+      '<form action="/memberships/321">' +
+        '<input type="checkbox" id="mute" name="mute_audio" />' +
       '</form>' +
     '</div>';
     
@@ -42,6 +42,7 @@ Test.context("PC.Room", {
     this.collectAjaxRequests();
     this.collectObserverOn(this.form);
     this.collectObserverOn(this.textarea);
+    this.collectObserverOn($('mute'));
     this.collectObservers();
     
     this.loadData = function(data) {
@@ -119,18 +120,30 @@ Test.context("PC.Room", {
     this.assertEqual("(6) " + before, document.title);
   },
   
+  "should remove existing BEEP_HTML before inserting a new one, this makes Safari beep only once when tab is focussed": function() {
+    this.room.notify();
+    this.room.notify();
+    this.room.notify();
+    
+    this.assertEqual(1, document.body.select('embed').length);
+  },
+  
   "should not insert the BEEP_HTML if the mute checkbox is checked": function() {
     $('mute').checked = true;
     Moksi.expects(document.body, 'insert', { 'times': 0 }); // no beep
     this.room.notify();
   },
   
-  "should remove existing BEEP_HTML before inserting a new one, this makes Safari beep onlt once when tab is focussed": function() {
-    this.room.notify();
-    this.room.notify();
-    this.room.notify();
+  "should save the mute state through an Ajax request if the state changes": function() {
+    var mute = $('mute');
+    mute.checked = true;
     
-    this.assertEqual(1, document.body.select('embed').length);
+    var handler = observerHandler(mute, 'change');
+    handler({});
+    
+    var request = Ajax.requests.last();
+    this.assertEqual('/memberships/321', request[0]);
+    this.assertEqual('on', request[1].parameters['mute_audio']);
   },
   
   "should group messages by author on initialization": function() {

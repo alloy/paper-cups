@@ -8,3 +8,4 @@
 - Save mute state on membership.
 - Use 'js' instead of json on rooms controller to be consistent with the messages controller.
 - Don't try to retrieve new messages and focus on the textarea if browsing an archive.
+- Double check all authorization rules and add missing coverage.

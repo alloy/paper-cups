@@ -6,7 +6,8 @@ class RoomsController < ApplicationController
   end
   
   def show
-    @room = Room.find(params[:id])
+    @membership = @authenticated.memberships.find_by_room_id(params[:id])
+    @room = @membership.room
     @authenticated.online_in(@room)
     respond_to do |format|
       format.html { @messages = @room.messages.recent }

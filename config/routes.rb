@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :members
+  map.resources :memberships
   map.resources :passwords
   map.resources :rooms do |room|
     room.resources :members

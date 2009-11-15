@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091113194130) do
+ActiveRecord::Schema.define(:version => 20091115170119) do
 
   create_table "members", :force => true do |t|
     t.string   "role"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20091113194130) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "last_seen_at"
+    t.boolean  "mute_audio",   :default => false
   end
 
   add_index "memberships", ["member_id"], :name => "index_memberships_on_member_id"

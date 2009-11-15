@@ -6,13 +6,13 @@ PC.Room = Class.create({
     this.action = this.container.readAttribute('data-action');
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
-    this.muteCheckbox = $('mute');
     
     this.start();
   },
   
   start: function() {
     this.setupWindow();
+    this.setupMuteCheckbox();
     this.setupRefreshedElements();
     this.groupMessagesByAuthor();
   },
@@ -22,6 +22,13 @@ PC.Room = Class.create({
     this.originalTitle = document.title;
     Event.observe(window, 'blur',  this.windowLoosesFocus.bindAsEventListener(this));
     Event.observe(window, 'focus', this.windowGainsFocus.bindAsEventListener(this));
+  },
+  
+  setupMuteCheckbox: function() {
+    this.muteCheckbox = $('mute');
+    this.muteCheckbox.observe('change', function() {
+      this.muteCheckbox.up('form').request();
+    }.bind(this));
   },
   
   setupRefreshedElements: function() {
