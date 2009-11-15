@@ -106,7 +106,7 @@ Test.context("PC.Room", {
     this.assertEqual('4', this.room.lastMessageId());
   },
   
-  "should insert the beepHTML and show the new messages count if the window does not have focus": function() {
+  "should insert the BEEP_HTML and show the new messages count if the window does not have focus": function() {
     var before = document.title;
     Moksi.expects(document.body, 'insert', { 'times': 2 }); // beep
     
@@ -119,10 +119,18 @@ Test.context("PC.Room", {
     this.assertEqual("(6) " + before, document.title);
   },
   
-  "should not insert the beepHTML if the mute checkbox is checked": function() {
+  "should not insert the BEEP_HTML if the mute checkbox is checked": function() {
     $('mute').checked = true;
     Moksi.expects(document.body, 'insert', { 'times': 0 }); // no beep
     this.room.notify();
+  },
+  
+  "should remove existing BEEP_HTML before inserting a new one, this makes Safari beep onlt once when tab is focussed": function() {
+    this.room.notify();
+    this.room.notify();
+    this.room.notify();
+    
+    this.assertEqual(1, document.body.select('embed').length);
   },
   
   "should group messages by author on initialization": function() {

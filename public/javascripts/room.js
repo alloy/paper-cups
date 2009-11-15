@@ -1,7 +1,5 @@
 if (typeof PC == "undefined") PC = {};
 
-Event.KEY_ALT = 18;
-
 PC.Room = Class.create({
   initialize: function(container) {
     this.container = $(container);
@@ -131,7 +129,9 @@ PC.Room = Class.create({
       this.dontNotify = false;
     } else {
       if (!this.muteCheckbox.checked) {
-        document.body.insert(PC.Room.beepHTML);
+        var existingBeep = document.body.down('embed');
+        if (existingBeep) { existingBeep.remove(); }
+        document.body.insert(PC.Room.BEEP_HTML);
       }
       if (!this.isVisible) {
         var count = this.messageCount() - this.messageCountBeforeFocusLost;
@@ -142,7 +142,7 @@ PC.Room = Class.create({
 });
 
 // Free sound effect from: http://www.freesoundfiles.tintagel.net/Audio/free-wave-files-beeps
-PC.Room.beepHTML = '<embed src="/droplet.wav" type="audio/wav" hidden="true" autostart="true" loop="false" volume="50" />';
+PC.Room.BEEP_HTML = '<embed src="/droplet.wav" type="audio/wav" hidden="true" autostart="true" loop="false" volume="50" />';
 
 PC.Room.watch = function() {
   var container = $('room');
