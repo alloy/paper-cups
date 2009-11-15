@@ -11,9 +11,11 @@ PC.Room = Class.create({
   },
   
   start: function() {
-    this.setupWindow();
-    this.setupMuteCheckbox();
-    this.setupRefreshedElements();
+    if (this.action) {
+      this.setupWindow();
+      this.setupMuteCheckbox();
+      this.setupRefreshedElements();
+    }
     this.groupMessagesByAuthor();
   },
   

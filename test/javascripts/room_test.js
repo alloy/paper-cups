@@ -62,6 +62,15 @@ Test.context("PC.Room", {
     Moksi.revert();
   },
   
+  "should only group messages by author if there's no data-action on the room div specified": function() {
+    this.room.action = undefined;
+    Moksi.expects(this.room, 'setupWindow', { 'times': 0 });
+    Moksi.expects(this.room, 'setupMuteCheckbox', { 'times': 0 });
+    Moksi.expects(this.room, 'setupRefreshedElements', { 'times': 0 });
+    Moksi.expects(this.room, 'groupMessagesByAuthor', { 'times': 1 });
+    this.room.start();
+  },
+  
   "should set focus to the new message textarea": function() {
     Moksi.expects(this.form.down('textarea'), 'focus');
     this.room = new PC.Room.watch();
