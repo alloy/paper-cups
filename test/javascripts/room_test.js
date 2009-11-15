@@ -37,9 +37,11 @@ Test.context("PC.Room", {
     '</div>';
     
     this.form = $('new_message');
+    this.textarea = this.form.down('textarea');
     
     this.collectAjaxRequests();
     this.collectObserverOn(this.form);
+    this.collectObserverOn(this.textarea);
     this.collectObservers();
     
     this.loadData = function(data) {
@@ -202,5 +204,47 @@ Test.context("PC.Room", {
     this.room.notify();
     this.assertEqual(before, document.title);
     this.assertEqual(false, this.room.dontNotify);
+  },
+  
+  "should submit the new message if the 'enter' key is used inside the input": function() {
+    var handler = observerHandler(this.textarea, 'keydown');
+    var event = { keyCode: Event.KEY_RETURN };
+    var result;
+    this.room.submitMessage = function(e) { result = e };
+    
+    handler(event);
+    this.assertEqual(event, result);
+  },
+  
+  "should not submit the new message if the 'alt' and 'enter' keys are combined": function() {
+    var result;
+    this.room.submitMessage = function(e) { result = e };
+    var handler = observerHandler(this.textarea, 'keydown');
+    
+    handler({ keyCode: Event.KEY_ALT });
+    this.assertNull(result);
+    
+    handler({ keyCode: Event.KEY_RETURN });
+    this.assertNull(result);
+    
+    var doSubmitAgain = { keyCode: Event.KEY_RETURN };
+    handler(doSubmitAgain);
+    this.assertEqual(doSubmitAgain, result);
+  },
+  
+  "should submit the new message if the 'alt' key is released before using the 'enter' key": function() {
+    var result;
+    this.room.submitMessage = function(e) { result = e };
+    var handler = observerHandler(this.textarea, 'keydown');
+    
+    handler({ keyCode: Event.KEY_ALT });
+    this.assertNull(result);
+    
+    observerHandler(this.textarea, 'keyup')({ keyCode: Event.KEY_ALT });
+    this.assertNull(result);
+    
+    var doSubmitAgain = { keyCode: Event.KEY_RETURN };
+    handler(doSubmitAgain);
+    this.assertEqual(doSubmitAgain, result);
   },
 });
