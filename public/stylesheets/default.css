@@ -166,6 +166,16 @@ a.cancel:hover
   vertical-align: top;
   padding: 10px;
 }
+#messages td.timestamp
+{
+  vertical-align: middle;
+  padding: 0 0 0 10px;
+  width: 550px;
+  font-size: 70%;
+  font-weight: bold;
+  color: #666;
+  background-color: #cee27e;
+}
 #messages pre
 {
   padding: 10px;

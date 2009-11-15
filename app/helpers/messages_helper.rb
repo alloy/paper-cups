@@ -8,6 +8,12 @@ module MessagesHelper
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
   YOUTUBE_URL = /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
   
+  def timestamp_message_needed?(message)
+    result = (@last_message.nil? || @last_message.created_at < (message.created_at - 2.minutes))
+    @last_message = message
+    result
+  end
+  
   def open_link_to(content, url, options = {})
     link_to content, url, options.merge(:target => '_blank')
   end

@@ -7,6 +7,10 @@ class Room < ActiveRecord::Base
     members.online.empty?
   end
   
+  def message_preceding(message)
+    messages.find(:first, :order => "messages.id DESC", :conditions => ["messages.id < ?", message.id])
+  end
+  
   def previous_date_that_contains_messages(date)
     date_that_contains_messages(date, 'DESC', '<')
   end

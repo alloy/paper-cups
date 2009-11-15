@@ -6,16 +6,6 @@ describe MessagesHelper do
       link_to('http://example.com', 'http://example.com', :target => '_blank')
   end
   
-  it "should return a pretty date link" do
-    link_to_messages_on_date(nil, :previous).should.be nil
-    
-    @room = rooms(:macruby)
-    
-    link = open_link_to(Date.today.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => Date.today))
-    link_to_messages_on_date(Date.today, :previous).should == '← ' + link
-    link_to_messages_on_date(Date.today, :next).should == link + ' →'
-  end
-  
   it "should format a members' full name" do
     format_full_name(members(:alloy)).should == 'Eloy D.'
     format_full_name(members(:lrz)).should == 'Laurent S.'
@@ -61,5 +51,46 @@ describe MessagesHelper do
     body = "\t http://www.yOutube.com/wAtch?foo=bar&v=ytF0M5fc-bs&baz=bla \n "
     poster_frame = image_tag('http://img.youtube.com/vi/ytF0M5fc-bs/0.jpg', :alt => '')
     format_message(Message.new(:body => body)).should == open_link_to(poster_frame, body.strip)
+  end
+end
+
+describe MessagesHelper, 'concerning date/time formatting' do
+  attr_reader :params
+  
+  before do
+    @room = rooms(:macruby)
+    @params = {}
+  end
+  
+  it "should return a pretty date link" do
+    link_to_messages_on_date(nil, :previous).should.be nil
+    
+    link = open_link_to(Date.today.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => Date.today))
+    link_to_messages_on_date(Date.today, :previous).should == '← ' + link
+    link_to_messages_on_date(Date.today, :next).should == link + ' →'
+  end
+  
+  it "should return whether or not a timestamp message is needed and cache the last message" do
+    freeze_time!
+    
+    messages = @room.messages
+    messages[0].update_attribute(:created_at, 7.minutes.ago)
+    messages[1].update_attribute(:created_at, 4.minutes.ago)
+    messages[2].update_attribute(:created_at, 2.minutes.ago)
+    messages[3].update_attribute(:created_at, Time.now)
+    
+    @last_message.should.be nil
+    
+    should.be.timestamp_message_needed messages[0]
+    @last_message.should == messages[0]
+    
+    should.be.timestamp_message_needed messages[1]
+    @last_message.should == messages[1]
+    
+    should.not.be.timestamp_message_needed messages[2]
+    @last_message.should == messages[2]
+    
+    should.not.be.timestamp_message_needed messages[3]
+    @last_message.should == messages[3]
   end
 end
