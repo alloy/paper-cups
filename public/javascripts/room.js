@@ -34,31 +34,20 @@ PC.Room = Class.create({
     this.newMessageInput = this.newMessageForm.down('textarea');
     this.newMessageInput.focus();
     
-    this.newMessageInput.observe('keyup', this.keyUpOnMessageInput.bindAsEventListener(this));
-    this.newMessageInput.observe('keydown', this.keyDownOnMessageInput.bindAsEventListener(this));
+    this.newMessageInput.observe('keypress', this.keyPressOnMessageInput.bindAsEventListener(this));
     this.newMessageForm.observe('submit', this.submitMessage.bindAsEventListener(this));
     
     this.startUpdateLoop();
   },
   
-  keyUpOnMessageInput: function(event) {
-    if (event.keyCode == Event.KEY_ALT) {
-      this.altKeyDown = false;
-    }
-  },
-  
-  keyDownOnMessageInput: function(event) {
-    switch (event.keyCode) {
-      case Event.KEY_ALT:
-        this.altKeyDown = true;
-        break;
-      case Event.KEY_RETURN:
-        if (this.altKeyDown) {
-          this.altKeyDown = false;
-        } else {
-          this.submitMessage(event);
-        }
-        break;
+  keyPressOnMessageInput: function(event) {
+    if (event.keyCode == Event.KEY_RETURN) {
+      if (event.altKey) {
+        event.stop();
+        this.newMessageInput.value += "\n";
+      } else {
+        this.submitMessage(event);
+      }
     }
   },
   

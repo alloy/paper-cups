@@ -207,8 +207,8 @@ Test.context("PC.Room", {
   },
   
   "should submit the new message if the 'enter' key is used inside the input": function() {
-    var handler = observerHandler(this.textarea, 'keydown');
-    var event = { keyCode: Event.KEY_RETURN };
+    var handler = observerHandler(this.textarea, 'keypress');
+    var event = { keyCode: Event.KEY_RETURN, altKey: false };
     var result;
     this.room.submitMessage = function(e) { result = e };
     
@@ -216,34 +216,16 @@ Test.context("PC.Room", {
     this.assertEqual(event, result);
   },
   
-  "should not submit the new message if the 'alt' and 'enter' keys are combined": function() {
+  "should not submit the new message if the 'alt' and 'enter' keys are combined, but insert a new line": function() {
     var result;
     this.room.submitMessage = function(e) { result = e };
-    var handler = observerHandler(this.textarea, 'keydown');
+    var handler = observerHandler(this.textarea, 'keypress');
     
-    handler({ keyCode: Event.KEY_ALT });
+    handler({ keyCode: Event.KEY_RETURN, altKey: true, stop: function() {} });
     this.assertNull(result);
+    this.assertEqual("foobar\n", this.textarea.value);
     
-    handler({ keyCode: Event.KEY_RETURN });
-    this.assertNull(result);
-    
-    var doSubmitAgain = { keyCode: Event.KEY_RETURN };
-    handler(doSubmitAgain);
-    this.assertEqual(doSubmitAgain, result);
-  },
-  
-  "should submit the new message if the 'alt' key is released before using the 'enter' key": function() {
-    var result;
-    this.room.submitMessage = function(e) { result = e };
-    var handler = observerHandler(this.textarea, 'keydown');
-    
-    handler({ keyCode: Event.KEY_ALT });
-    this.assertNull(result);
-    
-    observerHandler(this.textarea, 'keyup')({ keyCode: Event.KEY_ALT });
-    this.assertNull(result);
-    
-    var doSubmitAgain = { keyCode: Event.KEY_RETURN };
+    var doSubmitAgain = { keyCode: Event.KEY_RETURN, altKey: false };
     handler(doSubmitAgain);
     this.assertEqual(doSubmitAgain, result);
   },
