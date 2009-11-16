@@ -1,7 +1,7 @@
 <% if timestamp_message_needed?(message) %>
   <tr class="timestamp">
     <th></th>
-    <td><%= message.created_at.strftime("%I:%M %p") %></td>
+    <td><%= message.created_at.strftime("%H:%M %p") %></td>
   </tr>
 <% end %>
 <tr class="message" data-message-id="<%= message.id %>">
