@@ -142,18 +142,30 @@ a.cancel:hover
 
 /* @end */
 
+.sidebar
+{
+  position: fixed;
+  right: 0;
+  top: 100px;
+  width: 250px;
+  padding: 0 10px;
+}
+
 .messages
 {
-  float: left;
   overflow-y: scroll;
   overflow-x: hidden;
-  width: 800px;
-  height: 500px;
+  position: fixed;
+  top: 100px;
+  right: 270px;
+  left: 0;
+  bottom: 0;
 }
 .messages img
 {
   width: 300px;
 }
+
 #messages th
 {
   width: 100px;
@@ -171,7 +183,6 @@ a.cancel:hover
 {
   vertical-align: middle;
   padding: 0 0 0 10px;
-  width: 550px;
   font-size: 70%;
   font-weight: bold;
   color: #666;
@@ -186,7 +197,8 @@ a.cancel:hover
   overflow-x: auto;
 }
 
-.sidebar
+.message a
 {
-  float: right;
+  /* WebKit does not wrap correctly long words so break URLs anywhere */
+  word-break: break-all;
 }
