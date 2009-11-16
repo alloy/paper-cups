@@ -21,6 +21,9 @@ PC.Room = Class.create({
     this.originalTitle = document.title;
     Event.observe(window, 'blur',  this.windowLoosesFocus.bindAsEventListener(this));
     Event.observe(window, 'focus', this.windowGainsFocus.bindAsEventListener(this));
+    window.onbeforeunload = function(event) {
+      return event.returnValue = "You’re closing a window with an active chat.";
+    }
   },
   
   setupMuteCheckbox: function() {
