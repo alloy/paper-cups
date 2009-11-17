@@ -14,6 +14,7 @@ PC.Room = Class.create({
     this.setupWindow();
     this.setupMuteCheckbox();
     this.setupRefreshedElements();
+    this.setupTopicEditor();
   },
   
   setupWindow: function() {
@@ -45,6 +46,30 @@ PC.Room = Class.create({
     this.newMessageForm.observe('submit', this.submitMessage.bindAsEventListener(this));
     
     this.startUpdateLoop();
+  },
+  
+  setupTopicEditor: function() {
+    this.topicHeader = $('topic');
+    this.topicForm = $$('form.edit_room').first();
+    this.topicForm.hide();
+    
+    this.topicEditor = new Ajax.InPlaceEditor(this.topicHeader, this.topicForm.action, {
+      okControl: false,
+      cancelControl: false,
+      savingText: "Saving room topic…",
+      callback: function(form, value) {
+        this.timer.stop();
+        this.topicForm.down('input[type=text]').value = value;
+        return Form.serialize(this.topicForm);
+      }.bind(this),
+      onFailure: function() { this.startUpdateLoop(); }.bind(this),
+      ajaxOptions: {
+        onSuccess: function() {
+          this.requestData();
+          this.startUpdateLoop();
+        }.bind(this)
+      },
+    });
   },
   
   keyPressOnMessageInput: function(event) {

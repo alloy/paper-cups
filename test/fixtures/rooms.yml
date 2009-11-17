@@ -1,3 +1,5 @@
 macruby:
   label: MacRuby
   topic: "A kitten a day, keeps the stress away!"
+kitten:
+  label: Daily kitten

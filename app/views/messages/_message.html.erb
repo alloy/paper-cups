@@ -4,8 +4,15 @@
     <td><%= message.created_at.strftime("%H:%M") %></td>
   </tr>
 <% end %>
-<tr class="message" data-message-id="<%= message.id %>">
-  <th><%= format_full_name(message.author) if authors_name_needed?(message) %></th>
-  <td><%= format_message message %></td>
-</tr>
+<% if message.topic_changed_message? %>
+  <tr class="message topic" data-message-id="<%= message.id %>">
+    <th></th>
+    <td><%= message.body %></td>
+  </tr>
+<% else %>
+  <tr class="message" data-message-id="<%= message.id %>">
+    <th><%= format_full_name(message.author) if authors_name_needed?(message) %></th>
+    <td><%= format_message message %></td>
+  </tr>
+<% end %>
 <% @last_message = message %>

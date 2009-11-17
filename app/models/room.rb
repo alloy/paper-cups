@@ -11,7 +11,7 @@ class Room < ActiveRecord::Base
   
   def set_topic(member, topic)
     update_attribute(:topic, topic)
-    messages.create :author => member, :message_type => 'topic', :body => "#{member.full_name} changed the room topic to ‘#{topic}’"
+    messages.create :author => member, :message_type => 'topic', :body => "#{member.full_name} changed the room’s topic to ‘#{topic}’"
   end
   
   def message_preceding(message)

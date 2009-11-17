@@ -88,6 +88,6 @@ describe 'A', Room do
     message = @room.messages.last
     message.author.should == members(:lrz)
     message.should.be.topic_changed_message
-    message.body.should == "Laurent Sansonetti changed the room topic to ‘Sacre blue!’"
+    message.body.should == "Laurent Sansonetti changed the room’s topic to ‘Sacre blue!’"
   end
 end

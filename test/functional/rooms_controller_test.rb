@@ -7,7 +7,7 @@ describe "On the", RoomsController, "a member" do
   end
   
   it "should for now redirect to the first room a member has access to" do
-    new_room = Room.create!(:label => 'another room')
+    new_room = Room.new; new_room.label = 'another room'; new_room.save!
     @authenticated.memberships.delete_all
     @authenticated.memberships.create(:room => new_room)
     
@@ -43,4 +43,18 @@ describe "On the", RoomsController, "a member" do
       data['messages'].should.include "data-message-id=\"#{message.id}\""
     end
   end
+  
+  it "should be able to set the room topic" do
+    put :update, :id => @room.to_param, :room => { :topic => 'Oeleboele!' }, :format => 'js'
+    status.should.be :success
+    response.body.should == 'Oeleboele!'
+    
+    @room.reload.topic.should == 'Oeleboele!'
+    message = @room.messages.last
+    message.author.should == members(:lrz)
+    message.should.be.topic_changed_message
+    message.body.should == "Laurent Sansonetti changed the room’s topic to ‘Oeleboele!’"
+  end
+  
+  should.disallow.put :update, :id => rooms(:kitten)
 end

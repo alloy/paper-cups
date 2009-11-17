@@ -26,6 +26,14 @@
   
   <div class="sidebar column">
     <div>
+      <h3 id="topic"><%=h @room.topic %></h3>
+      <% form_for @room do |f| %>
+        <%= f.text_field :topic, :size => 12 %>
+        <%= f.submit 'Save topic' %>
+      <% end %>
+    </div>
+    
+    <div>
       <% form_tag room_messages_path(@room), :method => :get do %>
         <%= text_field_tag 'q', '', :size => 12, :tabfocus => 1 %>
         <%= submit_tag 'Search', :name => nil %>

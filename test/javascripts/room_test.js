@@ -26,6 +26,10 @@ Test.context("PC.Room", {
           '</tr>' +
         '</tbody>' +
       '</table>' +
+      '<h3 id="topic">MacRuby</h3>' +
+      '<form class="edit_room" action="/rooms/123">' +
+        '<input type="text" name="room[topic]" />' +
+      '</form>' +
       '<table id="online_members">' +
         '<tbody>' +
           '<tr><td>alloy</td></tr>' +
@@ -244,5 +248,43 @@ Test.context("PC.Room", {
     var doSubmitAgain = { keyCode: Event.KEY_RETURN, altKey: false };
     handler(doSubmitAgain);
     this.assertEqual(doSubmitAgain, result);
+  },
+  
+  "should hide the new topic form": function() {
+    this.assert(!$$('.edit_room').first().visible());
+  },
+  
+  "should stop the update timer, submit the new topic via an Ajax request, restart the timer and load new data": function() {
+    var form = $$('.edit_room').first();
+    this.room.topicEditor.enterEditMode();
+    $('topic-inplaceeditor').down('input[type=text]').value = 'So fresh and so new';
+    
+    Moksi.expects(this.room.timer, 'stop');
+    this.room.topicEditor.handleFormSubmission();
+    
+    var request = Ajax.requests.last();
+    this.assertEqual(form.action, request[0]);
+    this.assertEqual('So fresh and so new', request[1].parameters['room[topic]']);
+    
+  },
+  
+  "should start the update timer and request new data if the topic was updated": function() {
+    this.room.topicEditor.enterEditMode();
+    this.room.topicEditor.handleFormSubmission();
+    var request = Ajax.requests.last();
+    
+    Moksi.expects(this.room, 'requestData');
+    Moksi.expects(this.room, 'startUpdateLoop');
+    request[1].onSuccess();
+  },
+  
+  "should restart the update timer if updating the topic failed": function() {
+    this.room.topicEditor.enterEditMode();
+    this.room.topicEditor.handleFormSubmission();
+    var request = Ajax.requests.last();
+    
+    Moksi.expects(this.room, 'requestData', { 'times': 0 });
+    Moksi.expects(this.room, 'startUpdateLoop');
+    request[1].onFailure();
   },
 });

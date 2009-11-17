@@ -151,6 +151,12 @@ a.cancel:hover
   padding: 0 10px;
 }
 
+.sidebar #topic
+{
+  font-style: italic;
+  padding: 10px 0;
+}
+
 .messages
 {
   overflow-y: scroll;
@@ -187,6 +193,16 @@ a.cancel:hover
   font-weight: bold;
   color: #666;
   background-color: #cee27e;
+}
+#messages tr.topic td
+{
+  vertical-align: middle;
+  padding: 0 0 0 10px;
+  font-size: 70%;
+  font-weight: bold;
+  font-style: italic;
+  color: #666;
+  background-color: #99CCFF;
 }
 #messages pre
 {
