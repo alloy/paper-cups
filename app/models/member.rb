@@ -8,7 +8,7 @@ class Member < ActiveRecord::Base
   before_create :create_invitation_token
   before_update :remove_invitation_token
   
-  attr_accessible :full_name, :email
+  attr_accessible :full_name, :email, :time_zone
   
   def admin?
     role == 'admin'
@@ -40,7 +40,7 @@ class Member < ActiveRecord::Base
     write_attribute :invitation_token, nil
   end
   
-  validates_presence_of :full_name, :unless => :new_record?
+  validates_presence_of :full_name, :time_zone, :unless => :new_record?
   validates_uniqueness_of :email
   validates_email :email
 end

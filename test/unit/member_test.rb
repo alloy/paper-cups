@@ -16,7 +16,7 @@ module GeneralValidationSpecs
       end
       
       it "should require a unique email" do
-        @member.email = members(:alloy).email
+        @member.email = members(:lrz).email
         @member.should.not.be.valid
         @member.errors.on(:email).should.not.be.blank
       end
@@ -36,6 +36,11 @@ describe Member, "concerning a new record" do
   
   it "should not require a password" do
     @member.password = ''
+    @member.should.be.valid
+  end
+  
+  it "should not require a preferred time zone" do
+    @member.time_zone = ''
     @member.should.be.valid
   end
   
@@ -65,18 +70,32 @@ describe Member, "concerning a new record" do
     @member.to_param.should == @member.id.to_s
   end
   
+  it "should default the preferred time zone to UTC" do
+    @member.time_zone.should == 'UTC'
+  end
+  
   include GeneralValidationSpecs
 end
 
 describe Member, "concerning an existing record" do
   before do
-    @member = members(:lrz)
+    @member = members(:alloy)
   end
   
   it "should require a full name" do
     @member.full_name = ''
     @member.should.not.be.valid
     @member.errors.on(:full_name).should.not.be.blank
+  end
+  
+  it "should require a preferred time zone" do
+    @member.time_zone = ''
+    @member.should.not.be.valid
+    @member.errors.on(:time_zone).should.not.be.blank
+  end
+  
+  it "should return the preferred time zone" do
+    @member.time_zone.should == 'Amsterdam'
   end
   
   include GeneralValidationSpecs
@@ -91,6 +110,11 @@ describe 'A', Member do
   it "should allow access to email" do
     members(:alloy).update_attributes(:email => 'new@example.com')
     members(:alloy).reload.email.should == 'new@example.com'
+  end
+  
+  it "should allow access to time_zone" do
+    members(:lrz).update_attributes(:time_zone => 'Brussels')
+    members(:lrz).reload.time_zone.should == 'Brussels'
   end
   
   it "should be marked as being online in a room" do

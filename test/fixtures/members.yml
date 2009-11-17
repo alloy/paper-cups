@@ -8,6 +8,7 @@ alloy:
   hashed_password: <%= password %>
   email: eloy@example.com
   full_name: Eloy Duran
+  time_zone: Amsterdam
   role: admin
 matt:
   hashed_password: <%= password %>

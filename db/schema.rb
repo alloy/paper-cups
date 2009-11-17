@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091115170119) do
+ActiveRecord::Schema.define(:version => 20091117194544) do
 
   create_table "members", :force => true do |t|
     t.string   "role"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20091115170119) do
     t.datetime "updated_at"
     t.string   "full_name"
     t.string   "invitation_token"
+    t.string   "time_zone",            :default => "UTC"
   end
 
   create_table "memberships", :force => true do |t|
