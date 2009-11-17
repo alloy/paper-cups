@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   helper :all
   protect_from_forgery
   filter_parameter_logging :password
-  before_filter :find_authenticated, :block_access, :set_actionmailer_host
+  before_filter :find_authenticated, :block_access, :set_actionmailer_host, :set_time_zone
   # report_errors_to 'http://forestwatcher.example.com/paper_cups', :username => 'forestwatcher', :password => 'secret'
   
   protected
@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
   # Set the hostname of the server on ActionMailer
   def set_actionmailer_host
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+  
+  def set_time_zone
+    Time.zone = @authenticated.time_zone if @authenticated
   end
   
   def login(member)

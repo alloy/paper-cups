@@ -64,6 +64,12 @@ describe TestApplicationsController do
     should.not.be.authenticated
   end
   
+  it "should assign the members preferred time zone" do
+    login members(:alloy)
+    get :public_action
+    Time.zone.name.should == 'Amsterdam'
+  end
+  
   it "should respond with HTML before JPG" do
     request.env['HTTP_ACCEPT'] = "*/*"
     get :action_with_respond_block
