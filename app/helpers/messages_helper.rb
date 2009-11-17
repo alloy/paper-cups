@@ -9,7 +9,7 @@ module MessagesHelper
   YOUTUBE_URL = /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
   
   def timestamp_message_needed?(message)
-    @last_message.nil? || @last_message.created_at < (message.created_at - 2.minutes)
+    @last_message.nil? || @last_message.created_at < (message.created_at - TIMESTAMP_MESSAGE_INTERVAL)
   end
   
   def authors_name_needed?(message)

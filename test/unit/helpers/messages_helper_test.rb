@@ -74,9 +74,9 @@ describe MessagesHelper, 'concerning date/time formatting' do
     freeze_time!
     
     messages = @room.messages
-    messages[0].update_attribute(:created_at, 7.minutes.ago)
-    messages[1].update_attribute(:created_at, 4.minutes.ago)
-    messages[2].update_attribute(:created_at, 2.minutes.ago)
+    messages[0].update_attribute(:created_at, (TIMESTAMP_MESSAGE_INTERVAL * 3 + 1).minutes.ago)
+    messages[1].update_attribute(:created_at, (TIMESTAMP_MESSAGE_INTERVAL * 2).ago)
+    messages[2].update_attribute(:created_at, TIMESTAMP_MESSAGE_INTERVAL.ago)
     messages[3].update_attribute(:created_at, Time.now)
     
     @last_message = nil
