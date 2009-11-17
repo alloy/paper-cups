@@ -3,8 +3,15 @@ class Room < ActiveRecord::Base
   has_many :members, :through => :memberships, :order => :email
   has_many :messages, :order => :id
   
+  attr_accessible :topic
+  
   def empty?
     members.online.empty?
+  end
+  
+  def set_topic(member, topic)
+    update_attribute(:topic, topic)
+    messages.create :author => member, :message_type => 'topic', :body => "#{member.full_name} changed the room topic to ‘#{topic}’"
   end
   
   def message_preceding(message)

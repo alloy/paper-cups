@@ -4,6 +4,10 @@ class Message < ActiveRecord::Base
   
   named_scope :since, lambda { |id| { :conditions => ["messages.id > ?", id] } }
   
+  def topic_changed_message?
+    message_type == 'topic'
+  end
+  
   def self.recent
     find(:all, :order => 'messages.id DESC', :limit => 25, :include => :author).reverse
   end

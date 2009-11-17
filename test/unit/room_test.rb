@@ -69,4 +69,25 @@ describe 'A', Room do
     @room.search('kitt').should == [messages(:daily_kitten)]
     @room.search('a').should == messages(:patrick_hernandez, :daily_kitten, :change_life).sort_by(&:id)
   end
+  
+  it "should not allow access to label" do
+    @room.update_attributes(:label => 'IronRuby')
+    @room.reload.label.should == 'MacRuby'
+  end
+  
+  it "should allow access to topic" do
+    @room.update_attributes(:topic => 'Two kittens a day, keeps the stress away!')
+    @room.reload.topic.should == 'Two kittens a day, keeps the stress away!'
+  end
+  
+  it "should update the topic and insert a message to show that the topic was updated" do
+    lambda {
+      @room.set_topic(members(:lrz), 'Sacre blue!')
+    }.should.differ('@room.messages.count', +1)
+    @room.reload.topic.should == 'Sacre blue!'
+    message = @room.messages.last
+    message.author.should == members(:lrz)
+    message.should.be.topic_changed_message
+    message.body.should == "Laurent Sansonetti changed the room topic to ‘Sacre blue!’"
+  end
 end

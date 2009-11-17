@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091117194544) do
+ActiveRecord::Schema.define(:version => 20091117203719) do
 
   create_table "members", :force => true do |t|
     t.string   "role"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20091117194544) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "message_type"
   end
 
   add_index "messages", ["author_id"], :name => "index_messages_on_author_id"
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20091117194544) do
     t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "topic"
   end
 
 end
