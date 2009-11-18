@@ -32,12 +32,13 @@ describe 'A', Room do
     @room.members.online.should == @room.members
   end
   
-  it "should return the message preceding the given one" do
+  it "should return the message preceding the given one, excluding those that are topic changed messages" do
     m = @room.messages
+    m[1].update_attribute(:message_type, 'topic')
     
     @room.message_preceding(m[0]).should.be nil
     @room.message_preceding(m[1]).should == m[0]
-    @room.message_preceding(m[2]).should == m[1]
+    @room.message_preceding(m[2]).should == m[0]
   end
   
   it "should return the most recent date that contains messages" do

@@ -14,5 +14,5 @@
     <th><%= format_full_name(message.author) if authors_name_needed?(message) %></th>
     <td><%= format_message message %></td>
   </tr>
+  <% @last_message = message %>
 <% end %>
-<% @last_message = message %>

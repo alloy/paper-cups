@@ -15,7 +15,7 @@ class Room < ActiveRecord::Base
   end
   
   def message_preceding(message)
-    messages.find(:first, :order => "messages.id DESC", :conditions => ["messages.id < ?", message.id])
+    messages.find(:first, :order => "messages.id DESC", :conditions => ["messages.message_type IS NULL AND messages.id < ?", message.id])
   end
   
   def previous_date_that_contains_messages(date)
