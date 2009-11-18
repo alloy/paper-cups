@@ -52,12 +52,11 @@ module MessagesHelper
   
   def format_attachment_message(message)
     path = message.attachment.original.public_path
-    body = h(message.attachment.filename)
-    path =~ IMAGE_URL ? open_image_link(path, body) : open_link_to(body, path)
+    path =~ IMAGE_URL ? open_image_link(path) : open_link_to(h(message.body), path)
   end
   
-  def open_image_link(url, body = nil)
-    open_link_to(image_tag(url, :alt => ''), body || url)
+  def open_image_link(url)
+    open_link_to(image_tag(url, :alt => ''), url)
   end
   
   def format_full_name(member)

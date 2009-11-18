@@ -48,7 +48,7 @@
     </div>
     
     <div>
-      <h3>Online:</h3>
+      <h3>Online</h3>
       <table id="online_members">
         <tbody>
           <%= render @room.members.online %>
@@ -58,13 +58,22 @@
     </div>
     
     <div>
+      <h3>Files</h3>
       <% form_for [@room, Message.new], :html => { :multipart => true } do |f| %>
         <% f.object.build_attachment %>
         <% f.fields_for :attachment do |af| %>
           <%= af.file_field :uploaded_file %>
         <% end %>
-        <%= f.submit 'Upload file' %>
+        <%= f.submit 'Upload' %>
       <% end %>
+      
+      <ul id="files">
+        <% @room.messages.find(:all, :order => 'messages.id DESC', :conditions => { :message_type => 'attachment' }, :limit => 5).each do |message| %>
+          <li>
+            <%= open_link_to(h(message.body), message.attachment.original.public_path) %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>

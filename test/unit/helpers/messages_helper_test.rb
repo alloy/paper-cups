@@ -57,7 +57,7 @@ describe MessagesHelper do
     message = rooms(:macruby).messages.create!(:author => members(:lrz), :attachment_attributes => { :uploaded_file => rails_icon })
     
     format_message(message).should ==
-      open_link_to(image_tag(message.attachment.original.public_path, :alt => ''), message.attachment.filename)
+      open_link_to(image_tag(message.attachment.original.public_path, :alt => ''), message.attachment.original.public_path)
     
     message.attachment.original.stubs(:public_path).returns('/attachments/Rakefile')
     format_message(message).should == open_link_to(message.attachment.filename, '/attachments/Rakefile')

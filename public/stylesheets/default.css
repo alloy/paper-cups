@@ -151,6 +151,11 @@ a.cancel:hover
   padding: 0 10px;
 }
 
+.sidebar div
+{
+  padding: 10px 0;
+}
+
 .sidebar #topic
 {
   font-style: italic;
