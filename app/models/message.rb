@@ -2,10 +2,19 @@ class Message < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :room
   
+  extend AttachmentSan::Has
+  has_attachment :attachment
+  accepts_nested_attributes_for :attachment
+  before_create :set_attachment_metadata, :if => :attachment
+  
   named_scope :since, lambda { |id| { :conditions => ["messages.id > ?", id] } }
   
   def topic_changed_message?
     message_type == 'topic'
+  end
+  
+  def attachment_message?
+    message_type == 'attachment'
   end
   
   def self.recent
@@ -25,5 +34,11 @@ class Message < ActiveRecord::Base
   
   private
   
-  validates_presence_of :author_id, :room_id, :body
+  def set_attachment_metadata
+    self.message_type = 'attachment'
+    self.body = attachment.filename
+  end
+  
+  validates_presence_of :author_id, :room_id
+  validates_presence_of :body, :unless => :attachment
 end

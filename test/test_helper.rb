@@ -30,3 +30,9 @@ class ActiveSupport::TestCase
 end
 
 ActionMailer::Base.default_url_options[:host] = 'test.host'
+
+Attachment.attachment_san_options[:base_path] = TMP = File.expand_path('../tmp', __FILE__)
+def TMP.reset!
+  FileUtils.rm_rf self
+  FileUtils.mkdir_p self
+end

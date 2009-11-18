@@ -1,3 +1,6 @@
 [submodule "vendor/rails"]
   path = vendor/rails
   url = git://github.com/Fingertips/rails.git
+[submodule "vendor/plugins/attachment-san"]
+	path = vendor/plugins/attachment-san
+	url = git@github.com:Fingertips/attachment-san.git

@@ -32,6 +32,17 @@ describe "On the", MessagesController, " nested under a room, a member" do
     end
   end
   
+  it "should create an attachment message" do
+    lambda {
+      lambda {
+        post :create, :room_id => @room.to_param, :message => { :attachment_attributes => { :uploaded_file => rails_icon } }
+      }.should.differ('@room.messages.count', +1)
+    }.should.differ('Attachment.count', +1)
+    
+    File.read(@room.reload.messages.last.attachment.original.file_path).should == rails_icon.read
+    should.redirect_to room_url(@room)
+  end
+  
   it "should see all messages for the given date" do
     freeze_time!(Time.parse('01/01/2009'))
     messages = Message.all

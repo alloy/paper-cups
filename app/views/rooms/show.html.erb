@@ -56,5 +56,15 @@
       </table>
       <%= link_to 'Invite member', new_room_member_path(@room) if @authenticated.admin? %>
     </div>
+    
+    <div>
+      <% form_for [@room, Message.new], :html => { :multipart => true } do |f| %>
+        <% f.object.build_attachment %>
+        <% f.fields_for :attachment do |af| %>
+          <%= af.file_field :uploaded_file %>
+        <% end %>
+        <%= f.submit 'Upload file' %>
+      <% end %>
+    </div>
   </div>
 </div>

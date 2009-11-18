@@ -52,6 +52,16 @@ describe MessagesHelper do
     poster_frame = image_tag('http://img.youtube.com/vi/ytF0M5fc-bs/0.jpg', :alt => '')
     format_message(Message.new(:body => body)).should == open_link_to(poster_frame, body.strip)
   end
+  
+  it "should format an attachment message" do
+    message = rooms(:macruby).messages.create!(:author => members(:lrz), :attachment_attributes => { :uploaded_file => rails_icon })
+    
+    format_message(message).should ==
+      open_link_to(image_tag(message.attachment.original.public_path, :alt => ''), message.attachment.filename)
+    
+    message.attachment.original.stubs(:public_path).returns('/attachments/Rakefile')
+    format_message(message).should == open_link_to(message.attachment.filename, '/attachments/Rakefile')
+  end
 end
 
 describe MessagesHelper, 'concerning date/time formatting' do

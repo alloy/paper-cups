@@ -29,12 +29,16 @@ module MessagesHelper
   end
   
   def format_message(message)
-    case body = message.body.strip
-    when ONLY_URL
-      format_special_link body
-    when MULTILINE
-      "<pre>#{h(message.body)}</pre>"
-    end || h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
+    if message.attachment_message?
+      format_attachment_message(message)
+    else
+      case body = (message.attachment_message? ? message.attachment.original.public_path : message.body.strip)
+      when ONLY_URL
+        format_special_link body
+      when MULTILINE
+        "<pre>#{h(message.body)}</pre>"
+      end || h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
+    end
   end
   
   def format_special_link(url)
@@ -42,8 +46,18 @@ module MessagesHelper
     when YOUTUBE_URL
       open_link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), url)
     when IMAGE_URL
-      open_link_to(image_tag(url, :alt => ''), url)
+      open_image_link(url)
     end
+  end
+  
+  def format_attachment_message(message)
+    path = message.attachment.original.public_path
+    body = h(message.attachment.filename)
+    path =~ IMAGE_URL ? open_image_link(path, body) : open_link_to(body, path)
+  end
+  
+  def open_image_link(url, body = nil)
+    open_link_to(image_tag(url, :alt => ''), body || url)
   end
   
   def format_full_name(member)

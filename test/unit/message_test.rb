@@ -40,6 +40,17 @@ describe "A", Message do
   it "should return the room it was written in" do
     @message.room.should == rooms(:macruby)
   end
+  
+  it "should accept nested attributes for an attachment" do
+    TMP.reset!
+    
+    Token.stubs(:generate).returns('556d2e8e')
+    message = rooms(:macruby).messages.create!(:author => members(:lrz), :attachment_attributes => { :uploaded_file => rails_icon })
+    message.should.be.attachment_message
+    message.body.should == 'rails.png'
+    original = message.attachment.original
+    original.file_path.should == File.join(TMP, '55/6d/2e/8e/rails.png')
+  end
 end
 
 describe Message do
