@@ -1,3 +1,4 @@
+- Before next deploy make sure to move attachments into shared and link before restart.
 - Let the user cancel changing the topic by clicking outside of the input.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
 - Create enter/leave messages and also use these to track the status of the authors.
