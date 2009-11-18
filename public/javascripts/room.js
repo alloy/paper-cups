@@ -140,6 +140,7 @@ PC.Room = Class.create({
   loadData: function(response) {
     var data = response.responseText.evalJSON();
     this.onlineMembersTBody.innerHTML = data.online_members;
+    this.topicHeader.innerHTML = data.room_topic;
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
       this.newMessageInput.scrollIntoView();

@@ -42,6 +42,7 @@ describe "On the", RoomsController, "a member" do
     @room.messages[1..-1].each do |message|
       data['messages'].should.include "data-message-id=\"#{message.id}\""
     end
+    data['room_topic'].should == @room.topic
   end
   
   it "should be able to set the room topic" do

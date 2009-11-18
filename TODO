@@ -6,3 +6,4 @@
   anything changed at all since a specific message id.
 - Use 'js' instead of json on rooms controller to be consistent with the messages controller.
 - Double check all authorization rules and add missing coverage.
+- Think about the best way to make search actually scale. MyISAM / thinkingsphinx.

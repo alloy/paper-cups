@@ -287,4 +287,9 @@ Test.context("PC.Room", {
     Moksi.expects(this.room, 'startUpdateLoop');
     request[1].onFailure();
   },
+  
+  "should update the room topic": function() {
+    this.loadData({ messages: '', online_members: '<tr><td>lrz</td></tr><tr><td>matt</td></tr>', room_topic: 'New topic!' });
+    this.assertEqual('New topic!', $('topic').innerHTML);
+  },
 });

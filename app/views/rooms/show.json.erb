@@ -8,5 +8,6 @@
   :online_members => render(
     :partial => 'members/member.html.erb',
     :collection => @room.members.online
-  )
+  ),
+  :room_topic => @room.topic
 }.to_json %>
