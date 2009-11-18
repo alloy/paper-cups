@@ -3,6 +3,10 @@
 A small cozy web chat app, like paper cups and a string back in the days.
 Usually surrounded by lots of French chatter...
 
+Is it a replacement for some of the hosted solutions? No, it’s meant as a
+minimalistic application that can be hosted on your own server when that’s
+_absolutely_ necessary.
+
 == Install
 
 The vendored Rails is a git submodule, to get it:
