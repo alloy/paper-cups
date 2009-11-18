@@ -11,4 +11,10 @@ describe "On the", MembershipsController, "a member" do
     status.should.be :no_content
     @membership.reload.mute_audio.should.be true
   end
+  
+  should.disallow.put :update, :id => memberships(:alloy_in_macruby)
+end
+
+describe "On the", MembershipsController, "a visitor" do
+  should.require_login.put :update, :id => memberships(:lrz_in_macruby)
 end

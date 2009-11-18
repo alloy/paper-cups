@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  allow_access(:authenticated) { @membership = @authenticated.memberships.find(params[:id]) }
+  allow_access(:authenticated) { @membership = @authenticated.memberships.find_by_id(params[:id]) }
   
   def update
     @membership.update_attributes(params[:membership])

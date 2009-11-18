@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  allow_access :authenticated
+  allow_access(:authenticated) { @authenticated.memberships.find_by_room_id(params[:room_id]) }
   
   find_parent_resource
   

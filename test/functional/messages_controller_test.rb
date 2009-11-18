@@ -53,4 +53,12 @@ describe "On the", MessagesController, " nested under a room, a member" do
     template.should.be 'messages/index'
     assigns(:messages).should == [messages(:daily_kitten)]
   end
+  
+  should.disallow.get :index, :room_id => rooms(:kitten)
+  should.disallow.post :create, :room_id => rooms(:kitten), :message => { :body => "Sacre blue!" }
+end
+
+describe "On the", MembershipsController, "a visitor" do
+  should.require_login.get :index, :room_id => rooms(:kitten)
+  should.require_login.post :create, :room_id => rooms(:kitten), :message => { :body => "Sacre blue!" }
 end

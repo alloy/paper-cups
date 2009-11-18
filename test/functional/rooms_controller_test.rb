@@ -57,5 +57,12 @@ describe "On the", RoomsController, "a member" do
     message.body.should == "Laurent Sansonetti changed the room’s topic to ‘Oeleboele!’"
   end
   
+  should.disallow.get :show, :id => rooms(:kitten)
   should.disallow.put :update, :id => rooms(:kitten)
+end
+
+describe "On the", MembershipsController, "a visitor" do
+  should.require_login.get :index
+  should.require_login.get :show, :id => rooms(:kitten)
+  should.require_login.put :update, :id => rooms(:kitten)
 end
