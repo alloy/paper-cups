@@ -1,7 +1,5 @@
-- Add a quit confirm message:
-  window.onbeforeunload = function() {
-    return "You're closing a window with an active chat. Are you sure you want to do that?";
-  };
+- Update client topic if it changed.
+- Let the user cancel changing the topic by clicking outside of the input.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
 - Create enter/leave messages and also use these to track the status of the authors.
   Also store the last message id on the room instance, this allows us to check if
