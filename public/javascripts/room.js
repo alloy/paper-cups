@@ -55,7 +55,7 @@ PC.Room = Class.create({
     
     this.topicEditor = new Ajax.InPlaceEditor(this.topicHeader, this.topicForm.action, {
       okControl: false,
-      cancelControl: false,
+      cancelText: 'Cancel',
       savingText: "Saving room topic…",
       callback: function(form, value) {
         this.timer.stop();
