@@ -1,3 +1,6 @@
+- In Safari, when the URL is bookmarked (bar) and selected, the title of the document never updates, so no unread message count.
+- When going to ‘earlier messages’, it links to the same day at the top. Might be related to TZ.
+
 - Before next deploy make sure to move attachments into shared and link before restart!
 - Update files list.
 - Let the user cancel changing the topic by clicking outside of the input.
