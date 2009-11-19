@@ -23,3 +23,10 @@ Add some development data:
   $ rake db:fixtures:load
 
 And it’s ready to be served.
+
+== Notes
+
+* If you want to bookmark the application’s URL in Safari, be sure to bookmark
+  +/session/new+, _not_ a room URL. This is because Safari will maintain the
+  name given to the bookmark as the tab’s title even when it’s updated with new
+  messages count.
