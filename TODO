@@ -3,6 +3,7 @@
 
 - Before next deploy make sure to move attachments into shared and link before restart!
 - Update files list.
+- Add a ‘services’ controller which authenticates a user based on a token and loads something like service specific class to handle creating a message for that service. At first this will be a github hook thing only.
 - Let the user cancel changing the topic by clicking outside of the input.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
 - Create enter/leave messages and also use these to track the status of the authors.
