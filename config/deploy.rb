@@ -24,9 +24,15 @@ namespace :deploy do
     run "ln -fs #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
   end
   
+  task :link_attachments do
+    path = 'public/attachments'
+    run "ln -s #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
+  end
+  
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
 
 after "deploy:finalize_update", "deploy:link_session_store"
+after "deploy:finalize_update", "deploy:link_attachments"
