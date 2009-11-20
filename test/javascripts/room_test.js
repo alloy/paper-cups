@@ -42,6 +42,10 @@ Test.context("PC.Room", {
       '<form action="/memberships/321">' +
         '<input type="checkbox" id="mute" name="mute_audio" />' +
       '</form>' +
+      '<ul id="attachments">' +
+          '<li><a href="/rucola-logo.gif">rucola-logo.gif</a></li>' +
+          '<li><a href="/loveparade.jpg">loveparade.jpg</a></li>' +
+      '</ul>' + 
     '</div>';
     
     this.form = $('new_message');
@@ -289,7 +293,14 @@ Test.context("PC.Room", {
   },
   
   "should update the room topic": function() {
-    this.loadData({ messages: '', online_members: '<tr><td>lrz</td></tr><tr><td>matt</td></tr>', room_topic: 'New topic!' });
+    this.loadData({ room_topic: 'New topic!', messages: '', online_members: '' });
     this.assertEqual('New topic!', $('topic').innerHTML);
+  },
+  
+  "should refresh the attachments list": function() {
+    var before = $('attachments').innerHTML;
+    var data = before + '<li><a href="/messa.jpg">messa.jpg</a></li>';
+    this.loadData({ attachments: data, messages: '', online_members: '', room_topic: '' });
+    this.assertEqual(data, $('attachments').innerHTML);
   },
 });

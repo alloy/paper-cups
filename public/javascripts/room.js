@@ -6,6 +6,7 @@ PC.Room = Class.create({
     this.action = this.container.readAttribute('data-action');
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
+    this.attachmentsList = $('attachments');
     
     this.start();
   },
@@ -139,8 +140,9 @@ PC.Room = Class.create({
   
   loadData: function(response) {
     var data = response.responseText.evalJSON();
-    this.onlineMembersTBody.innerHTML = data.online_members;
     this.topicHeader.innerHTML = data.room_topic;
+    this.onlineMembersTBody.innerHTML = data.online_members;
+    this.attachmentsList.innerHTML = data.attachments;
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
       this.newMessageInput.scrollIntoView();

@@ -67,12 +67,8 @@
         <%= f.submit 'Upload' %>
       <% end %>
       
-      <ul id="files">
-        <% @room.messages.find(:all, :order => 'messages.id DESC', :conditions => { :message_type => 'attachment' }, :limit => 5).each do |message| %>
-          <li>
-            <%= open_link_to(h(message.body), message.attachment.original.public_path) %>
-          </li>
-        <% end %>
+      <ul id="attachments">
+        <%= render :partial => 'messages/attachment', :collection => @room.last_attachment_messages, :as => :message %>
       </ul>
     </div>
   </div>

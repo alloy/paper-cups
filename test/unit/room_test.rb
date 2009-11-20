@@ -91,4 +91,22 @@ describe 'A', Room do
     message.should.be.topic_changed_message
     message.body.should == "Laurent Sansonetti changed the room’s topic to ‘Sacre blue!’"
   end
+  
+  it "should return the last 5 attachments" do
+    AttachmentSan::Variant.any_instance.stubs(:process!)
+    AttachmentSan::Variant::Original.any_instance.stubs(:process!)
+    
+    attachment_messages = []
+    12.times do |i|
+      if i.odd?
+        attachment_messages << (m = @room.messages.build :message_type => 'attachment', :author => members(:lrz))
+        m.build_attachment
+        m.save!
+      else
+        @room.messages.create! :body => 'a text message', :author => members(:lrz)
+      end
+    end
+    
+    @room.last_attachment_messages.should == attachment_messages.reverse.first(5)
+  end
 end

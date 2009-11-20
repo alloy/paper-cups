@@ -1,6 +1,7 @@
 <% messages = @room.messages.since(params[:since]) -%>
 <% @last_message = @room.message_preceding(messages.first) unless messages.empty? -%>
 <%= {
+  :room_topic => @room.topic,
   :messages => render(
     :partial => 'messages/message.html.erb',
     :collection => messages
@@ -9,5 +10,9 @@
     :partial => 'members/member.html.erb',
     :collection => @room.members.online
   ),
-  :room_topic => @room.topic
+  :attachments => render(
+    :partial => 'messages/attachment.html.erb',
+    :collection => @room.last_attachment_messages,
+    :as => :message
+  )
 }.to_json %>
