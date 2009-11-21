@@ -110,8 +110,5 @@ describe TestApplicationsController, "when dealing with pages that need authoriz
 end
 
 describe TestApplicationsController, "concerning an api only member" do
-  it "should not be able to authenticate with an api token" do
-    get :private_action, :api_token => members(:api).api_token
-    should.redirect_to new_session_url
-  end
+  should.require_login.get :private_action, :api_token => members(:api)
 end

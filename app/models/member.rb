@@ -19,7 +19,7 @@ class Member < ActiveRecord::Base
   end
   
   def to_param
-    invitation_token || id.to_s
+    invitation_token || api_token || id.to_s
   end
   
   def online_in(room)

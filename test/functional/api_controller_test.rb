@@ -14,7 +14,7 @@ end
 
 describe "On the", TestApiController, "a visitor" do
   it "should be able to authenticate with a token" do
-    get :private_action, :api_token => members(:api).api_token
+    get :private_action, :api_token => members(:api).to_param
     status.should.be :success
     assigns(:authenticated).should == members(:api)
   end

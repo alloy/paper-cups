@@ -129,6 +129,11 @@ describe Member, "concerning an api only member" do
     @member.save!
     @member.reload.api_token.should == token
   end
+  
+  it "should return the api token from to_param" do
+    @member.save!
+    @member.to_param.should == @member.api_token
+  end
 end
 
 describe 'A', Member do
