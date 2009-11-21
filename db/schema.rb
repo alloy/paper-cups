@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091118200230) do
+ActiveRecord::Schema.define(:version => 20091120235345) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "message_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20091118200230) do
     t.string   "full_name"
     t.string   "invitation_token"
     t.string   "time_zone",            :default => "UTC"
+    t.string   "api_token"
   end
 
   create_table "memberships", :force => true do |t|

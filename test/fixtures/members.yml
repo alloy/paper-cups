@@ -15,4 +15,7 @@ matt:
   email: matt@example.com
   full_name: Matt Aimonetti
   role: member
-  
+api:
+  api_token: eb23cm52
+  full_name: GitHub
+  role: api

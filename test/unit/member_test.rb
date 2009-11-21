@@ -101,6 +101,36 @@ describe Member, "concerning an existing record" do
   include GeneralValidationSpecs
 end
 
+describe Member, "concerning an api only member" do
+  before do
+    @member = Member.new(:full_name => 'GitHub')
+    @member.role = 'api'
+  end
+  
+  it "should not require a password" do
+    @member.password = ''
+    @member.should.be.valid
+  end
+  
+  it "should not require an email" do
+    @member.email = ''
+    @member.should.be.valid
+  end
+  
+  it "should require a full_name" do
+    @member.full_name = ''
+    @member.should.not.be.valid
+    @member.errors.on(:full_name).should.not.be.blank
+  end
+  
+  it "should generate an api token" do
+    token = Token.generate
+    Token.stubs(:generate).returns(token)
+    @member.save!
+    @member.reload.api_token.should == token
+  end
+end
+
 describe 'A', Member do
   it "should not allow access to role" do
     members(:lrz).update_attributes(:role => 'admin')

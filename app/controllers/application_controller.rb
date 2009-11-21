@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
   
   def find_authenticated
-    @authenticated = Member.find_by_id(request.session[:member_id]) unless request.session[:member_id].blank?
+    @authenticated ||= Member.find_by_id(request.session[:member_id]) unless request.session[:member_id].blank?
   end
   
   # Handles interaction when the client may not access the current resource
