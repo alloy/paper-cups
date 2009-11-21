@@ -104,7 +104,7 @@ PC.Room = Class.create({
   },
   
   lastMessage: function() {
-    return this.messagesTBody.down('tr:last-child');
+    return this.messagesTBody.down('tr.message:last-child');
   },
   
   lastMessageId: function() {
@@ -146,8 +146,9 @@ PC.Room = Class.create({
     this.attachmentsList.innerHTML = data.attachments;
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
-      this.newMessageInput.scrollIntoView();
       this.notify();
+      if (typeof SyntaxHighlighter != "undefined") { SyntaxHighlighter.highlight(); }
+      this.newMessageInput.scrollIntoView();
     }
   },
   

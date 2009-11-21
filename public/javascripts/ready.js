@@ -7,4 +7,7 @@
 
 Event.observe(window, 'load', function() {
   PC.Room.watch();
+  
+  SyntaxHighlighter.config.clipboardSwf = '/clipboard.swf';
+  SyntaxHighlighter.highlight();
 });

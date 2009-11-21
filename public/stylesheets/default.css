@@ -209,7 +209,7 @@ a.cancel:hover
   color: #666;
   background-color: #99CCFF;
 }
-#messages pre
+#messages .code
 {
   padding: 10px;
   background-color: lightgrey;

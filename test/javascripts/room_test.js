@@ -120,7 +120,7 @@ Test.context("PC.Room", {
     Moksi.expects(this.room, 'notify');
     
     var request = this.loadData({
-      messages: '<tr data-message-id="4"><th data-author-id="33">matt</th><td>Fourth message</td></tr>',
+      messages: '<tr class="message" data-message-id="4"><th data-author-id="33">matt</th><td>Fourth message</td></tr>',
       online_members: '<tr><td>alloy</td></tr><tr><td>matt</td></tr>'
     });
     

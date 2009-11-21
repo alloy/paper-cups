@@ -1,4 +1,5 @@
 module MessagesHelper
+  MARKDOWN_ALIASES = %w{ markdown md }
   YOUTUBE_POSTER_FRAME = 'http://img.youtube.com/vi/%s/0.jpg'
   
   MULTILINE = /\n/m
@@ -36,11 +37,11 @@ module MessagesHelper
     if message.attachment_message?
       format_attachment_message(message)
     else
-      case body = (message.attachment_message? ? message.attachment.original.public_path : message.body.strip)
+      case body = message.body.strip
       when ONLY_URL
-        format_special_link body
+        format_special_link(body)
       when MULTILINE
-        "<pre>#{h(message.body)}</pre>"
+        format_multiline_message(message.body)
       end
     end || format_regular_message(body)
   end
@@ -52,6 +53,19 @@ module MessagesHelper
   def format_regular_message(body)
     format_links(body) do |body_with_substituted_links|
       markdown(body_with_substituted_links)[3..-5]
+    end
+  end
+  
+  def format_multiline_message(raw_body)
+    if raw_body =~ /^syntax:(\w+)\n(.+)$/m
+      syntax, body = $1, $2
+      if MARKDOWN_ALIASES.include?(syntax)
+        "<div class=\"code\">#{markdown(body)}</div>"
+      else
+        "<pre class=\"brush: #{syntax}\">#{h(body)}</pre>"
+      end
+    else
+      "<pre class=\"code\">#{h(raw_body)}</pre>"
     end
   end
   

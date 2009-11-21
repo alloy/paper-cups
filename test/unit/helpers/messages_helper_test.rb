@@ -14,7 +14,17 @@ describe MessagesHelper do
   
   it "should format a multiline message body as code and escape" do
     body = "  This is\n  <em> http://example.com </em>\n  code"
-    format_message(Message.new(:body => body)).should == "<pre>#{h(body)}</pre>"
+    format_message(Message.new(:body => body)).should == "<pre class=\"code\">#{h(body)}</pre>"
+  end
+  
+  it "should format a multiline message body that starts with a magic syntax line as a code and add the syntax class" do
+    body = "  This is\n  some <em> Ruby </em>\n  code."
+    format_message(Message.new(:body => "syntax:ruby\n#{body}")).should == "<pre class=\"brush: ruby\">#{h(body)}</pre>"
+  end
+  
+  it "should format a multiline message body that starts with a magic markdown line as markdown" do
+    body = "  This is\n  a markdown message <em> http://example.com </em>\n  code."
+    format_message(Message.new(:body => "syntax:markdown\n#{body}")).should == "<div class=\"code\">#{markdown(body)}</div>"
   end
   
   it "should escape content for regular messages" do
