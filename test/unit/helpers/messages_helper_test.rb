@@ -27,7 +27,7 @@ describe MessagesHelper do
       [
         "%s",
         "\t%s\n",
-        "Check this \t%s. link\n",
+        "Check this %s. link\n",
         "%s <= hilarious!",
         "%s. <= hilarious!",
         "Also hilarious: %s",
@@ -64,6 +64,13 @@ describe MessagesHelper do
     body = "\t http://www.yOutube.com/wAtch?foo=bar&v=ytF0M5fc-bs&baz=bla \n "
     poster_frame = image_tag('http://img.youtube.com/vi/ytF0M5fc-bs/0.jpg', :alt => '')
     format_message(Message.new(:body => body)).should == open_link_to(poster_frame, body.strip)
+  end
+  
+  it "should format markdown in regular single-line messages" do
+    url = 'http://example.com'
+    original = "\t\nThis _is_ a markdown single-line message with a (#{url}) link.\s\n"
+    expected = "This <em>is</em> a markdown single-line message with a (#{open_link_to(url, url)}) link."
+    format_message(Message.new(:body => original)).should == expected
   end
   
   it "should format an attachment message" do
