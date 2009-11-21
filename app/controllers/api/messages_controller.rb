@@ -5,6 +5,8 @@ class Api::MessagesController < ApiController
     end
   end
   
+  skip_before_filter :verify_authenticity_token
+  
   def create
     if @service = Service.find(params[:service_id]).try(:new)
       @service.create_message(@room, @authenticated, params)
@@ -12,11 +14,5 @@ class Api::MessagesController < ApiController
     else
       head :not_found
     end
-  end
-  
-  private
-  
-  def protect_from_forgery?
-    false
   end
 end
