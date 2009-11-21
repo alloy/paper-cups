@@ -3,7 +3,7 @@ module MessagesHelper
   
   MULTILINE = /\n/m
   
-  ANY_URL = /(https*:\/\/.+?)(\s|\.\s|\.$|$)/i
+  ANY_URL = /(https*:\/\/.+?)(\s|\)|\.\s|\.$|$)/i
   ONLY_URL = /^https*:\/\/[^\s]+$/i
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
   YOUTUBE_URL = /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/i

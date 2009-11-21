@@ -31,7 +31,8 @@ describe MessagesHelper do
         "%s <= hilarious!",
         "%s. <= hilarious!",
         "Also hilarious: %s",
-        "Also hilarious: %s."
+        "Also hilarious: %s.",
+        "Hey this (%s) is cool!"
       ].each do |body|
         format_message(Message.new(:body => body % url)).should == h(body.strip) % open_link_to(url, url)
       end
