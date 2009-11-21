@@ -12,16 +12,10 @@ class Member < ActiveRecord::Base
   
   attr_accessible :full_name, :email, :time_zone
   
-  # %w{ admin api }.each do |role|
-  #   define_method("#{role}?") { self.role == role }
-  # end
-  
-  def admin?
-    role == 'admin'
-  end
-  
-  def api?
-    role == 'api'
+  %w{ admin api }.each do |role|
+    define_method("#{role}?") do
+      self.role == role
+    end
   end
   
   def to_param
