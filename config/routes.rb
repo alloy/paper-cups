@@ -1,4 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.with_options :path_prefix => '/api/:api_token', :name_prefix => 'api_' do |api|
+    api.resources :services do |service|
+      service.resources :rooms do |room|
+        room.resources :messages, :controller => 'api/messages'
+      end
+    end
+  end
+  
   map.resources :members
   map.resources :memberships
   map.resources :passwords

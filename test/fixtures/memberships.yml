@@ -10,3 +10,7 @@ matt_in_macruby:
   room: macruby
   member: matt
   last_seen_at: <%= 1.day.ago %>
+api_in_macruby:
+  room: macruby
+  member: api
+  last_seen_at: <%= 1.day.ago %>
