@@ -34,12 +34,23 @@ describe MessagesHelper do
         "Also hilarious: %s.",
         "Hey this (%s) is cool!"
       ].each do |body|
-        format_message(Message.new(:body => body % url)).should == h(body.strip) % open_link_to(url, url)
+        should_format_anchor_message(body, url)
       end
     end
     
     test.call("hTtP://some-examplE.com/inDex.php?foo=bar%20baz")
     test.call("hTtPs://some-examplE.com/inDex.php?foo=bar%20baz")
+  end
+  
+  it "should shorten the content part of an anchor if it exceeds 50 chars and is not only a URL" do
+    url = "http://github.com/alloy/paper-cups/commit/073a9c85dca34ad237d83e4e35503b0dffe0449b"
+    should_format_anchor_message("\t%s\s\n", url)
+    
+    body = "\tBla %s bla\s\n"
+    should_format_anchor_message(body, url, "http://github.com…")
+    
+    url = "http://maps.google.com/maps?f=q&source=s_q&hl=en&q=1+Infinite+Loop,+Cupertino,+Santa+Clara,+California+95014&sll=37.0625,-95.677068&sspn=31.095668,75.410156&ie=UTF8&cd=1&geocode=FcajOQIdYvO5-A&split=0&hq=&hnear=1+Infinite+Loop,+Cupertino,+Santa+Clara,+California+95014&z=16"
+    should_format_anchor_message(body, url, "http://maps.google.com…")
   end
   
   it "should create an image tag if a message body only contains a url that seems to point to an image" do
@@ -63,6 +74,12 @@ describe MessagesHelper do
     
     message.attachment.original.stubs(:public_path).returns('/attachments/Rakefile')
     format_message(message).should == open_link_to(message.attachment.filename, '/attachments/Rakefile')
+  end
+  
+  private
+  
+  def should_format_anchor_message(body, url, expected = nil)
+    format_message(Message.new(:body => body % url)).should == h(body.strip) % open_link_to(expected || url, url)
   end
 end
 

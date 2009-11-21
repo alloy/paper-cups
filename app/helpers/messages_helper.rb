@@ -3,10 +3,14 @@ module MessagesHelper
   
   MULTILINE = /\n/m
   
-  ANY_URL = /(https*:\/\/.+?)(\s|\)|\.\s|\.$|$)/i
-  ONLY_URL = /^https*:\/\/[^\s]+$/i
+  URL_PROTOCOL = 'https*:\/\/'
+  ANY_URL = /(#{URL_PROTOCOL}.+?)(\s|\)|\.\s|\.$|$)/i
+  ONLY_URL = /^#{URL_PROTOCOL}[^\s]+$/i
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
-  YOUTUBE_URL = /^http:\/\/\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
+  YOUTUBE_URL = /^#{URL_PROTOCOL}\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
+  
+  URL_PROTOCOL_SIZE = 'https://'.size
+  TRUNCATE_URL = 50
   
   def timestamp_message_needed?(message)
     @last_message.nil? || @last_message.created_at < (message.created_at - TIMESTAMP_MESSAGE_INTERVAL)
@@ -37,7 +41,29 @@ module MessagesHelper
         format_special_link body
       when MULTILINE
         "<pre>#{h(message.body)}</pre>"
-      end || h(body).gsub(ANY_URL) { "#{link_to($1, $1, :target => '_blank')}#{$2}" }
+      end
+    end || format_links(body)
+  end
+  
+  def format_links(body)
+    only_url = (body =~ ONLY_URL)
+    
+    h(body).gsub(ANY_URL) do
+      url, remainder = $1, $2
+      
+      content = if only_url
+        url
+      else
+        if url.length > TRUNCATE_URL
+          protocol = url.match(URL_PROTOCOL)[0]
+          host = url[protocol.length..-1].split('/').first
+          "#{protocol}#{host}…"
+        else
+          url
+        end
+      end
+      
+      "#{link_to(content, url, :target => '_blank')}#{remainder}"
     end
   end
   
