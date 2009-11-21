@@ -13,4 +13,10 @@ class Api::MessagesController < ApiController
       head :not_found
     end
   end
+  
+  private
+  
+  def protect_from_forgery?
+    false
+  end
 end
