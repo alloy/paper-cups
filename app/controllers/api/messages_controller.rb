@@ -6,7 +6,11 @@ class Api::MessagesController < ApiController
   end
   
   def create
-    @message = @room.messages.create(params[:message].merge(:author => @authenticated))
-    head :created
+    if @service = Service.find(params[:service_id]).try(:new)
+      @service.create_message(@room, @authenticated, params)
+      head :created
+    else
+      head :not_found
+    end
   end
 end

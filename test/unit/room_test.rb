@@ -14,8 +14,8 @@ describe 'A', Room do
     @room = rooms(:macruby)
   end
   
-  it "should return the members with access to the room, ordered by email" do
-    @room.members.should.equal_list members(:alloy, :lrz, :matt)
+  it "should return the members with access to the room" do
+    @room.members.should.equal_set members(:alloy, :lrz, :matt, :api)
   end
   
   it "should return the messages that were written in the room, ordered id" do

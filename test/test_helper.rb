@@ -12,6 +12,14 @@ require 'test/spec/share'
 # require 'test/spec/add_allow_switch'
 # Net::HTTP.add_allow_switch :start
 
+FIXTURE_ROOT = (Rails.root + 'test/fixtures').to_s
+
+class Test::Unit::TestCase
+  def fixture(name)
+    File.join(FIXTURE_ROOT, name)
+  end
+end
+
 class ActiveSupport::TestCase
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
