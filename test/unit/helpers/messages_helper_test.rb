@@ -9,6 +9,7 @@ describe MessagesHelper do
   it "should format a members' full name" do
     format_full_name(members(:alloy)).should == 'Eloy D.'
     format_full_name(members(:lrz)).should == 'Laurent S.'
+    format_full_name(members(:api)).should == 'GitHub'
   end
   
   it "should format a multiline message body as code and escape" do

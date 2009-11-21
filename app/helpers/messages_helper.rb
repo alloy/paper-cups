@@ -60,7 +60,9 @@ module MessagesHelper
   end
   
   def format_full_name(member)
-    parts = h(member.full_name).split(' ')
+    name = h(member.full_name)
+    parts = name.split(' ')
+    return name if parts.length == 1
     parts[0..-2].join(' ') + parts.last
     "#{parts[0..-2].join(' ')} #{parts.last[0,1]}."
   end
