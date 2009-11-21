@@ -41,6 +41,7 @@ PC.Room = Class.create({
     this.newMessageForm = $('new_message');
     this.newMessageButton = this.newMessageForm.down('input[type=submit]');
     this.newMessageInput = this.newMessageForm.down('textarea');
+    Object.extend(this.newMessageInput, PC.Room.TextareaExt);
     this.newMessageInput.focus();
     
     this.newMessageInput.observe('keypress', this.keyPressOnMessageInput.bindAsEventListener(this));
@@ -77,7 +78,7 @@ PC.Room = Class.create({
     if (event.keyCode == Event.KEY_RETURN) {
       if (event.altKey) {
         event.stop();
-        this.newMessageInput.value += "\n";
+        this.newMessageInput.insertNewLineAtCursor();
       } else {
         this.submitMessage(event);
       }
@@ -174,5 +175,28 @@ PC.Room.watch = function() {
   var container = $('room');
   if (container && container.readAttribute('data-action')) {
     return new PC.Room(container);
+  }
+}
+
+PC.Room.TextareaExt = {
+  insertNewLineAtCursor: function() {
+    // IE
+    if (document.selection) {
+      document.selection.createRange().text = "\n";
+    } else {
+      // Others
+      var start_position = this.selectionStart;
+      if (start_position || start_position == 0) {
+        var end_position = this.selectionEnd;
+        var first_part = this.value.substring(0, start_position);
+        var last_part = this.value.substring(end_position, this.value.length);
+        this.value = first_part + "\n" + last_part;
+        
+        this.selectionStart = start_position + 1;
+        this.selectionEnd = start_position + 1;
+      } else {
+        this.value += "\n";
+      }
+    }
   }
 }

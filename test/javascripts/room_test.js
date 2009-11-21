@@ -245,9 +245,11 @@ Test.context("PC.Room", {
     this.room.submitMessage = function(e) { result = e };
     var handler = observerHandler(this.textarea, 'keypress');
     
+    this.textarea.selectionStart = 3;
     handler({ keyCode: Event.KEY_RETURN, altKey: true, stop: function() {} });
     this.assertNull(result);
-    this.assertEqual("foobar\n", this.textarea.value);
+    this.assertEqual("foo\nbar", this.textarea.value);
+    this.assertEqual(4, this.textarea.selectionStart);
     
     var doSubmitAgain = { keyCode: Event.KEY_RETURN, altKey: false };
     handler(doSubmitAgain);
