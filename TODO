@@ -1,6 +1,5 @@
 - When going to ‘earlier messages’, it links to the same day at the top. Might be related to TZ.
 
-- Add a ‘services’ controller which authenticates a user based on a token and loads something like service specific class to handle creating a message for that service. At first this will be a github hook thing only.
 - Add an overview page of attachments.
 - Let the user cancel changing the topic by clicking outside of the input.
 - Make styling a bit nicer: names of members should fit and scroll whole page and make sidebar fixed.
