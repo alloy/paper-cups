@@ -43,17 +43,11 @@ module MessagesHelper
       when MULTILINE
         format_multiline_message(message.body)
       end
-    end || format_regular_message(body)
+    end || format_links(body)
   end
   
   def markdown(text)
     RDiscount.new(text).to_html.strip
-  end
-  
-  def format_regular_message(body)
-    format_links(body) do |body_with_substituted_links|
-      markdown(body_with_substituted_links)[3..-5]
-    end
   end
   
   def format_multiline_message(raw_body)
@@ -69,16 +63,10 @@ module MessagesHelper
     end
   end
   
-  # Applying markdown can break urls, for instance by translating '&' to &amp;.
-  #
-  # Therefore this method substitutes the links in the body with a tmp string.
-  # The body is then yielded so markdown can be applied and the links are then
-  # interpolated into the end result.
   def format_links(body)
     only_url = (body =~ ONLY_URL)
-    links = []
     
-    result = h(body).gsub(ANY_URL) do
+    h(body).gsub(ANY_URL) do
       url, remainder = $1, $2
       
       content = if only_url
@@ -93,11 +81,8 @@ module MessagesHelper
         end
       end
       
-      links << link_to(content, url, :target => '_blank')
-      "%s#{remainder}"
+      "#{link_to(content, url, :target => '_blank')}#{remainder}"
     end
-    
-    yield(result) % links
   end
   
   def format_special_link(url)
