@@ -17,6 +17,18 @@
         <div class="field"><%= f.text_field :full_name %></div>
       </div>
       
+      <% if @member.invitation_token %>
+        <div class="field">
+          <div class="label"><%= f.label :password %></div>
+          <div class="field"><%= f.password_field :password %></div>
+        </div>
+        
+        <div class="field">
+          <div class="label"><%= f.label :verify_password %></div>
+          <div class="field"><%= f.password_field :verify_password, :value => '' %></div>
+        </div>
+      <% end %>
+      
       <div class="field">
         <div class="label"><%= f.label :time_zone %></div>
         <div class="field"><%= f.time_zone_select :time_zone %></div>
