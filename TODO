@@ -9,4 +9,4 @@
   - Store the last message id on the room instance, and a hash representing online members, topic,
     and attachments. This allows us to check if anything changed at all since a specific message id.
 - Use 'js' instead of json on rooms controller to be consistent with the messages controller.
-- Think about the best way to make search actually scale. MyISAM / thinkingsphinx.
+- Think about the best way to make search actually scale. MyISAM / thinkingsphinx. But for now it works good enough.
