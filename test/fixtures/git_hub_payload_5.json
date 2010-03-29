@@ -33,8 +33,38 @@
       },
       "message": "update pricing a tad",
       "timestamp": "2008-02-15T14:36:34-08:00"
+    },
+    {
+      "id": "123251ff97ee194a289832576287d6f8ad74e3d0",
+      "url": "http://github.com/defunkt/github/commit/123251ff97ee194a289832576287d6f8ad74e3d0",
+      "author": {
+        "email": "chris@ozmm.org",
+        "name": "Chris Wanstrath"
+      },
+      "message": "bananas are healthy!",
+      "timestamp": "2008-02-15T13:36:34-08:00"
+    },
+    {
+      "id": "456251ff97ee194a289832576287d6f8ad74e3d0",
+      "url": "http://github.com/defunkt/github/commit/456251ff97ee194a289832576287d6f8ad74e3d0",
+      "author": {
+        "email": "chris@ozmm.org",
+        "name": "Chris Wanstrath"
+      },
+      "message": "oranges too!",
+      "timestamp": "2008-02-15T13:16:34-08:00"
+    },
+    {
+      "id": "789251ff97ee194a289832576287d6f8ad74e3d0",
+      "url": "http://github.com/defunkt/github/commit/789251ff97ee194a289832576287d6f8ad74e3d0",
+      "author": {
+        "email": "chris@ozmm.org",
+        "name": "Chris Wanstrath"
+      },
+      "message": "but now time for some sugar!",
+      "timestamp": "2008-02-15T13:06:34-08:00"
     }
   ],
-  "after": "de8251ff97ee194a289832576287d6f8ad74e3d0",
+  "after": "789251ff97ee194a289832576287d6f8ad74e3d0",
   "ref": "refs/heads/master"
 }

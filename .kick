@@ -1,5 +1,4 @@
-# require 'ignore'
-# ignore(//)
+recipe :rails
 
 # App specific mappings
 process do |files|
@@ -10,13 +9,7 @@ process do |files|
     end
   end
   
-  run_ruby_tests test_files
+  Rails.run_tests test_files
 end
 
-require 'rails'
-require 'jstest'
-
-# Update stories
-# process do |files|
-#   execute "rake stories:convert" if files.delete('design/requirements.txt')
-# end
+recipe :jstest

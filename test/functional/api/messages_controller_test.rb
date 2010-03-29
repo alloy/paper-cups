@@ -10,8 +10,8 @@ describe "On the", Api::MessagesController, ", nested under a service and room, 
       post :create, :api_token => members(:api).to_param,
                     :service_id => 'git_hub',
                     :room_id => @room.to_param,
-                    :payload => File.read(fixture('git_hub_payload.json'))
-    }.should.differ('@room.messages.count', +2)
+                    :payload => File.read(fixture('git_hub_payload_3.json'))
+    }.should.differ('@room.messages.count', +3)
     status.should.be :created
   end
 end
