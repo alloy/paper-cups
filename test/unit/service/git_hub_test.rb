@@ -39,6 +39,6 @@ describe "Service::GitHub" do
     
     coalesced_message = messages.last
     coalesced_message.author.should == @member
-    coalesced_message.body.should == '[github/master] Total of 5 commits: http://github.com/defunkt/github/master/compare/41a212e...789251f'
+    coalesced_message.body.should == '[github/master] Total of 5 commits: http://github.com/defunkt/github/compare/41a212e...789251f'
   end
 end

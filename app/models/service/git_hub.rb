@@ -27,7 +27,7 @@ class Service::GitHub < Service
   end
   
   def coalesced_message
-    url = "#{@pushed['repository']['url']}/#{@branch}/compare/#{@commits.first['id'][0,7]}...#{@commits.last['id'][0,7]}"
+    url = "#{@pushed['repository']['url']}/compare/#{@commits.first['id'][0,7]}...#{@commits.last['id'][0,7]}"
     "[#{@repo}/#{@branch}] Total of #{@commits.size} commits: #{url}"
   end
 end
