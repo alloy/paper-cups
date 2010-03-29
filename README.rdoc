@@ -9,7 +9,7 @@ _absolutely_ necessary.
 
 == Install
 
-The vendored Rails is a git submodule, to get it:
+The vendored Rails is a git submodule, get it with:
 
   $ git submodule update --init
 
