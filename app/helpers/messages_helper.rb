@@ -33,6 +33,14 @@ module MessagesHelper
     end
   end
   
+  def format_timestamp(timestamp)
+    if params[:q]
+      open_link_to(timestamp.strftime("%d %b %Y %H:%M"), room_messages_on_day_path(@room, :day => timestamp.to_date))
+    else
+      timestamp.strftime("%H:%M")
+    end
+  end
+  
   def format_message(message)
     if message.attachment_message?
       format_attachment_message(message)

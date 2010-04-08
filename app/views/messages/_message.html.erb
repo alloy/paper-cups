@@ -1,7 +1,7 @@
 <% if timestamp_message_needed?(message) %>
   <tr class="timestamp">
     <th></th>
-    <td><%= message.created_at.strftime(params[:q] ? "%d %b %Y %H:%M" : "%H:%M") %></td>
+    <td><%= format_timestamp(message.created_at) %></td>
   </tr>
 <% end %>
 <% if message.topic_changed_message? %>
