@@ -142,20 +142,6 @@ a.cancel:hover
 
 /* @end */
 
-.sidebar
-{
-  position: fixed;
-  right: 0;
-  top: 100px;
-  width: 250px;
-  padding: 0 10px;
-}
-
-.sidebar div
-{
-  padding: 10px 0;
-}
-
 #topic
 {
   font-style: italic;
@@ -164,11 +150,7 @@ a.cancel:hover
 
 .messages
 {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  position: fixed;
   top: 100px;
-  right: 270px;
   left: 0;
   bottom: 0;
 }

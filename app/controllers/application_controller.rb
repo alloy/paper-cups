@@ -3,9 +3,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   filter_parameter_logging :password
   before_filter :find_authenticated, :block_access, :set_actionmailer_host, :set_time_zone
-  # report_errors_to 'http://forestwatcher.example.com/paper_cups', :username => 'forestwatcher', :password => 'secret'
   
   protected
+  
+  # Request from an iPhone or iPod touch? (Mobile Safari user agent)
+  def iphone_user_agent?
+    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"] =~ /(Mobile\/.+Safari)/
+  end
+  helper_method :iphone_user_agent?
   
   # Responds with a http status code and an error document
   def send_response_document(status)
@@ -51,5 +56,9 @@ class ApplicationController < ActionController::Base
   
   def logout
     request.session.delete(:member_id)
+  end
+  
+  def adjust_format_for_iphone
+    request.format = :iphone if request.format == :html && iphone_user_agent?
   end
 end

@@ -1,3 +1,7 @@
 <meta charset="UTF-8">
 <title><%=h [@title, 'PaperCups'].compact.join(' · ') %></title>
-<%= stylesheet_link_tag %w(reset default syntaxhighlighter_2.1.364/shCore syntaxhighlighter_2.1.364/shThemeRDark), :media => 'all', :cache => 'application' %>
+<% if iphone_user_agent? %>
+  <%= stylesheet_link_tag %w(reset iphone), :media => 'all', :cache => 'iphone' %>
+<% else %>
+  <%= stylesheet_link_tag %w(reset default syntaxhighlighter_2.1.364/shCore syntaxhighlighter_2.1.364/shThemeRDark), :media => 'all', :cache => 'application' %>
+<% end %>

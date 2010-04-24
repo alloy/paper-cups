@@ -1,9 +1,12 @@
 if (typeof PC == "undefined") PC = {};
 
+Event.KEY_IPHONE_RETURN = 10;
+
 PC.Room = Class.create({
   initialize: function(container) {
     this.container = $(container);
     this.action = this.container.readAttribute('data-action');
+    this.topicHeader = $('topic');
     this.messagesTable = this.container.down('#messages');
     this.messagesTBody = this.messagesTable.down('tbody');
     this.attachmentsList = $('attachments');
@@ -12,10 +15,13 @@ PC.Room = Class.create({
   },
   
   start: function() {
-    this.setupWindow();
-    this.setupMuteCheckbox();
+    this.hasSideBar = ($$('.sidebar').length > 0);
+    if (this.hasSideBar) {
+      this.setupWindow();
+      this.setupMuteCheckbox();
+      this.setupTopicEditor();
+    }
     this.setupRefreshedElements();
-    this.setupTopicEditor();
   },
   
   setupWindow: function() {
@@ -51,7 +57,6 @@ PC.Room = Class.create({
   },
   
   setupTopicEditor: function() {
-    this.topicHeader = $('topic');
     this.topicForm = $$('form.edit_room').first();
     this.topicForm.hide();
     
@@ -75,7 +80,7 @@ PC.Room = Class.create({
   },
   
   keyPressOnMessageInput: function(event) {
-    if (event.keyCode == Event.KEY_RETURN) {
+    if (event.keyCode == Event.KEY_RETURN || event.keyCode == Event.KEY_IPHONE_RETURN) {
       if (event.altKey) {
         event.stop();
         this.newMessageInput.insertNewLineAtCursor();
@@ -142,11 +147,13 @@ PC.Room = Class.create({
   loadData: function(response) {
     var data = response.responseText.evalJSON();
     this.topicHeader.innerHTML = data.room_topic;
-    this.onlineMembersTBody.innerHTML = data.online_members;
-    this.attachmentsList.innerHTML = data.attachments;
+    if (this.hasSideBar) {
+      this.onlineMembersTBody.innerHTML = data.online_members;
+      this.attachmentsList.innerHTML = data.attachments;
+    }
     if (data.messages && !data.messages.strip().empty()) {
       this.messagesTBody.insert(data.messages);
-      this.notify();
+      if (this.hasSideBar) { this.notify(); }
       if (typeof SyntaxHighlighter != "undefined") { SyntaxHighlighter.highlight(); }
       this.newMessageInput.scrollIntoView();
     }

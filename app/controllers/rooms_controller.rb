@@ -4,6 +4,8 @@ class RoomsController < ApplicationController
     (@membership = @authenticated.memberships.find_by_room_id(params[:id])) && @room = @membership.room
   end
   
+  before_filter :adjust_format_for_iphone
+  
   def index
     redirect_to room_url(@authenticated.memberships.first.room)
   end
@@ -18,8 +20,15 @@ class RoomsController < ApplicationController
   def show
     @authenticated.online_in(@room)
     respond_to do |format|
-      format.html { @messages = @room.messages.recent }
-      format.json
+      format.iphone { load_recent_messages }
+      format.html { load_recent_messages }
+      format.json { render :layout => false }
     end
+  end
+  
+  private
+  
+  def load_recent_messages
+    @messages = @room.messages.recent
   end
 end
