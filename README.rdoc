@@ -16,7 +16,7 @@ The vendored Rails is a git submodule, get it with:
 Then:
 
   $ rake db:create:all
-  $ rake migrate
+  $ rake db:migrate
 
 Add some development data:
 
