@@ -1,14 +1,23 @@
-<h2><%= @title = @room.label %></h2>
-<h3 id="topic"><%=h @room.topic %></h3>
+<p class="title">
+  <span id="title"><%= @title = @room.label %></span>
+  -
+  <span id="topic"><%=h @room.topic %></span>
 
-<div>
-  <% form_tag room_messages_path(@room), :method => :get do %>
-    <%= text_field_tag 'q', '', :size => 12, :tabfocus => 1 %>
-    <%= submit_tag 'Search', :name => nil %>
-  <% end %>
-</div>
+</p>
 
 <div id="room" data-action="<%= room_path(@room, 'json') %>">
+  <div id="menu">
+    <div id="messages-title" class="active">
+      Messages
+    </div>
+    <div id="search">
+      <% form_tag room_messages_path(@room), :method => :get do %>
+        <%= text_field_tag 'q', '', :size => nil, :tabfocus => 1 %>
+        <%= submit_tag 'Search', :name => nil %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="messages column">
     <table id="messages">
       <tbody>
@@ -20,15 +29,12 @@
         <%= render :partial => "messages/message.html.erb", :collection => @messages %>
       </tbody>
     </table>
-    
-    <% form_for [@room, Message.new] do |f| %>
-      <div class="fields">
-        <div class="field"><%= f.text_area :body, :rows => 1, :cols => 80, :tabfocus => 0 %></div>
-        
-        <div class="submit">
-          <%= f.submit 'Send message' %>
-        </div>
-      </div>
-    <% end %>
   </div>
 </div>
+
+<% form_for [@room, Message.new] do |f| %>
+  <%= f.text_area :body, :rows => 2, :cols => nil, :tabfocus => 0 %>
+  <div class="submit">
+    <%= f.submit 'Send' %>
+  </div>
+<% end %>

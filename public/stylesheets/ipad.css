@@ -91,7 +91,7 @@ ul#navigation li + li
 
 div#main
 {
-  padding: 12px;
+  padding: 0 12px;
 }
 
 /* @end */
@@ -142,10 +142,56 @@ a.cancel:hover
 
 /* @end */
 
+p.title
+{
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-bottom: 4px;
+}
+
 #topic
 {
   font-style: italic;
-  padding: 10px 0;
+}
+
+#new_message
+{
+  margin-top: 0.5em;
+}
+
+#new_message textarea
+{
+  width: 100%;
+}
+
+#new_message .submit
+{
+  text-align: right;
+}
+
+#room
+{
+  -webkit-border-radius: 5px 5px;
+  border: solid 1px rgb(153, 153, 153);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(240, 240, 240)), to(rgb(255, 255, 255)));
+}
+
+#menu
+{
+  padding: 4px 1em 4px 1em;
+  border-bottom: solid 1px rgb(153, 153, 153);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(230, 230, 230)), to(rgb(200, 200, 200)));
+}
+
+#messages-title, #search
+{
+  margin-right: 1em;
+  display: inline-block;
+}
+
+#search input[type="text"]
+{
+  width: 25em;
 }
 
 .messages
@@ -162,7 +208,7 @@ a.cancel:hover
 
 #messages th
 {
-  width: 100px;
+  width: 12em;
   vertical-align: top;
   text-align: right;
   padding: 10px;
@@ -172,6 +218,7 @@ a.cancel:hover
 {
   vertical-align: top;
   padding: 10px;
+  width: 55em;
 }
 #messages tr.timestamp td
 {
@@ -180,7 +227,8 @@ a.cancel:hover
   font-size: 70%;
   font-weight: bold;
   color: #666;
-  background-color: #cee27e;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#cee27e), to(#eeff9e));
+
 }
 #messages tr.topic td
 {
