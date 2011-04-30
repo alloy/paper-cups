@@ -2,7 +2,6 @@
   <span id="title"><%= @title = @room.label %></span>
   -
   <span id="topic"><%=h @room.topic %></span>
-
 </p>
 
 <div id="room" data-action="<%= room_path(@room, 'json') %>">
@@ -18,17 +17,20 @@
     </div>
   </div>
 
+  <div class="links">
+    <%= open_link_to 'Earlier messages...', room_messages_on_day_path(@room, :day => Date.today) %>
+  </div>
+
   <div class="messages column">
     <table id="messages">
       <tbody>
-        <tr>
-          <th></th>
-          <td><%= open_link_to 'Earlier messages…', room_messages_on_day_path(@room, :day => Date.today) %></td>
-        </tr>
-        
         <%= render :partial => "messages/message.html.erb", :collection => @messages %>
       </tbody>
     </table>
+  </div>
+
+  <div class="links">
+    <a href="#" onclick="javascript: location.reload();">Reload messages...</a></td>
   </div>
 </div>
 

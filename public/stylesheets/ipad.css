@@ -196,6 +196,7 @@ p.title
 
 .messages
 {
+  margin-top: 0.5em;
   top: 100px;
   left: 0;
   bottom: 0;
@@ -253,4 +254,10 @@ p.title
 {
   /* WebKit does not wrap correctly long words so break URLs anywhere */
   word-break: break-all;
+}
+
+.links
+{
+  text-align: right;
+  margin: 0.5em 1em;
 }
