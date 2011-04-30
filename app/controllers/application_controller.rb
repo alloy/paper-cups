@@ -6,8 +6,16 @@ class ApplicationController < ActionController::Base
   
   protected
   
+  # Request from an iPad?
+  def ipad_user_agent?
+    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"] =~ /(Mobile\/.+iPad.+Safari)/
+    return true
+  end
+  helper_method :ipad_user_agent?
+
   # Request from an iPhone or iPod touch? (Mobile Safari user agent)
   def iphone_user_agent?
+    return false if ipad_user_agent?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"] =~ /(Mobile\/.+Safari)/
   end
   helper_method :iphone_user_agent?
@@ -58,6 +66,10 @@ class ApplicationController < ActionController::Base
     request.session.delete(:member_id)
   end
   
+  def adjust_format_for_ipad
+    request.format = :ipad if request.format == :html && ipad_user_agent?
+  end
+
   def adjust_format_for_iphone
     request.format = :iphone if request.format == :html && iphone_user_agent?
   end
