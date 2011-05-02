@@ -1,0 +1,263 @@
+/* @group Typography */
+
+html,
+input
+{
+  font: 14px/20px "Lucida Grande", Lucida, "Lucida Sans Unicode", Verdana, sans-serif;
+}
+
+h1
+{
+  font-size: 200%;
+}
+h2
+{
+  font-size: 150%;
+  margin-bottom: 24px;
+}
+
+/* @end */
+
+/* @group Basics */
+
+a,
+a:visited
+{
+  color: #366e26;
+}
+
+a:hover,
+a:active
+{
+  color: #cee27e;
+}
+
+/* @end */
+
+/* @group Layout */
+
+a#logo
+{
+  display: block;
+  padding: 6px 12px;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 90%;
+}
+
+p#member
+{
+  position: absolute;
+  top: 3px;
+  right: 12px;
+}
+p#member a
+{
+  text-decoration: none;
+  font-size: 10px;
+}
+p#member a+a
+{
+  margin-left: 6px;
+}
+
+ul#navigation
+{
+  background-color: #cee27e;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+  border-top: 1px solid #daef83;
+  border-bottom: 1px solid #b7c96e;
+}
+ul#navigation li
+{
+  display: inline;
+}
+ul#navigation a,
+ul#navigation a:visited
+{
+  text-decoration: none;
+  color: #222;
+}
+ul#navigation a:hover,
+ul#navigation a:active
+{
+  color: #637321;
+}
+ul#navigation li + li
+{
+  margin-left:  6px;
+}
+
+div#main
+{
+  padding: 0 12px;
+}
+
+/* @end */
+
+/* @group Forms */
+
+div.field
+{
+  margin: 12px 0px;
+}
+label,
+div.label
+{
+  color: #666;
+}
+div.label a
+{
+  color: #999;
+  font-size: 80%;
+  text-decoration: none;
+}
+div.label a:hover
+{
+  text-decoration: underline;
+}
+div.inline label
+{
+  font-size: 90%;
+}
+
+input[type="text"],
+input[type="password"]
+{
+  color: #222;
+}
+
+a.cancel
+{
+  text-decoration: none;
+  color: #999;
+  font-size: 80%;
+  margin-left: 3px;
+}
+a.cancel:hover
+{
+  text-decoration: underline;
+}
+
+/* @end */
+
+p.title
+{
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-bottom: 4px;
+}
+
+#topic
+{
+  font-style: italic;
+}
+
+#new_message
+{
+  margin-top: 0.5em;
+}
+
+#new_message textarea
+{
+  width: 100%;
+}
+
+#new_message .submit
+{
+  text-align: right;
+}
+
+#room
+{
+  -webkit-border-radius: 5px 5px;
+  border: solid 1px rgb(153, 153, 153);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(240, 240, 240)), to(rgb(255, 255, 255)));
+}
+
+#menu
+{
+  padding: 4px 1em 4px 1em;
+  border-bottom: solid 1px rgb(153, 153, 153);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(230, 230, 230)), to(rgb(200, 200, 200)));
+}
+
+#messages-title, #search
+{
+  margin-right: 1em;
+  display: inline-block;
+}
+
+#search input[type="text"]
+{
+  width: 25em;
+}
+
+.messages
+{
+  margin-top: 0.5em;
+  top: 100px;
+  left: 0;
+  bottom: 0;
+}
+
+.messages img
+{
+  width: 300px;
+}
+
+#messages th
+{
+  width: 12em;
+  vertical-align: top;
+  text-align: right;
+  padding: 10px;
+  font-size: 85%;
+}
+#messages td
+{
+  vertical-align: top;
+  padding: 10px;
+  width: 55em;
+}
+#messages tr.timestamp td
+{
+  vertical-align: middle;
+  padding: 0 0 0 10px;
+  font-size: 70%;
+  font-weight: bold;
+  color: #666;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#cee27e), to(#eeff9e));
+
+}
+#messages tr.topic td
+{
+  vertical-align: middle;
+  padding: 0 0 0 10px;
+  font-size: 70%;
+  font-weight: bold;
+  font-style: italic;
+  color: #666;
+  background-color: #99CCFF;
+}
+#messages .code
+{
+  padding: 10px;
+  background-color: lightgrey;
+  width: 550px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.message a
+{
+  /* WebKit does not wrap correctly long words so break URLs anywhere */
+  word-break: break-all;
+}
+
+.links
+{
+  text-align: right;
+  margin: 0.5em 1em;
+}
