@@ -61,6 +61,21 @@ describe "On the", RoomsController, "a member" do
   should.disallow.put :update, :id => rooms(:kitten)
 end
 
+describe "On the", RoomsController, "a member on an iOS device" do
+  before do
+    login members(:lrz)
+    @room = rooms(:macruby)
+  end
+
+  %w{ html iphone ipad }.each do |format|
+    it "should see an overview of messages in the room" do
+      get :show, :id => @room.to_param, :format => format
+      status.should.be :success
+      template.should.be "rooms/show.#{format}.erb"
+    end
+  end
+end
+
 describe "On the", MembershipsController, "a visitor" do
   should.require_login.get :index
   should.require_login.get :show, :id => rooms(:kitten)

@@ -1,6 +1,9 @@
 set :application, "papercups"
-set :domain, "#{application}.superalloy.nl"
-set :deploy_to, "/var/www/#{domain}"
+# set :domain, "#{application}.superalloy.nl"
+# set :deploy_to, "/var/www/apps/#{domain}"
+
+set :domain, "alloy.xen.prgmr.com"
+set :deploy_to, "/var/www/apps/papercups.superalloy.nl"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
