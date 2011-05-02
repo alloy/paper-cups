@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   # Request from an iPad?
   def ipad_user_agent?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"] =~ /(Mobile\/.+iPad.+Safari)/
-    return true
   end
   helper_method :ipad_user_agent?
 
