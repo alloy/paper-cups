@@ -1,0 +1,42 @@
+<p class="title">
+  <span id="title"><%= @title = @room.label %></span>
+  -
+  <span id="topic"><%=h @room.topic %></span>
+</p>
+
+<div id="room" data-action="<%= room_path(@room, 'json') %>">
+  <div id="menu">
+    <div id="messages-title" class="active">
+      Messages
+    </div>
+    <div id="search">
+      <% form_tag room_messages_path(@room), :method => :get do %>
+        <%= text_field_tag 'q', '', :size => nil, :tabfocus => 1 %>
+        <%= submit_tag 'Search', :name => nil %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="links">
+    <%= open_link_to 'Earlier messages...', room_messages_on_day_path(@room, :day => Date.today) %>
+  </div>
+
+  <div class="messages column">
+    <table id="messages">
+      <tbody>
+        <%= render :partial => "messages/message.html.erb", :collection => @messages %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="links">
+    <a href="#" onclick="javascript: location.reload();">Reload messages...</a></td>
+  </div>
+</div>
+
+<% form_for [@room, Message.new] do |f| %>
+  <%= f.text_area :body, :rows => 2, :cols => nil, :tabfocus => 0 %>
+  <div class="submit">
+    <%= f.submit 'Send' %>
+  </div>
+<% end %>

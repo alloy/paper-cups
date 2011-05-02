@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render :partial => 'layouts/head.html.erb' %>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <a id="logo" href="/">PaperCups</a>
+        <%= render :partial => 'sessions/status.html.erb' %>
+      </div>
+      
+      <div id="main">
+        <%= yield :layout %>
+      </div>
+    </div>
+    
+
+    <%= render :partial => 'layouts/application_javascript_includes.html.erb' %>
+  </body>
+</html>

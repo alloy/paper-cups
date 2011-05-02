@@ -4,6 +4,7 @@ class RoomsController < ApplicationController
     (@membership = @authenticated.memberships.find_by_room_id(params[:id])) && @room = @membership.room
   end
   
+  before_filter :adjust_format_for_ipad
   before_filter :adjust_format_for_iphone
   
   def index
@@ -20,6 +21,7 @@ class RoomsController < ApplicationController
   def show
     @authenticated.online_in(@room)
     respond_to do |format|
+      format.ipad { load_recent_messages }
       format.iphone { load_recent_messages }
       format.html { load_recent_messages }
       format.json { render :layout => false }
