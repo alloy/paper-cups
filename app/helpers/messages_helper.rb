@@ -33,7 +33,21 @@ module MessagesHelper
     end
   end
   
-  def format_timestamp(timestamp)
+  def format_message_timestamp(message)
+    created_at = message.created_at
+    authors_created_at = created_at.in_time_zone(message.author.time_zone)
+    if @authenticated.time_zone == message.author.time_zone
+      return format_timestamp(created_at)
+    else
+      s = format_timestamp(created_at)
+      s << " ("
+      s << authors_created_at.strftime("%d %b %H:%M")
+      s << ")"
+      return s
+    end
+  end
+  
+  def format_timestamp(timestamp, time_zone = nil)
     if params[:q]
       open_link_to(timestamp.strftime("%d %b %Y %H:%M"), room_messages_on_day_path(@room, :day => timestamp.to_date))
     else
