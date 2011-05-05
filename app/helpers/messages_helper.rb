@@ -26,7 +26,7 @@ module MessagesHelper
   end
   
   def link_to_messages_on_date(date, direction)
-    if date
+    if date && @authenticated.created_at < date
       path = room_messages_on_day_path(@room, :day => date)
       link = open_link_to(date.to_formatted_s(:long_ordinal), path)
       direction == :previous ? '← ' + link : link + ' →'

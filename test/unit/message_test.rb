@@ -54,10 +54,22 @@ describe "A", Message do
 end
 
 describe Message do
+  it "should return messages matching the given query" do
+    Message.search('hernandez').should == [messages(:patrick_hernandez)]
+    Message.search('kitt').should == [messages(:daily_kitten)]
+    Message.search('a').should == messages(:patrick_hernandez, :daily_kitten, :change_life).sort_by(&:id)
+  end
+  
   it "should return messages since a given id" do
     messages = Message.all
+    Message.since(nil).should == messages
     Message.since(messages.first.id).should.equal_list messages[1..-1]
     Message.since(messages.second.id.to_s).should.equal_list messages[2..-1]
+    
+    member = Member.create!(:email => 'new@example.com')
+    sleep 1
+    message = Message.create!(:author => members(:lrz), :room => rooms(:macruby), :body => 'Ahoy!')
+    Message.since_member_joined(member).since(nil).should == [message]
   end
   
   it "should return messages on a given date" do
@@ -86,7 +98,7 @@ describe Message do
     messages_after_join = Array.new(20) { room.messages.create! :author => members(:lrz), :body => "foo" }
     messages = messages_before_join + messages_after_join
     
-    room.reload.messages.recent(members(:alloy)).should.equal_list messages.last(25)
-    room.reload.messages.recent(member).should.equal_list messages_after_join
+    room.reload.messages.since_member_joined(members(:alloy)).recent.should.equal_list messages.last(25)
+    room.reload.messages.since_member_joined(member).recent.should.equal_list messages_after_join
   end
 end

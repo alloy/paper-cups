@@ -65,12 +65,6 @@ describe 'A', Room do
     @room.next_date_that_contains_messages(2.days.from_now.to_date.to_s).should.be nil
   end
   
-  it "should return messages matching the given query" do
-    @room.search('hernandez').should == [messages(:patrick_hernandez)]
-    @room.search('kitt').should == [messages(:daily_kitten)]
-    @room.search('a').should == messages(:patrick_hernandez, :daily_kitten, :change_life).sort_by(&:id)
-  end
-  
   it "should not allow access to label" do
     @room.update_attributes(:label => 'IronRuby')
     @room.reload.label.should == 'MacRuby'

@@ -7,8 +7,10 @@ class Message < ActiveRecord::Base
   accepts_nested_attributes_for :attachment
   before_create :set_attachment_metadata, :if => :attachment
   
-  named_scope :since, lambda { |id| { :conditions => ["messages.id > ?", id] } }
-  
+  named_scope :since_member_joined, lambda { |member| { :conditions => ["messages.created_at > ?", member.created_at] } }
+  named_scope :since, lambda { |id| { :conditions => ["messages.id > ?", id] } if id }
+  named_scope :search, lambda { |query| { :conditions => ["messages.body LIKE ?", "%#{query}%"] } }
+
   def topic_changed_message?
     message_type == 'topic'
   end
@@ -17,9 +19,8 @@ class Message < ActiveRecord::Base
     message_type == 'attachment'
   end
   
-  def self.recent(since_member_joined)
+  def self.recent
     find(:all,
-      :conditions => ["messages.created_at > ?", since_member_joined.created_at],
       :order => 'messages.id DESC',
       :limit => 25,
       :include => :author

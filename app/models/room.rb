@@ -30,10 +30,6 @@ class Room < ActiveRecord::Base
     messages.all :include => :attachment, :order => 'messages.id DESC', :conditions => { :message_type => 'attachment' }, :limit => 5
   end
   
-  def search(query)
-    messages.find :all, :conditions => ["messages.body LIKE ?", "%#{query}%"]
-  end
-  
   private
   
   def date_that_contains_messages(date, order, operator)

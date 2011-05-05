@@ -17,6 +17,7 @@ describe "On the", MessagesController, " nested under a room, a member" do
   end
   
   it "should create a message and see the newest messages" do
+    @authenticated.update_attribute(:created_at, Date.yesterday)
     memberships(:alloy_in_macruby).online!
     
     lambda {
@@ -44,29 +45,52 @@ describe "On the", MessagesController, " nested under a room, a member" do
   end
   
   it "should see all messages for the given date" do
-    freeze_time!(Time.parse('01/01/2009'))
-    messages = Message.all
-    
-    messages.last.update_attribute(:created_at, "2008-12-30")
-    messages[1..2].each { |m| m.update_attribute(:created_at, "2008-12-31") }
-    messages.first.update_attribute(:created_at, "2009-01-01")
-    
+    @authenticated.update_attribute(:created_at, Date.parse('12/30/2008'))
+    messages = setup_messages_on_a_date
     get :index, :room_id => @room.to_param, :day => '2008-12-31'
-    
     status.should.be :success
     template.should.be 'messages/index'
-    assigns(:messages).should.equal_list messages[1..2]
+    assigns(:messages).should.equal_list messages
+  end
+  
+  it "should not see messages for the given date if the member didn't join then yet" do
+    @authenticated.update_attribute(:created_at, Date.parse('01/01/2009'))
+    messages = setup_messages_on_a_date
+    get :index, :room_id => @room.to_param, :day => '2008-12-31'
+    status.should.be :success
+    template.should.be 'messages/index'
+    assigns(:messages).should.be.empty
   end
   
   it "should see all messages matching the search query" do
+    @authenticated.update_attribute(:created_at, Date.yesterday)
     get :index, :room_id => @room.to_param, :q => 'itte'
     status.should.be :success
     template.should.be 'messages/index'
     assigns(:messages).should == [messages(:daily_kitten)]
   end
   
+  it "should not see messages matching the search query that were created before the member joined" do
+    @authenticated.update_attribute(:created_at, Date.tomorrow)
+    get :index, :room_id => @room.to_param, :q => 'itte'
+    status.should.be :success
+    template.should.be 'messages/index'
+    assigns(:messages).should.be.empty
+  end
+  
   should.disallow.get :index, :room_id => rooms(:kitten)
   should.disallow.post :create, :room_id => rooms(:kitten), :message => { :body => "Sacre blue!" }
+  
+  private
+  
+  def setup_messages_on_a_date
+    freeze_time!(Time.parse('01/01/2009'))
+    messages = Message.all
+    messages.last.update_attribute(:created_at, "2008-12-30")
+    messages[1..2].each { |m| m.update_attribute(:created_at, "2008-12-31") }
+    messages.first.update_attribute(:created_at, "2009-01-01")
+    messages[1..2]
+  end
 end
 
 describe "On the", MembershipsController, "a visitor" do

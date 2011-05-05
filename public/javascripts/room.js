@@ -113,7 +113,10 @@ PC.Room = Class.create({
   },
   
   lastMessageId: function() {
-    return this.lastMessage().readAttribute('data-message-id');
+    var last = this.lastMessage();
+    if (last) {
+      return last.readAttribute('data-message-id');
+    }
   },
   
   requestData: function() {

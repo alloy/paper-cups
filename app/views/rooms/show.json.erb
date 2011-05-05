@@ -1,4 +1,4 @@
-<% messages = @room.messages.since(params[:since]) -%>
+<% messages = @room.messages.since_member_joined(@authenticated).since(params[:since]) -%>
 <% @last_message = @room.message_preceding(messages.first) unless messages.empty? -%>
 <%= {
   :room_topic => @room.topic,

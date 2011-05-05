@@ -102,11 +102,21 @@ describe MessagesHelper, 'concerning date/time formatting' do
   end
   
   it "should return a pretty date link" do
+    @authenticated = members(:lrz)
+    @authenticated.update_attribute(:created_at, Date.yesterday)
+    
     link_to_messages_on_date(nil, :previous).should.be nil
     
     link = open_link_to(Date.today.to_formatted_s(:long_ordinal), room_messages_on_day_path(@room, :day => Date.today))
     link_to_messages_on_date(Date.today, :previous).should == '← ' + link
     link_to_messages_on_date(Date.today, :next).should == link + ' →'
+  end
+  
+  it "should not return a pretty date link if the date is from before the member joined" do
+    @authenticated = members(:lrz)
+    @authenticated.update_attribute(:created_at, Date.tomorrow)
+    link_to_messages_on_date(Date.yesterday, :previous).should == nil
+    link_to_messages_on_date(Date.yesterday, :next).should == nil
   end
   
   it "should return whether or not a timestamp message is needed" do

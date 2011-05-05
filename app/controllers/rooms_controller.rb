@@ -31,6 +31,6 @@ class RoomsController < ApplicationController
   private
   
   def load_recent_messages
-    @messages = @room.messages.recent(@authenticated)
+    @messages = @room.messages.since_member_joined(@authenticated).recent
   end
 end

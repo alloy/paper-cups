@@ -27,12 +27,28 @@ describe "On the", RoomsController, "a member" do
     template.should.be 'rooms/show'
   end
   
+  it "should only see messages from after the member joined" do
+    sleep 1
+    member = Member.create!(:full_name => 'new member', :email => 'new@example.com')
+    @room.memberships.create!(:member => member)
+    sleep 1
+    messages = Array.new(2) { @room.messages.create! :author => member, :body => "foo" }
+    
+    login(member)
+    get :show, :id => @room.to_param
+    assigns(:room).should == @room
+    assigns(:messages).should.equal_list messages
+    status.should.be :success
+    template.should.be 'rooms/show'
+  end
+  
   it "should be marked as being online" do
     get :show, :id => @room.to_param
     @room.members.online.should == [@authenticated]
   end
   
   it "should return new messages since the given message id" do
+    @authenticated.update_attribute(:created_at, Date.yesterday)
     memberships(:alloy_in_macruby).online!
     get :show, :id => @room.to_param, :since => @room.messages.first.to_param, :format => 'json'
     status.should.be :success
@@ -44,6 +60,14 @@ describe "On the", RoomsController, "a member" do
       data['messages'].should.include "data-message-id=\"#{message.id}\""
     end
     data['room_topic'].should == @room.topic
+  end
+  
+  it "should not return messages since the given id if they are from before the member joined" do
+    @authenticated.update_attribute(:created_at, Date.tomorrow)
+    get :show, :id => @room.to_param, :since => @room.messages.first.to_param, :format => 'json'
+    status.should.be :success
+    data = JSON.parse(response.body)
+    data['messages'].should == nil
   end
   
   it "should be able to set the room topic" do
