@@ -10,6 +10,9 @@ module MessagesHelper
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
   YOUTUBE_URL = /^#{URL_PROTOCOL}\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
   
+  TRAC_TICKET = /(^|\s)#(\d+)\b/
+  TRAC_TICKET_URL = "http://www.macruby.org/trac/ticket/%s"
+  
   URL_PROTOCOL_SIZE = 'https://'.size
   TRUNCATE_URL = 50
   
@@ -90,6 +93,9 @@ module MessagesHelper
       end
       
       "#{link_to(content, url, :target => '_blank')}#{remainder}"
+    end.gsub(TRAC_TICKET) do
+      space, number = $1, $2
+      "#{space}#{link_to("##{number}", TRAC_TICKET_URL % number, :target => '_blank')}"
     end
   end
   

@@ -76,6 +76,17 @@ describe MessagesHelper do
     format_message(Message.new(:body => body)).should == open_link_to(poster_frame, body.strip)
   end
   
+  it "autolinks #digit to a Trac ticket" do
+    [
+      "%s",
+      "%s <- is crazy!",
+      "Check this: %s",
+      "Oi! Can you tell me if %s needs a fix or is this just a joke?",
+    ].each do |body|
+      should_format_anchor_message(body, 'http://www.macruby.org/trac/ticket/42', '#42', true)
+    end
+  end
+  
   it "should format an attachment message" do
     message = rooms(:macruby).messages.create!(:author => members(:lrz), :attachment_attributes => { :uploaded_file => rails_icon })
     
@@ -88,8 +99,10 @@ describe MessagesHelper do
   
   private
   
-  def should_format_anchor_message(body, url, expected = nil)
-    format_message(Message.new(:body => body % url)).should == h(body.strip) % open_link_to(expected || url, url)
+  def should_format_anchor_message(body, url, expected = nil, autolink_to_expected_text = false)
+    display_body = body % (autolink_to_expected_text ? expected : url)
+    link = open_link_to(expected || url, url)
+    format_message(Message.new(:body => display_body)).should == h(body.strip) % link
   end
 end
 
