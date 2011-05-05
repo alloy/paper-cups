@@ -1,6 +1,8 @@
 module MessagesHelper
   MARKDOWN_ALIASES = %w{ markdown md }
   YOUTUBE_POSTER_FRAME = 'http://img.youtube.com/vi/%s/0.jpg'
+  TRAC_TICKET_URL = "http://www.macruby.org/trac/ticket/%s"
+  IMGUR_IMAGE_URL = "http://i.imgur.com/%s.jpg"
   
   MULTILINE = /\n/m
   
@@ -8,10 +10,9 @@ module MessagesHelper
   ANY_URL = /(#{URL_PROTOCOL}.+?)(\s|\)|\.\s|\.$|$)/i
   ONLY_URL = /^#{URL_PROTOCOL}[^\s]+$/i
   IMAGE_URL = /\.(gif|png|jpe?g)\??/i
+  IMGUR_URL = /^#{URL_PROTOCOL}imgur.com(\/gallery)?\/(\w+)$/i
   YOUTUBE_URL = /^#{URL_PROTOCOL}\w*\.*youtube.com\/watch.+?v=([\w-]+)/i
-  
   TRAC_TICKET = /(^|\s)#(\d+)\b/
-  TRAC_TICKET_URL = "http://www.macruby.org/trac/ticket/%s"
   
   URL_PROTOCOL_SIZE = 'https://'.size
   TRUNCATE_URL = 50
@@ -105,6 +106,8 @@ module MessagesHelper
       open_link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), url)
     when IMAGE_URL
       open_image_link(url)
+    when IMGUR_URL
+      open_image_link(IMGUR_IMAGE_URL % $2)
     end
   end
   
