@@ -71,11 +71,10 @@ describe MessagesHelper do
   end
   
   it "should create an image tag to an image on imgur.com" do
-    expected = open_link_to(image_tag("http://i.imgur.com/vTAUD.jpg", :alt => ''), "http://i.imgur.com/vTAUD.jpg")
     body = " \thttps://imgur.COM/vTAUD\n"
-    format_message(Message.new(:body => body)).should == expected
+    format_message(Message.new(:body => body)).should == open_link_to(image_tag("http://i.imgur.com/vTAUD.jpg", :alt => ''), body.strip)
     body = " \thttp://imguR.com/gallery/vTAUD\n"
-    format_message(Message.new(:body => body)).should == expected
+    format_message(Message.new(:body => body)).should == open_link_to(image_tag("http://i.imgur.com/vTAUD.jpg", :alt => ''), body.strip)
   end
   
   it "should create an anchor to a youtube clip with an image tag that shows the poster frame" do

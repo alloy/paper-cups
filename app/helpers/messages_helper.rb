@@ -103,11 +103,11 @@ module MessagesHelper
   def format_special_link(url)
     case url
     when YOUTUBE_URL
-      open_link_to(image_tag(YOUTUBE_POSTER_FRAME % $1, :alt => ''), url)
+      open_image_link(YOUTUBE_POSTER_FRAME % $1, url)
     when IMAGE_URL
       open_image_link(url)
     when IMGUR_URL
-      open_image_link(IMGUR_IMAGE_URL % $2)
+      open_image_link(IMGUR_IMAGE_URL % $2, url)
     end
   end
   
@@ -116,8 +116,8 @@ module MessagesHelper
     path =~ IMAGE_URL ? open_image_link(path) : open_link_to(h(message.body), path)
   end
   
-  def open_image_link(url)
-    open_link_to(image_tag(url, :alt => ''), url)
+  def open_image_link(image_url, open_url = nil)
+    open_link_to(image_tag(image_url, :alt => ''), open_url || image_url)
   end
   
   def format_full_name(member)
