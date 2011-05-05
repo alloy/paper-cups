@@ -1,3 +1,4 @@
+- If we ever add more rooms then Message.recent should check the membership of the room instead of author creation date.
 - Link #digit to Trac tickets.
 - Show twitter links inline.
 - Compact search result messages to one line, highlight query, and add a link to the message #id.

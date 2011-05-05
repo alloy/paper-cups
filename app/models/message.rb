@@ -17,8 +17,13 @@ class Message < ActiveRecord::Base
     message_type == 'attachment'
   end
   
-  def self.recent
-    find(:all, :order => 'messages.id DESC', :limit => 25, :include => :author).reverse
+  def self.recent(since_member_joined)
+    find(:all,
+      :conditions => ["messages.created_at > ?", since_member_joined.created_at],
+      :order => 'messages.id DESC',
+      :limit => 25,
+      :include => :author
+    ).reverse
   end
   
   def self.find_created_on_date(year, month, day)

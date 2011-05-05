@@ -16,6 +16,7 @@ describe "On the", RoomsController, "a member" do
   end
   
   it "should see an overview of messages in the room, limited to the last 25" do
+    sleep 1
     @room.messages.delete_all
     messages = Array.new(26) { @room.messages.create! :author => @authenticated, :body => "foo" }
     

@@ -75,10 +75,18 @@ describe Message do
     Message.find_created_on_date('2009', '1',  '2').should.equal_list  []
   end
   
-  it "should return the 25 most recent messages" do
+  it "returns the 25 most recent messages, but not from before the given user joined the room" do
+    sleep 1 # the member fixtures have just been created, so wait a second to ensure the member `alloy' is a second old at least
     room = rooms(:macruby)
     room.messages.delete_all
-    messages = Array.new(26) { room.messages.create! :author => members(:lrz), :body => "foo" }
-    room.reload.messages.recent.should.equal_list messages.last(25)
+    
+    messages_before_join = Array.new(6) { room.messages.create! :author => members(:lrz), :body => "foo" }
+    member = Member.create!(:email => 'new@example.com')
+    sleep 1
+    messages_after_join = Array.new(20) { room.messages.create! :author => members(:lrz), :body => "foo" }
+    messages = messages_before_join + messages_after_join
+    
+    room.reload.messages.recent(members(:alloy)).should.equal_list messages.last(25)
+    room.reload.messages.recent(member).should.equal_list messages_after_join
   end
 end
