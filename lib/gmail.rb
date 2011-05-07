@@ -19,5 +19,7 @@ class Gmail
       @connection.uid_store(uid, "+FLAGS", [:Deleted])
     end
     @connection.expunge
+    @connection.logout
+    @connection.disconnect
   end
 end

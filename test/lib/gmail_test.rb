@@ -9,10 +9,24 @@ module Net
       
       def initialize(host, port = nil, usessl = nil, certs = nil, verify = nil)
         @connection_details = [host, port, usessl, certs, verify]
+        @connected = true
       end
       
       def login(username, password)
         @credentials = [username, password]
+        @logged_in = true
+      end
+      
+      def logout
+        @logged_in = false
+      end
+      
+      def disconnect
+        @connected = false
+      end
+      
+      def connected?
+        @logged_in && @connected
       end
       
       def select(mailbox)
@@ -94,13 +108,20 @@ describe "Gmail" do
   end
   
   it "deletes an email after it has been used" do
-    @gmail.emails do |email|
+    @gmail.emails do |_|
       # shouldn't be deleted yet
       imap.copied_uids.should == nil
       imap.stored_uids.should == nil
     end
     imap.copied_uids.should == [[1, "[Gmail]/All Mail"], [2, "[Gmail]/All Mail"]]
     imap.stored_uids.should == [[1, "+FLAGS", [:Deleted]], [2, "+FLAGS", [:Deleted]]]
+  end
+  
+  it "disconnects after yielding the emails" do
+    @gmail.emails do |_|
+      imap.should.be.connected
+    end
+    imap.should.not.be.connected
   end
   
   private
