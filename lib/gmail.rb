@@ -4,19 +4,20 @@ require 'net/imap'
 class Gmail
   HOST = 'imap.gmail.com'
   PORT = 993
-  MAILBOX = 'Inbox'
-  QUERY = 'NOT DELETED'
   
   def initialize(username, password)
     @connection = Net::IMAP.new(HOST, PORT, true)
     @connection.login(username, password)
-    @connection.select(MAILBOX)
+    @connection.select('Inbox')
   end
   
   def emails
-    @connection.uid_search(QUERY).each do |uid|
+    @connection.uid_search('NOT DELETED').each do |uid|
       source = @connection.uid_fetch(uid, ['RFC822']).first.attr['RFC822']
       yield TMail::Mail.parse(source)
+      @connection.uid_copy(uid, "[Gmail]/All Mail")
+      @connection.uid_store(uid, "+FLAGS", [:Deleted])
     end
+    @connection.expunge
   end
 end

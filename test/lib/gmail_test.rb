@@ -5,6 +5,7 @@ module Net
   class IMAP
     class Mock
       attr_reader :connection_details, :credentials, :selected_mailbox
+      attr_reader :copied_uids, :stored_uids
       
       def initialize(host, port = nil, usessl = nil, certs = nil, verify = nil)
         @connection_details = [host, port, usessl, certs, verify]
@@ -31,6 +32,20 @@ module Net
         when [1, ['RFC822']] then [FetchData.new(uid, 'RFC822' => email_fixture('email1.txt'))]
         when [2, ['RFC822']] then [FetchData.new(uid, 'RFC822' => email_fixture('email2.txt'))]
         end
+      end
+      
+      def uid_copy(uid, mailbox)
+        @_copied_uids ||= []
+        @_copied_uids << [uid, mailbox]
+      end
+      
+      def uid_store(uid, attr, flags)
+        @_stored_uids ||= []
+        @_stored_uids << [uid, attr, flags]
+      end
+      
+      def expunge
+        @copied_uids, @stored_uids, = @_copied_uids, @_stored_uids
       end
       
       private
@@ -76,6 +91,16 @@ describe "Gmail" do
     end
     yielded.map(&:subject).should == %w{ new1 new2 }
     yielded.map(&:body).should == %w{ new1 new2 }
+  end
+  
+  it "deletes an email after it has been used" do
+    @gmail.emails do |email|
+      # shouldn't be deleted yet
+      imap.copied_uids.should == nil
+      imap.stored_uids.should == nil
+    end
+    imap.copied_uids.should == [[1, "[Gmail]/All Mail"], [2, "[Gmail]/All Mail"]]
+    imap.stored_uids.should == [[1, "+FLAGS", [:Deleted]], [2, "+FLAGS", [:Deleted]]]
   end
   
   private
