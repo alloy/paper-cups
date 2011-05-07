@@ -1,3 +1,4 @@
+- How important is it in this case to use a cert file when retrieving an email?
 - If we ever add more rooms then Message.recent should check the membership of the room instead of author creation date.
 - Show twitter links inline.
 - Compact search result messages to one line, highlight query, and add a link to the message #id.

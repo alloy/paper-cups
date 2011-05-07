@@ -1,0 +1,43 @@
+Delivered-To: foobar@collectiveidea.com 
+Received: by 10.64.241.2 with SMTP id o2cs153762qbh; 
+        Thu, 23 Oct 2008 13:11:50 -0700 (PDT) 
+Received: by 10.231.11.137 with SMTP id t9mr734474ibt.45.1224792710215; 
+        Thu, 23 Oct 2008 13:11:50 -0700 (PDT) 
+Return-Path: <foobar@gmail.com> 
+Received: from yx-out-2324.google.com (yx-out-2324.google.com [74.125.44.29]) 
+        by mx.google.com with ESMTP id 30si13955180yxk.4.2008.10.23.13.11.48; 
+        Thu, 23 Oct 2008 13:11:49 -0700 (PDT) 
+Received-SPF: pass (google.com: domain of foobar@gmail.com designates 74.125.44.29 as permitted sender) client-ip=74.125.44.29; 
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of foobar@gmail.com designates 74.125.44.29 as permitted sender) smtp.mail=foobar@gmail.com; dkim=pass (test mode) header.i=@gmail.com 
+Received: by yx-out-2324.google.com with SMTP id 8so180598yxb.19 
+        for <foobar@collectiveidea.com>; Thu, 23 Oct 2008 13:11:48 -0700 (PDT) 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; 
+        d=gmail.com; s=gamma; 
+        h=domainkey-signature:received:received:message-id:date:from:to 
+         :subject:mime-version:content-type:content-transfer-encoding 
+         :content-disposition; 
+        bh=9saG725n0uImPMS0MkFJEf57wM1Qmfp3nnFOmS98QWo=; 
+        b=rY4fCAqdDLaGimEHba7DA9K5UfhKDk7AQoUM8PmLN4oe3SMM8NggB8C/K5LmoyLVrM 
+         fN+vNgeDMmyqhoic8tmY1oAjfdGbZ4z3kpT7ORp1iWS7r/Bnrpb6HoKtYC7j3xb2zgCp 
+         4QNVRcqJYkCpKsJ6jNCdB6tjV0nnrEJNi5Cbg= 
+DomainKey-Signature: a=rsa-sha1; c=nofws; 
+        d=gmail.com; s=gamma; 
+        h=message-id:date:from:to:subject:mime-version:content-type 
+         :content-transfer-encoding:content-disposition; 
+        b=WiayXoposKJrY03s1OXb8Dv343l9yEdvp19FTqCf9RGKv221/3YdivxZOatwxEIunD 
+         mPXiLFHuD5Is1ksyCl7G+9GvcHI2jCO39jZGbnbaZ/84CzqfYXRZDdIAE+kiwNthOJf2 
+         9bLJaN01B5LznkZ1p5VSG2mfpzPrxH9OXk/T0= 
+Received: by 10.150.12.3 with SMTP id 3mr4449655ybl.18.1224792708446; 
+        Thu, 23 Oct 2008 13:11:48 -0700 (PDT) 
+Received: by 10.151.117.16 with HTTP; Thu, 23 Oct 2008 13:11:48 -0700 (PDT) 
+Message-ID: <75ca27b70810231311t7c06de72hd223edfa2b656326@mail.gmail.com> 
+Date: Thu, 23 Oct 2008 16:11:48 -0400 
+From: "John Doe" <foobar@gmail.com> 
+To: foobar@collectiveidea.com 
+Subject: new2
+MIME-Version: 1.0 
+Content-Type: text/plain; charset=ISO-8859-1 
+Content-Transfer-Encoding: 7bit 
+Content-Disposition: inline 
+
+new2
