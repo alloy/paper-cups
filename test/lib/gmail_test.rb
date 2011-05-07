@@ -124,6 +124,22 @@ describe "Gmail" do
     imap.should.not.be.connected
   end
   
+  it "rescues Net::IMAP::NoResponseError" do
+    lambda {
+      @gmail.emails do |_|
+        raise Net::IMAP::NoResponseError
+      end
+    }.should.not.raise
+  end
+  
+  it "rescues Net::IMAP::ByeResponseError" do
+    lambda {
+      @gmail.emails do |_|
+        raise Net::IMAP::ByeResponseError
+      end
+    }.should.not.raise
+  end
+  
   private
   
   def imap

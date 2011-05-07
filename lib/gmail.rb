@@ -21,5 +21,7 @@ class Gmail
     @connection.expunge
     @connection.logout
     @connection.disconnect
+  rescue Net::IMAP::NoResponseError, Net::IMAP::ByeResponseError => e
+    Rails.logger.error "[!] A #{e.class.name} error occurred when connecting to Gmail: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
   end
 end
