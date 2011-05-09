@@ -11,8 +11,8 @@ class Gmail
     @connection.select('Inbox')
   end
   
-  def emails
-    @connection.uid_search('NOT DELETED').each do |uid|
+  def emails_from(address)
+    @connection.uid_search("FROM #{address} NOT DELETED").each do |uid|
       source = @connection.uid_fetch(uid, ['RFC822']).first.attr['RFC822']
       yield TMail::Mail.parse(source)
       @connection.uid_copy(uid, "[Gmail]/All Mail")

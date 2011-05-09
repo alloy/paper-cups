@@ -33,17 +33,18 @@ module Net
       end
       
       def uid_search(keys, charset = nil)
-        if keys == "NOT DELETED"
-          [1, 2]
+        if keys =~ /^FROM (.+?) NOT DELETED$/
+          @from_email_address = $1
+          email_fixtures.map { |f| File.basename(f, '.txt').to_i }.sort
         else
           []
         end
       end
       
       def uid_fetch(uid, attr)
-        case [uid, attr]
-        when [1, ['RFC822']] then [FetchData.new(uid, 'RFC822' => email_fixture('email1.txt'))]
-        when [2, ['RFC822']] then [FetchData.new(uid, 'RFC822' => email_fixture('email2.txt'))]
+        fixture = email_fixtures.find { |f| File.basename(f, '.txt').to_i == uid }
+        if attr == ['RFC822'] && fixture
+          [FetchData.new(uid, 'RFC822' => File.read(fixture))]
         end
       end
       
@@ -63,8 +64,8 @@ module Net
       
       private
       
-      def email_fixture(name)
-        File.read(File.join(FIXTURE_ROOT, 'emails', name))
+      def email_fixtures
+        Dir.glob(File.join(FIXTURE_ROOT, 'emails', @from_email_address, '*.txt'))
       end
     end
     
