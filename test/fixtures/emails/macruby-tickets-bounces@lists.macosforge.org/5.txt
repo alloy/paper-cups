@@ -1,0 +1,85 @@
+Delivered-To: bananasapp@gmail.com
+Received: by 10.216.36.199 with SMTP id w49cs69074wea;
+        Mon, 9 May 2011 15:38:12 -0700 (PDT)
+Received: by 10.68.1.170 with SMTP id 10mr10161211pbn.189.1304980691347;
+        Mon, 09 May 2011 15:38:11 -0700 (PDT)
+Return-Path: <macruby-tickets-bounces@lists.macosforge.org>
+Received: from bz1.apple.com (bz1.apple.com [17.254.13.36])
+        by mx.google.com with ESMTPS id p1si22277448wfn.94.2011.05.09.15.38.09
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 09 May 2011 15:38:10 -0700 (PDT)
+Received-SPF: neutral (google.com: 17.254.13.36 is neither permitted nor denied by best guess record for domain of macruby-tickets-bounces@lists.macosforge.org) client-ip=17.254.13.36;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 17.254.13.36 is neither permitted nor denied by best guess record for domain of macruby-tickets-bounces@lists.macosforge.org) smtp.mail=macruby-tickets-bounces@lists.macosforge.org
+Received: from lists.macosforge.org (volk.macosforge.org [17.254.20.157])
+	by bz1.apple.com (Postfix) with SMTP id D858921B107B9;
+	Mon,  9 May 2011 15:38:08 -0700 (PDT)
+Received: from volk.macosforge.org (localhost [127.0.0.1])
+	by lists.macosforge.org (Postfix) with ESMTP id CA0AE51F524;
+	Mon,  9 May 2011 15:38:08 -0700 (PDT)
+X-Original-To: macruby-tickets@lists.macosforge.org
+Delivered-To: macruby-tickets@lists.macosforge.org
+Received: from mail-in12.apple.com (mail-in.apple.com [17.254.13.10])
+	by lists.macosforge.org (Postfix) with ESMTP id C501B51F51E
+	for <macruby-tickets@lists.macosforge.org>;
+	Mon,  9 May 2011 15:38:06 -0700 (PDT)
+X-AuditID: 11fe0d0a-b7ba8ae0000074c4-85-4dc86cce7e28
+Received: from bz1.apple.com (bz1.apple.com [17.254.13.36])
+	(using TLS with cipher AES256-SHA (AES256-SHA/256 bits))
+	(Client did not present a certificate)
+	by mail-in12.apple.com (Apple Secure Mail Relay) with SMTP id
+	FB.AF.29892.ECC68CD4; Mon,  9 May 2011 15:38:06 -0700 (PDT)
+To: undisclosed-recipients:;
+Received: from kappa.macosforge.org (kappa.macosforge.org [17.254.20.153])
+	by bz1.apple.com (Postfix) with ESMTP id 42D7121B107A9;
+	Mon,  9 May 2011 15:38:06 -0700 (PDT)
+MIME-Version: 1.0
+From: "MacRuby" <ruby-noreply@macosforge.org>
+X-Trac-Version: 0.11.7
+Precedence: bulk
+Cc: macruby-tickets@lists.macosforge.org
+Auto-Submitted: auto-generated
+X-Mailer: Trac 0.11.7, by Edgewall Software
+X-Trac-Project: MacRuby
+Date: Mon, 09 May 2011 22:38:06 -0000
+X-URL: http://macruby.org/
+Subject: Re: [MacRuby] #1270: A test ticket, please ignore.
+X-Trac-Ticket-URL: http://www.macruby.org/trac/ticket/1270#comment:4
+Message-ID: <063.e6778aeedde0e4ece1f1d395ceb9af72@macosforge.org>
+References: <054.e5151e1cc5b75715a5b7a9ef3761ce79@macosforge.org>
+X-Trac-Ticket-ID: 1270
+In-Reply-To: <054.e5151e1cc5b75715a5b7a9ef3761ce79@macosforge.org>
+X-Brightmail-Tracker: AAAABRgACbgYAKR+GADDFxgAzaUYAM5R
+X-BeenThere: macruby-tickets@lists.macosforge.org
+X-Mailman-Version: 2.1.13
+Reply-To: noreply@macosforge.org
+List-Id: automated ticket emails from MacRuby Trac
+	<macruby-tickets.lists.macosforge.org>
+List-Unsubscribe: <http://lists.macosforge.org/mailman/options.cgi/macruby-tickets>,
+	<mailto:macruby-tickets-request@lists.macosforge.org?subject=unsubscribe>
+List-Archive: <http://lists.macosforge.org/pipermail/macruby-tickets>
+List-Post: <mailto:macruby-tickets@lists.macosforge.org>
+List-Help: <mailto:macruby-tickets-request@lists.macosforge.org?subject=help>
+List-Subscribe: <http://lists.macosforge.org/mailman/listinfo.cgi/macruby-tickets>,
+	<mailto:macruby-tickets-request@lists.macosforge.org?subject=subscribe>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Sender: macruby-tickets-bounces@lists.macosforge.org
+Errors-To: macruby-tickets-bounces@lists.macosforge.org
+
+IzEyNzA6IEEgdGVzdCB0aWNrZXQsIHBsZWFzZSBpZ25vcmUuCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0K
+IFJlcG9ydGVyOiAgZWxveS5kZS5lbmlnZUDigKYgICAgICAgICAgfCAgICAgICAgT3duZXI6ICBs
+c2Fuc29uZXR0aUDigKYgICAgICAgIAogICAgIFR5cGU6ICBkZWZlY3QgICAgICAgICAgICAgICAg
+ICAgfCAgICAgICBTdGF0dXM6ICBjbG9zZWQgICAgICAgICAgICAgICAKIFByaW9yaXR5OiAgYmxv
+Y2tlciAgICAgICAgICAgICAgICAgIHwgICAgTWlsZXN0b25lOiAgICAgICAgICAgICAgICAgICAg
+ICAgCkNvbXBvbmVudDogIE1hY1J1YnkgICAgICAgICAgICAgICAgICB8ICAgUmVzb2x1dGlvbjog
+IGZpeGVkICAgICAgICAgICAgICAgIAogS2V5d29yZHM6ICB0ZXN0IGJhbmFuYXMgcmV2b2x1dGlv
+biAgfCAgCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KQ2hhbmdlcyAoYnkgZWxveS5kZS5lbmlnZUDigKYp
+OgoKICAqIHN0YXR1czogIHJlb3BlbmVkID0+IGNsb3NlZAogICogcmVzb2x1dGlvbjogID0+IGZp
+eGVkCgoKQ29tbWVudDoKCiBPaCBjb21lIG9uLCBkdWRlIQoKLS0gClRpY2tldCBVUkw6IDxodHRw
+Oi8vd3d3Lm1hY3J1Ynkub3JnL3RyYWMvdGlja2V0LzEyNzAjY29tbWVudDo0PgpNYWNSdWJ5IDxo
+dHRwOi8vbWFjcnVieS5vcmcvPgoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX18KbWFjcnVieS10aWNrZXRzIG1haWxpbmcgbGlzdAptYWNydWJ5LXRpY2tldHNA
+bGlzdHMubWFjb3Nmb3JnZS5vcmcKaHR0cDovL2xpc3RzLm1hY29zZm9yZ2Uub3JnL21haWxtYW4v
+bGlzdGluZm8uY2dpL21hY3J1YnktdGlja2V0cwo=

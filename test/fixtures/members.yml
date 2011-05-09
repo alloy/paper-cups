@@ -19,3 +19,6 @@ api:
   api_token: eb23cm52
   full_name: GitHub
   role: api
+ticket:
+  full_name: Ticket
+  role: api

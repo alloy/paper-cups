@@ -86,7 +86,7 @@ describe MessagesHelper do
   it "autolinks #digit to a Trac ticket" do
     [
       "%s",
-      "%s <- is crazy!",
+      "%s: <- is crazy!",
       "Check this: %s",
       "Oi! Can you tell me if %s needs a fix or is this just a joke?",
     ].each do |body|
