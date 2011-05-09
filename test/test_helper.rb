@@ -9,6 +9,12 @@ require 'test/spec/rails'
 require 'test/spec/rails/macros'
 require 'test/spec/share'
 
+$:.unshift(File.dirname(__FILE__))
+require 'ext/authentication'
+require 'ext/time'
+require 'ext/file_fixtures'
+require 'ext/imap_mock'
+
 # require 'test/spec/add_allow_switch'
 # Net::HTTP.add_allow_switch :start
 
@@ -25,15 +31,8 @@ class ActiveSupport::TestCase
   self.use_instantiated_fixtures  = false
   fixtures :all
   
-  $:.unshift(File.expand_path('../', __FILE__))
-  
-  require 'ext/authentication'
   include TestHelpers::Authentication
-  
-  require 'ext/time'
   include TestHelpers::Time
-  
-  require 'ext/file_fixtures'
   include TestHelpers::FileFixtures
 end
 
