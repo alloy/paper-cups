@@ -1,0 +1,7 @@
+if Rails.env.test?
+  GMAIL_USERNAME = 'test@example.org'
+  GMAIL_PASSWORD = "secret"
+else
+  GMAIL_USERNAME = 'bob@gmail.com'
+  GMAIL_PASSWORD = 'secret'
+end
