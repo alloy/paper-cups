@@ -17,7 +17,7 @@ describe "Gmail" do
   
   it "yields new emails from a specific address" do
     yielded = []
-    @gmail.emails_from('test@example.org') do |email|
+    @gmail.emails(:from => 'test@example.org') do |email|
       yielded << email
     end
     yielded.map(&:subject).should == %w{ new1 new2 }
@@ -26,14 +26,14 @@ describe "Gmail" do
   
   it "yields nothing if there are no new emails" do
     yielded = []
-    @gmail.emails_from('no-new-mails@example.org') do |email|
+    @gmail.emails(:from => 'no-new-mails@example.org') do |email|
       yielded << email
     end
     yielded.should.be.empty
   end
   
   it "deletes an email after it has been used" do
-    @gmail.emails_from('test@example.org') do |_|
+    @gmail.emails(:from => 'test@example.org') do |_|
       # shouldn't be deleted yet
       imap.copied_uids.should == nil
       imap.stored_uids.should == nil
@@ -43,7 +43,7 @@ describe "Gmail" do
   end
   
   it "disconnects after yielding the emails" do
-    @gmail.emails_from('test@example.org') do |_|
+    @gmail.emails(:from => 'test@example.org') do |_|
       imap.should.be.connected
     end
     imap.should.not.be.connected
@@ -51,7 +51,7 @@ describe "Gmail" do
   
   it "rescues Net::IMAP::NoResponseError" do
     lambda {
-      @gmail.emails_from('test@example.org') do |_|
+      @gmail.emails(:from => 'test@example.org') do |_|
         raise Net::IMAP::NoResponseError
       end
     }.should.not.raise
@@ -59,7 +59,7 @@ describe "Gmail" do
   
   it "rescues Net::IMAP::ByeResponseError" do
     lambda {
-      @gmail.emails_from('test@example.org') do |_|
+      @gmail.emails(:from => 'test@example.org') do |_|
         raise Net::IMAP::ByeResponseError
       end
     }.should.not.raise

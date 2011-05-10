@@ -33,8 +33,8 @@ module Net
       end
       
       def uid_search(keys, charset = nil)
-        if keys =~ /^FROM (.+?) NOT DELETED$/
-          @from_email_address = $1
+        if keys.join(" ") =~ /^NOT DELETED (FROM|CC) (.+?)$/
+          @query = File.join($1, $2)
           email_fixtures.map { |f| File.basename(f, '.txt').to_i }.sort
         else
           []
@@ -65,7 +65,7 @@ module Net
       private
       
       def email_fixtures
-        Dir.glob(File.join(FIXTURE_ROOT, 'emails', @from_email_address, '*.txt'))
+        Dir.glob(File.join(FIXTURE_ROOT, 'emails', @query, '*.txt'))
       end
     end
     

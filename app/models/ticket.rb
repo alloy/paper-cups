@@ -1,5 +1,5 @@
 class Ticket
-  MACRUBY_TICKETS_LIST = 'macruby-tickets-bounces@lists.macosforge.org'
+  MACRUBY_TICKETS_LIST = 'macruby-tickets@lists.macosforge.org'
   
   def self.fetch_and_create_messages!
     # TODO this is so lame, but as we don't have more rooms atm, this will suffice
@@ -11,7 +11,7 @@ class Ticket
   end
   
   def self.fetch
-    Gmail.new(GMAIL_USERNAME, GMAIL_PASSWORD).emails_from(MACRUBY_TICKETS_LIST) do |email|
+    Gmail.new(GMAIL_USERNAME, GMAIL_PASSWORD).emails(:cc => MACRUBY_TICKETS_LIST) do |email|
       yield new(email)
     end
   end

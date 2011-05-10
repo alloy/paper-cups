@@ -21,3 +21,8 @@ task :test do
   Rake::Task['test:lib'].invoke
   Rake::Task['test:javascripts'].invoke
 end
+
+desc 'Fetch new MacRuby ticket emails and create messages for them'
+task :fetch_ticket_emails => :environment do
+  Ticket.fetch_and_create_messages!
+end
