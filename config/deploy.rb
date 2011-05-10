@@ -22,7 +22,7 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  task :symlink do
+  task :create_symlinks do
     ['config/initializers/session_store.rb', 'config/initializers/gmail.rb', 'public/attachments'].each do |path|
       run "ln -fs #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
     end
@@ -33,4 +33,4 @@ namespace :deploy do
   end
 end
 
-after "deploy:finalize_update", "deploy:symlink"
+after "deploy:finalize_update", "deploy:create_symlinks"
