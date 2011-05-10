@@ -14,3 +14,7 @@ api_in_macruby:
   room: macruby
   member: api
   last_seen_at: <%= 1.day.ago %>
+ticket_in_macruby:
+  room: macruby
+  member: ticket
+  last_seen_at: <%= 1.day.ago %>
