@@ -4,6 +4,7 @@ require 'net/imap'
 class Gmail
   HOST = 'imap.gmail.com'
   PORT = 993
+  CACERT_FILE = File.expand_path('../cacert.pem', __FILE__)
   
   def initialize(username, password)
     connect(username, password)
@@ -36,7 +37,7 @@ class Gmail
   end
   
   def connect(username, password)
-    @connection = Net::IMAP.new(HOST, PORT, true)
+    @connection = Net::IMAP.new(HOST, PORT, true, CACERT_FILE, true)
     @connection.login(username, password)
     @connection.select('Inbox')
   end

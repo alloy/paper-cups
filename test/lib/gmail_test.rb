@@ -7,7 +7,7 @@ describe "Gmail" do
   end
   
   it "connects with the given username and password" do
-    imap.connection_details.should == ['imap.gmail.com', 993, true, nil, false]
+    imap.connection_details.should == ['imap.gmail.com', 993, true, (Rails.root + 'lib/cacert.pem').to_s, true]
     imap.credentials.should == ['bob', 'secret']
   end
   
