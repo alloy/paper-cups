@@ -22,14 +22,10 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  task :link_session_store do
-    path = 'config/initializers/session_store.rb'
-    run "ln -fs #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
-  end
-  
-  task :link_attachments do
-    path = 'public/attachments'
-    run "ln -s #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
+  task :symlink do
+    ['config/initializers/session_store.rb', 'config/initializers/gmail.rb', 'public/attachments'].each do |path|
+      run "ln -fs #{File.join(deploy_to, 'shared', path)} #{File.join(release_path, path)}"
+    end
   end
   
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -37,5 +33,4 @@ namespace :deploy do
   end
 end
 
-after "deploy:finalize_update", "deploy:link_session_store"
-after "deploy:finalize_update", "deploy:link_attachments"
+after "deploy:finalize_update", "deploy:symlink"
