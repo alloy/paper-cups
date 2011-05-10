@@ -15,7 +15,7 @@ describe "Gmail" do
     imap.selected_mailbox.should == 'Inbox'
   end
   
-  it "yields new emails from a specific address" do
+  it "yields new emails from a specific address in reverse order" do
     yielded = []
     @gmail.emails(:from => 'test@example.org') do |email|
       yielded << email

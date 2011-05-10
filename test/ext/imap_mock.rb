@@ -35,7 +35,7 @@ module Net
       def uid_search(keys, charset = nil)
         if keys.join(" ") =~ /^NOT DELETED (FROM|CC) (.+?)$/
           @query = File.join($1, $2)
-          email_fixtures.map { |f| File.basename(f, '.txt').to_i }.sort
+          email_fixtures.map { |f| File.basename(f, '.txt').to_i }.sort.reverse
         else
           []
         end

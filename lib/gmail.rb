@@ -22,7 +22,7 @@ class Gmail
   private
   
   def find_ids(conditions)
-    @connection.uid_search(query(conditions))
+    @connection.uid_search(query(conditions)).reverse
   end
   
   def fetch_email(id)
