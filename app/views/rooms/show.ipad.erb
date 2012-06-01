@@ -8,6 +8,7 @@
   <div id="menu">
     <div id="messages-title" class="active">
       Messages
+      (<%= open_link_to 'Earlier...', room_messages_on_day_path(@room, :day => Date.today) %>)
     </div>
     <div id="search">
       <% form_tag room_messages_path(@room), :method => :get do %>
@@ -18,7 +19,7 @@
   </div>
 
   <div class="links">
-    <%= open_link_to 'Earlier messages...', room_messages_on_day_path(@room, :day => Date.today) %>
+    <a href="javascript: window.scrollBy(0, document.height);">Jump to bottom</a></td>
   </div>
 
   <div class="messages column">
@@ -30,7 +31,7 @@
   </div>
 
   <div class="links">
-    <a href="#" onclick="javascript: location.reload();">Reload messages...</a></td>
+    <a href="javascript: location.reload();">Reload messages...</a></td>
   </div>
 </div>
 
